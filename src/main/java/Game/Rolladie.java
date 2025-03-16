@@ -11,6 +11,7 @@ public class Rolladie {
      * Main entry-point for the java.duke.Duke application.
      */
     public static void main(String[] args) {
+
         UI.printWelcomeMessage();
         int[] health1 = {100};
         int[] health2 = {50};
