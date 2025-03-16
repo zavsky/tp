@@ -1,9 +1,11 @@
 package Game;
 
-public class Game {
-    private int score;
+import Game.Events.Event;
 
-    public Game() {
-        score = 0;
-    }
+import java.util.ArrayList;
+
+public class Game {
+    private ArrayList<Event> events = new ArrayList<Event>();
+    private ArrayList<Character> characters = new ArrayList<Character>();
+    private int score = 0;
 }
