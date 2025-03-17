@@ -8,6 +8,7 @@ import Game.Actions.EndAction;
 import Game.Actions.ExitAction;
 import Game.Actions.HelpAction;
 import Game.Actions.MoveAction;
+import Game.Actions.StartAction;
 
 import java.util.Scanner;
 
@@ -41,7 +42,7 @@ public class Parser {
         final String actionArgs = actionTypeAndParams[1];
         switch (actionType) {
         case ACTION_START:
-            return new AttackAction();
+            return new StartAction();
         case ACTION_MOVE:
             return new MoveAction();
         case ACTION_HELP:
