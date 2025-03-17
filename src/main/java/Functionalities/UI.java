@@ -37,7 +37,7 @@ public class UI {
     }
 
     public static void battleExit(Enemy enemy, Player player) {
-        if (!player.isAlive()) {
+        if (!player.isAlive) {
             System.out.println(enemy.getCharacterName() + " has defeated you. Another one bites the dust!");
             return;
         } else {

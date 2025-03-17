@@ -11,7 +11,12 @@ import Game.Actions.MoveAction;
 import Game.Actions.StartAction;
 
 import java.util.Scanner;
+import java.io.IOException;
 
+/**
+ * Parser class to handle user inputs.
+ * Parser object is created to take in user inputs and handle them.
+ */
 public class Parser {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String ACTION_START = "start";
