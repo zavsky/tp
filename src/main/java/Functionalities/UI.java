@@ -8,7 +8,7 @@ public class UI {
             "|  _ <   " + "| |_| | " + "| |___  " + "| |___  " + " / /_\\ \\ " + "| |_| | " + " | |  " + "| |___  " + "\n" +
             "|_| \\_\\  " + " \\___/  " + "|_____| " + "|_____| " + "/_/   \\_\\" + "|____/  " + "|___| " + "|_____| ";
 
-    public static void printWelcomeMessage() {
+    public void printWelcomeMessage() {
         System.out.println("Welcome to");
         System.out.println(logo);
     }

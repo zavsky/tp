@@ -1,4 +1,5 @@
 package Game.Events;
 
-public class Event {
+public abstract class Event {
+    public abstract Event next();
 }
