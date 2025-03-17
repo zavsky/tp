@@ -1,8 +1,9 @@
 package Game.Battle;
 
 public abstract class Turn {
-    enum Action {
+    protected enum Action {
         ATTACK, DEFEND, SURRENDER
     }
+    protected Action currentAction;
 
 }

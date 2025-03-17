@@ -5,7 +5,7 @@ import Game.Characters.Character;
 /**
  * Represents the player's turn. Player can select different moves during his/her turn.
  */
-public class PlayerTurn {
+public class PlayerTurn extends Turn {
     private final Character player;
 
     /**
@@ -22,8 +22,8 @@ public class PlayerTurn {
      *
      * @return A String representing the action of the player.
      */
-    public String getAction() {
-        return "0";
+    public void getAction() {
+        currentAction = Action.valueOf("ATTACK");
     }
 
 
