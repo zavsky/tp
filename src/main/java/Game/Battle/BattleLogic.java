@@ -27,7 +27,7 @@ public class BattleLogic {
 
 
     public boolean BattleSequence() {
-        while (player.getIsAlive() || enemy.getIsAlive()) {
+        while (player.isAlive || enemy.isAlive) {
             if (playerTurn) {
 
             }

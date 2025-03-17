@@ -16,8 +16,10 @@ public class Rolladie {
         int[] health2 = {50};
         Player player = new Player(health1, 10, 10, "Player");
         Enemy enemy = new Enemy(health2, 10, 10, "Enemy");
+        UI.battleEntry(enemy);
         System.out.println(Arrays.toString(enemy.getHealthBars()));
         player.attack(enemy);
         System.out.println(Arrays.toString(enemy.getHealthBars()));
+        UI.battleExit(enemy, player);
     }
 }
