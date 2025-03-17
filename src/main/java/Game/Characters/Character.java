@@ -15,18 +15,22 @@ public abstract class Character {
         isAlive = true;
     }
 
+    public String getCharacterName() { return characterName; }
+
     public int[] getHealthBars() {
         return healthBars;
     }
 
     public void attack(Character defender) {
         int damage = attackValue;
-        double damageReduction = (double) 100 / (100 + defender.defenseValue);
-        int damageTaken = (int) (damage * damageReduction);
-        defender.takeDamage(damageTaken);
+        defender.takeDamage(damage);
     }
 
-    public void takeDamage(int damage) {
+    public boolean isAlive() { return isAlive; }
+
+    public void takeDamage(int damageDealt) {
+        double damageReduction = (double) 100 / (100 + defenseValue);
+        int damage = (int) (damageDealt * damageReduction);
         int index = 0;
         int remainingDamage = damage;
         while (remainingDamage > 0) {
