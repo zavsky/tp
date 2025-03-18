@@ -1,13 +1,14 @@
 package Game.Characters;
 
-public abstract class Character {
+public class Character {
     private int[] healthBars;
     private int attackValue;
     private int defenseValue;
     private String characterName;
     public boolean isAlive;
+    public int currentHealthIndex = 0;
 
-    public Character(int health[], int attack, int defense, String Name) {
+    public Character(int[] health, int attack, int defense, String Name) {
         healthBars = health;
         attackValue = attack;
         defenseValue = defense;
@@ -23,31 +24,51 @@ public abstract class Character {
         return healthBars;
     }
 
+    public int getAttackValue() {
+        return attackValue;
+    }
 
+    public int getDefenseValue() {
+        return defenseValue;
+    }
+
+    public boolean getCurrentStatus() {
+        return isAlive;
+    }
+    
     public void attack(Character defender) {
-        int damage = attackValue;
+        int damage = calculateDamage(defender);
+        defender.takeDamage(damage);
+        System.out.println(this.characterName + " attacks " + defender.getCharacterName() +
+                " for " + damage + " damage.");
+
+    }
+
+    public int calculateDamage(Character defender){
         double damageReduction = (double) 100 / (100 + defender.defenseValue);
-        int damageTaken = (int) (damage * damageReduction);
-        defender.takeDamage(damageTaken);
+        int damageTaken = (int) (this.attackValue * damageReduction);
+        return damageTaken;
+
     }
 
     public void takeDamage(int damage) {
-        int index = 0;
+
         int remainingDamage = damage;
         while (remainingDamage > 0) {
-            //If all health bars are depleted, character is no longer alive
-            if (index >= healthBars.length) {
+
+            /* Case 1 */
+            if (currentHealthIndex >= healthBars.length) {
                 isAlive = false;
                 break;
             }
-            //If current health bar is depleted, update remaining damage to be dealt on next health bar
-            if (healthBars[index] - remainingDamage <= 0) {
-                remainingDamage -= healthBars[index];
-                healthBars[index] = 0;
-                index++;
+            /* Case 2 */
+            if (healthBars[currentHealthIndex] - remainingDamage <= 0) {
+                remainingDamage -= healthBars[currentHealthIndex];
+                healthBars[currentHealthIndex] = 0;
+                currentHealthIndex++;
             }
             else {
-                healthBars[index] -= remainingDamage;
+                healthBars[currentHealthIndex] -= remainingDamage;
                 break;
             }
         }
