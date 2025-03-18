@@ -1,22 +1,22 @@
 package Functionalities;
 
 import Game.Actions.Action;
-import Game.Actions.AttackAction;
+import Game.Actions.BattleAction.AttackAction;
 import Game.Actions.DefaultAction;
-import Game.Actions.DefendAction;
-import Game.Actions.EndAction;
+import Game.Actions.BattleAction.DefendAction;
+import Game.Actions.BattleAction.EndAction;
 import Game.Actions.ExitAction;
 import Game.Actions.HelpAction;
-import Game.Actions.MoveAction;
+import Game.Actions.TravelAction.MoveAction;
 import Game.Actions.StartAction;
 
 import java.util.Scanner;
-import java.io.IOException;
 
 /**
  * Parser class to handle user inputs.
  * Parser object is created to take in user inputs and handle them.
  */
+
 public class Parser {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String ACTION_START = "start";
@@ -37,7 +37,7 @@ public class Parser {
     }
 
     public String readInput() {
-        String inputLine = SCANNER.nextLine();
+        String inputLine = SCANNER.nextLine().toLowerCase();
         return inputLine;
     }
 

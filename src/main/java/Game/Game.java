@@ -1,33 +1,52 @@
 package Game;
 
+import Exceptions.InvalidActionException;
 import Game.Characters.Character;
+import Game.Characters.Enemy;
 import Game.Characters.Player;
+import Game.Events.Battle.Battle;
 import Game.Events.Event;
+import Game.Events.EventType;
 import Game.Events.Travel;
 
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Game {
-    // https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Queue.html
-    private Queue<Event> eventsQueue = new LinkedList<Event>();
-    private Queue<Character> charactersQueue = new LinkedList<Character>();
-    private Character currentCharacter;
+    private Queue<Event> eventsQueue = new LinkedList<>(); // Might not be needed
+    private Queue<Character> characterQueue = new LinkedList<>();
+    private Player player;
     private Event currentEvent;
+    private EventType eventType = EventType.TRAVEL;
     private int score = 0;
 
-    public void init() {
+    public Game() {
         int[] health1 = {100};
-        Player player = new Player(health1, 10, 10, "Player");
-        this.eventsQueue.add(new Travel());
-        this.charactersQueue.add(player);
+        this.player = new Player(health1, 10, 10, "Hero");
+        queueCharacter(this.player);
+        this.currentEvent = new Travel();
     }
 
-    /* Should we implement actually implement eventsQueue
-     * or should we make an abstract method in Event, public abstract Event next()
-     * The latter makes it easier to dictate what happens according to the current event
-     * while the former is easier for development
-     */
+    public void move() throws InvalidActionException {
+        if (this.currentEvent instanceof Travel) {
+            Random rand = new Random();
+            int chance = rand.nextInt(100);
+            if (chance > 25) {
+                int[] enemyHealth = {50};
+                Enemy enemy = new Enemy(enemyHealth, 15, 5, "Goblin");
+                currentEvent = new Battle(this.player, enemy);
+            } else {
+                currentEvent = new Travel();
+            }
+        } else {
+            throw new InvalidActionException();
+        }
+    }
+
+    public EventType getEventType() {
+        return this.eventType;
+    }
     public void queueEvent(Event event) {
         eventsQueue.add(event);
     }
@@ -37,10 +56,10 @@ public class Game {
     }
 
     public void queueCharacter(Character character) {
-        charactersQueue.add(character);
+        characterQueue.add(character);
     }
 
     public Character nextCharacter() {
-        return charactersQueue.poll();
+        return characterQueue.poll();
     }
 }

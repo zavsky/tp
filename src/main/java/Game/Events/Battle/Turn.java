@@ -1,4 +1,4 @@
-package Game.Battle;
+package Game.Events.Battle;
 
 public abstract class Turn {
     protected enum Action {

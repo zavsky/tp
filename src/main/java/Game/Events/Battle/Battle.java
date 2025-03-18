@@ -1,13 +1,16 @@
-package Game.Battle;
+package Game.Events.Battle;
 
 import Game.Characters.Character;
+import Game.Characters.Enemy;
+import Game.Characters.Player;
+import Game.Events.Event;
 
 /**
  * Represents a battle event in which player fights an enemy.
  */
-public class Battle {
-    private final Character player;
-    private final Character enemy;
+public class Battle extends Event {
+    private final Player player;
+    private final Enemy enemy;
     private boolean hasWon;
     /**
      * Constructs a Battle event object.
@@ -15,7 +18,7 @@ public class Battle {
      * @param player The player character in battle.
      * @param enemy The enemy character that player is facing.
      */
-    public Battle(Character player, Character enemy) {
+    public Battle(Player player, Enemy enemy) {
         this.player = player;
         this.enemy = enemy;
     }
