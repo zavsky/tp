@@ -1,6 +1,5 @@
 package Game.Events;
 
-import Game.Characters.Character;
 import Game.Characters.Enemy;
 import Game.Characters.Player;
 

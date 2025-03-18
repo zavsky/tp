@@ -2,7 +2,6 @@ package Game.Battle;
 
 import Game.Characters.Enemy;
 import Game.Characters.Player;
-import Game.Events.EventType;
 
 /**
  * Represents a battle event in which player fights an enemy.
@@ -20,6 +19,12 @@ public class Battle {
     public Battle(Player player, Enemy enemy) {
         this.player = player;
         this.enemy = enemy;
+    }
+
+    public Battle() {
+        this.player = null;
+        int[] enemyHealth = {50};
+        this.enemy = new Enemy(enemyHealth, 15, 5, "Goblin");
     }
 
     /**
