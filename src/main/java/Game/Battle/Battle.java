@@ -1,14 +1,13 @@
-package Game.Events.Battle;
+package Game.Battle;
 
-import Game.Characters.Character;
 import Game.Characters.Enemy;
 import Game.Characters.Player;
-import Game.Events.Event;
+import Game.Events.EventType;
 
 /**
  * Represents a battle event in which player fights an enemy.
  */
-public class Battle extends Event {
+public class Battle {
     private final Player player;
     private final Enemy enemy;
     private boolean hasWon;
@@ -35,6 +34,4 @@ public class Battle extends Event {
 
         return hasWon;
     }
-
-
 }

@@ -10,6 +10,7 @@ public class DefendAction extends BattleAction {
 
     @Override
     public void executeBattleAction(Game game, Storage storage, UI ui) throws RolladieException {
-
+        String message = game.defend();
+        ui.printMessage(message);
     }
 }

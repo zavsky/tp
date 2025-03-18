@@ -1,5 +1,7 @@
 package Game.Characters;
 
+import java.util.Arrays;
+
 /**
  * A class to represent characters in the game.
  */
@@ -126,6 +128,14 @@ public class Character {
                 break;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.characterName + "'s stats:" +
+                "\nHP: \t" + Arrays.toString(healthBars) +
+                "\nATK:\t" + this.attackValue +
+                "\nDEF:\t" + this.defenseValue;
     }
 
 }

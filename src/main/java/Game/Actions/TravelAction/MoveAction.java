@@ -9,6 +9,7 @@ public class MoveAction extends TravelAction {
 
     @Override
     public void executeTravelAction(Game game, Storage storage, UI ui) throws RolladieException {
-
+        String message = game.move();
+        ui.printMessage(message);
     }
 }

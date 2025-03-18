@@ -4,7 +4,7 @@ import Game.Actions.Action;
 import Game.Actions.BattleAction.AttackAction;
 import Game.Actions.DefaultAction;
 import Game.Actions.BattleAction.DefendAction;
-import Game.Actions.BattleAction.EndAction;
+import Game.Actions.BattleAction.FleeAction;
 import Game.Actions.ExitAction;
 import Game.Actions.HelpAction;
 import Game.Actions.TravelAction.MoveAction;
@@ -23,7 +23,7 @@ public class Parser {
     private static final String ACTION_MOVE = "move";
     private static final String ACTION_HELP = "help";
     private static final String ACTION_EXIT = "exit";
-    private static final String ACTION_END = "end";
+    private static final String ACTION_FLEE = "flee";
     private static final String ACTION_DEFEND = "defend";
     private static final String ACTION_ATTACK = "attack";
 
@@ -54,8 +54,8 @@ public class Parser {
             return new HelpAction();
         case ACTION_EXIT:
             return new ExitAction();
-        case ACTION_END:
-            return new EndAction();
+        case ACTION_FLEE:
+            return new FleeAction();
         case ACTION_DEFEND:
             return new DefendAction();
         case ACTION_ATTACK:

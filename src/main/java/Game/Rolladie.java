@@ -18,10 +18,11 @@ public class Rolladie {
 
     public static void main(String[] args) {
         UI.printWelcomeMessage();
+        UI.printMessage(GAME.toString());
         while(true) {
             try {
                 String inputLine = PARSER.readInput();
-                UI.printMessage("Your Action: " + inputLine);
+                UI.printMessage("You chose to: " + inputLine);
                 Action action = PARSER.getAction(inputLine);
                 action.execute(GAME, STORAGE, UI);
             } catch (RolladieException e) {
