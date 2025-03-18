@@ -4,11 +4,12 @@ import Game.Characters.Character;
 import Game.Characters.Enemy;
 import Game.Characters.Player;
 import Game.Events.Event;
+import Game.Events.EventType;
 
 /**
  * Represents a battle event in which player fights an enemy.
  */
-public class Battle extends Event {
+public class Battle {
     private final Player player;
     private final Enemy enemy;
     private boolean hasWon;
@@ -21,6 +22,12 @@ public class Battle extends Event {
     public Battle(Player player, Enemy enemy) {
         this.player = player;
         this.enemy = enemy;
+    }
+
+    public Battle() {
+        this.player = null;
+        int[] enemyHealth = {50};
+        this.enemy = new Enemy(enemyHealth, 15, 5, "Goblin");
     }
 
     /**
@@ -37,4 +44,13 @@ public class Battle extends Event {
     }
 
 
+    @Override
+    public EventType getEventType() {
+        return EventType.BATTLE;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Battle";
+    }
 }
