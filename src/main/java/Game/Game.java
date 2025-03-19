@@ -3,31 +3,50 @@ package Game;
 import Game.Characters.Character;
 import Game.Characters.Player;
 import Game.Events.Event;
+import Game.Events.EventType;
 import Game.Events.Travel;
 
 import java.util.Queue;
 import java.util.LinkedList;
 
 public class Game {
-    // https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Queue.html
-    private Queue<Event> eventsQueue = new LinkedList<Event>();
-    private Queue<Character> charactersQueue = new LinkedList<Character>();
-    private Character currentCharacter;
+    private Queue<Event> eventsQueue = new LinkedList<>(); // Might not be needed
+    private Queue<Character> characterQueue = new LinkedList<>();
+    private Player player;
     private Event currentEvent;
     private int score = 0;
 
-    public void init() {
+    public Game() {
         int[] health1 = {100};
-        Player player = new Player(health1, 10, 10, "Player");
-        this.eventsQueue.add(new Travel());
-        this.charactersQueue.add(player);
+        this.player = new Player(health1, 10, 10, "Hero");
+        queueCharacter(this.player);
+        this.currentEvent = new Travel(this.player);
     }
 
-    /* Should we implement actually implement eventsQueue
-     * or should we make an abstract method in Event, public abstract Event next()
-     * The latter makes it easier to dictate what happens according to the current event
-     * while the former is easier for development
-     */
+    public String move() {
+        String message = "Moving to ";
+        this.currentEvent = this.currentEvent.move();
+        return message + this.currentEvent.toString();
+    }
+
+    public String attack() {
+        this.currentEvent = this.currentEvent.attack();
+        return this.currentEvent.toString();
+    }
+
+    public String defend() {
+        this.currentEvent = this.currentEvent.defend();
+        return this.currentEvent.toString();
+    }
+
+    public String flee() {
+        this.currentEvent = this.currentEvent.flee();
+        return this.currentEvent.toString();
+    }
+
+    public EventType getEventType() {
+        return this.currentEvent.getEventType();
+    }
     public void queueEvent(Event event) {
         eventsQueue.add(event);
     }
@@ -37,10 +56,15 @@ public class Game {
     }
 
     public void queueCharacter(Character character) {
-        charactersQueue.add(character);
+        characterQueue.add(character);
     }
 
     public Character nextCharacter() {
-        return charactersQueue.poll();
+        return characterQueue.poll();
+    }
+
+    @Override
+    public String toString() {
+        return this.currentEvent.toString();
     }
 }
