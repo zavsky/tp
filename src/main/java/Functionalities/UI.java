@@ -142,7 +142,7 @@ public class UI {
      * @param player The player character involved in the battle.
      * @param enemy The enemy character involved in the battle.
      */
-    public void printBattleTurnStart(Player player, Enemy enemy) {
+    public void printBattleTurnStart(Character player, Character enemy) {
         System.out.println(lineSeparator);
         printCharacterInfo(player);
         System.out.println(lineSeparator);
@@ -158,7 +158,7 @@ public class UI {
      * @param enemy The enemy being attacked.
      * @param damage The amount of damage dealt.
      */
-    public void printPlayerAttack(Player player, Enemy enemy, int damage) {
+    public void printPlayerAttack(Character player, Character enemy, int damage) {
         System.out.println("You punch the " + enemy.getCharacterName() + " with your bare fist!");
         if (damage > 30) {
             System.out.println("WHAMMM!! The " + enemy.getCharacterName() + " took a whopping " + damage + " damage!");
@@ -176,7 +176,7 @@ public class UI {
      * @param enemy The enemy performing the attack.
      * @param damage The amount of damage dealt.
      */
-    public void printEnemyAttack(Player player, Enemy enemy, int damage) {
+    public void printEnemyAttack(Character player, Character enemy, int damage) {
         System.out.println("The " + enemy.getCharacterName() + " lunges forward and attacks!");
         if (damage > 30) {
             System.out.println("Ouch!! The " + enemy.getCharacterName() + " nearly sends you flying! It dealt " + damage + " damage!");
@@ -193,7 +193,7 @@ public class UI {
      * @param enemy The enemy that the player fought.
      * @param player The player involved in the battle.
      */
-    public void battleExit(Enemy enemy, Player player) {
+    public void battleExit(Character player, Character enemy) {
         if (!player.isAlive) {
             System.out.println(enemy.getCharacterName() + " has defeated you. Another one bites the dust!");
             return;
