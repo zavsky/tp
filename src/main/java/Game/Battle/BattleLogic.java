@@ -10,7 +10,7 @@ public class BattleLogic {
 
     private Character player;
     private Character enemy;
-    private int turn = START_OF_TURN;
+    private int turnNumber = START_OF_TURN;
     private boolean playerTurn = true;
     private boolean hasWon = false;
 
@@ -29,7 +29,7 @@ public class BattleLogic {
     public boolean BattleSequence() {
         while (player.isAlive || enemy.isAlive) {
             if (playerTurn) {
-
+                PlayerTurn turn = new PlayerTurn(player, enemy);
             }
             else {
 
