@@ -4,6 +4,24 @@ package Game.Characters;
  * A class to create the player object.
  */
 public class Player extends Character {
+<<<<<<< Updated upstream
+=======
+    private static final String playerModel =
+            "      __      _\n" +
+                    "     /__\\__  //\n" +
+                    "    //_____\\///\n" +
+                    "   _| /-_-\\)|/_\n" +
+                    "  (___\\ _ //___\\\n" +
+                    "  (  |\\\\_/// * \\\\\n" +
+                    "   \\_| \\_((*   *))\n" +
+                    "   ( |__|_\\\\  *//\n" +
+                    "   (o/  _  \\_*_/\n" +
+                    "   //\\__|__/\\\n" +
+                    "  // |  | |  |\n" +
+                    " //  _\\ | |___)\n" +
+                    "//  (___|";
+
+>>>>>>> Stashed changes
     /**
      * Constructor to construct a player object.
      *
@@ -14,5 +32,10 @@ public class Player extends Character {
      */
     public Player(int[] health, int attack, int defense, String name) {
         super(health, attack, defense, name);
+    }
+
+    @Override
+    public String toString() {
+        return playerModel + "\n" + super.toString();
     }
 }

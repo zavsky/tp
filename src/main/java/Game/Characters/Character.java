@@ -143,8 +143,26 @@ public class Character {
 
     @Override
     public String toString() {
+<<<<<<< Updated upstream
         return this.characterName + "'s stats:" +
                 "\nHP: \t" + Arrays.toString(healthBars) +
+=======
+        String animatedHealthBars = "";
+        for (int health : healthBars) {
+            int maxhealth = 100;
+            animatedHealthBars += "[";
+            for (int i = 0; i < health; i++) {
+                animatedHealthBars += "#";
+            }
+            for (int i = health; i < maxhealth; i++) {
+                animatedHealthBars += "_";
+            }
+            animatedHealthBars += "]";
+        }
+
+        return this.characterName + "'s stats:" +
+                "\nHP: \t" + animatedHealthBars +
+>>>>>>> Stashed changes
                 "\nATK:\t" + this.attackValue +
                 "\nDEF:\t" + this.defenseValue;
     }
