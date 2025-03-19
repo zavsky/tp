@@ -13,30 +13,30 @@ public class UI {
             "|  _ <   " + "| |_| | " + "| |___  " + "| |___  " + " / /_\\ \\ " + "| |_| | " + " | |  " + "| |___  " + "\n" +
             "|_| \\_\\  " + " \\___/  " + "|_____| " + "|_____| " + "/_/   \\_\\" + "|____/  " + "|___| " + "|_____| ";
 
-    public static String playerModel =
+    public String playerModel =
             "";
 
-    public static void printMessage(String message) {
+    public void printMessage(String message) {
         System.out.println(message);
     }
 
-    public static void printWelcomeMessage() {
+    public void printWelcomeMessage() {
         System.out.println("Welcome to");
         System.out.println(lineSeparator);
         System.out.println(logo);
         System.out.println(lineSeparator);
         System.out.println("A text-based RPG game where your fate is determined by the roll of a die!!");
     }
-    public static void printPlayerInfo(Player player) {
+    public void printPlayerInfo(Player player) {
         System.out.println();
     }
 
-    public static void battleEntry(Enemy enemy) {
+    public void battleEntry(Enemy enemy) {
         System.out.println("A villainous " + enemy.getCharacterName() + " stands in your way!");
 
     }
 
-    public static void battleExit(Enemy enemy, Player player) {
+    public void battleExit(Enemy enemy, Player player) {
         if (!player.isAlive) {
             System.out.println(enemy.getCharacterName() + " has defeated you. Another one bites the dust!");
             return;
@@ -53,7 +53,7 @@ public class UI {
         }
     }
 
-    public static void printPlayerAttack(Player player, Enemy enemy, int damage) {
+    public void printPlayerAttack(Player player, Enemy enemy, int damage) {
         System.out.println("You punch the " + enemy.getCharacterName() + " with your bare fist!");
         if (damage > 30) {
             System.out.println("WHAMMM!! The " + enemy.getCharacterName() + " took a whopping " + damage + " damage!");
@@ -64,7 +64,7 @@ public class UI {
         }
     }
 
-    public static void printEnemyAttack(Player player, Enemy enemy, int damage) {
+    public void printEnemyAttack(Player player, Enemy enemy, int damage) {
         System.out.println("The " + enemy.getCharacterName() + " lunges forward and attacks!");
         if (damage > 30) {
             System.out.println("Ouch!! The " + enemy.getCharacterName() + " nearly sends you flying! It dealt " + damage + " damage!");
@@ -75,7 +75,7 @@ public class UI {
         }
     }
 
-    public static void printCharacterInfo(Character c) {
+    public void printCharacterInfo(Character c) {
         System.out.println(c.getCharacterName());
         System.out.print("Heath: ");
         int[] healthbars = c.getHealthBars();
