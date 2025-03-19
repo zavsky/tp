@@ -24,11 +24,7 @@ public class UI {
         "|  _ <   " + "| |_| | " + "| |___  " + "| |___  " + " / /_\\ \\ " + "| |_| | " + " | |  " + "| |___  " + "\n" +
         "|_| \\_\\  " + " \\___/  " + "|_____| " + "|_____| " + "/_/   \\_\\" + "|____/  " + "|___| " + "|_____| ";
 
-<<<<<<< Updated upstream
-    public String playerModel =
-            "";
 
-=======
     public static String dieFace1 =
         " _______ \n" +
         "|       |\n" +
@@ -95,17 +91,14 @@ public class UI {
      *
      * @param message The message to be printed.
      */
->>>>>>> Stashed changes
     public void printMessage(String message) {
         System.out.println(message);
     }
 
-<<<<<<< Updated upstream
-=======
+
     /**
      * Prints a welcome message to the player, including the game logo and a description.
      */
->>>>>>> Stashed changes
     public void printWelcomeMessage() {
         System.out.println("Welcome to");
         System.out.println(lineSeparator);
@@ -113,12 +106,6 @@ public class UI {
         System.out.println(lineSeparator);
         System.out.println("A text-based RPG game where your fate is determined by the roll of a die!!");
     }
-<<<<<<< Updated upstream
-    public void printPlayerInfo(Player player) {
-        System.out.println();
-    }
-
-=======
 
     /**
      * Prints information about the player.
@@ -134,13 +121,10 @@ public class UI {
      *
      * @param enemy The enemy the player is about to face.
      */
->>>>>>> Stashed changes
     public void battleEntry(Enemy enemy) {
         System.out.println("A villainous " + enemy.getCharacterName() + " stands in your way!");
     }
 
-<<<<<<< Updated upstream
-=======
 
     /**
      * Prints information about a character, including their name and health.
@@ -209,7 +193,6 @@ public class UI {
      * @param enemy The enemy that the player fought.
      * @param player The player involved in the battle.
      */
->>>>>>> Stashed changes
     public void battleExit(Enemy enemy, Player player) {
         if (!player.isAlive) {
             System.out.println(enemy.getCharacterName() + " has defeated you. Another one bites the dust!");
@@ -226,48 +209,6 @@ public class UI {
             System.out.println("You stumble away from the battlefield, severely wounded...");
         }
     }
-<<<<<<< Updated upstream
 
-    public void printPlayerAttack(Player player, Enemy enemy, int damage) {
-        System.out.println("You punch the " + enemy.getCharacterName() + " with your bare fist!");
-        if (damage > 30) {
-            System.out.println("WHAMMM!! The " + enemy.getCharacterName() + " took a whopping " + damage + " damage!");
-        } else if (damage > 10) {
-            System.out.println("You dealt " + damage + " damage.");
-        } else {
-            System.out.println("That tickled the " + enemy.getCharacterName() + ". You dealt a measly " + damage + " damage.");
-        }
-    }
-
-    public void printEnemyAttack(Player player, Enemy enemy, int damage) {
-        System.out.println("The " + enemy.getCharacterName() + " lunges forward and attacks!");
-        if (damage > 30) {
-            System.out.println("Ouch!! The " + enemy.getCharacterName() + " nearly sends you flying! It dealt " + damage + " damage!");
-        } else if (damage > 10) {
-            System.out.println("It dealt " + damage + " damage.");
-        } else {
-            System.out.println("You barely felt that attack... the " + enemy.getCharacterName() + " dealt only " + damage + " damage.");
-        }
-    }
-
-    public void printCharacterInfo(Character c) {
-        System.out.println(c.getCharacterName());
-        System.out.print("Heath: ");
-        int[] healthbars = c.getHealthBars();
-        for (int health : healthbars) {
-            int maxhealth = 100;
-            System.out.print("[");
-            for (int i = 0; i < health; i++) {
-                System.out.print("#");
-            }
-            for (int i = health; i < maxhealth; i++) {
-                System.out.print("_");
-            }
-            System.out.print("] ");
-        }
-        System.out.println();
-    }
-=======
->>>>>>> Stashed changes
 }
 

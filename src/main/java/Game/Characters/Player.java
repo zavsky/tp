@@ -4,8 +4,6 @@ package Game.Characters;
  * A class to create the player object.
  */
 public class Player extends Character {
-<<<<<<< Updated upstream
-=======
     private static final String playerModel =
             "      __      _\n" +
                     "     /__\\__  //\n" +
@@ -21,7 +19,6 @@ public class Player extends Character {
                     " //  _\\ | |___)\n" +
                     "//  (___|";
 
->>>>>>> Stashed changes
     /**
      * Constructor to construct a player object.
      *
