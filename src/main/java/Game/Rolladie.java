@@ -5,6 +5,7 @@ import java.util.Arrays;
 import Functionalities.Parser;
 import Functionalities.Storage;
 import Functionalities.UI;
+import Game.Battle.Battle;
 import Game.Characters.Enemy;
 import Game.Characters.Player;
 
@@ -24,9 +25,8 @@ public class Rolladie {
         Player player = new Player(health1, 10, 10, "Player");
         Enemy enemy = new Enemy(health2, 10, 10, "Enemy");
         UI.battleEntry(enemy);
-        System.out.println(Arrays.toString(enemy.getHealthBars()));
-        player.attack(enemy);
-        System.out.println(Arrays.toString(enemy.getHealthBars()));
+        Battle battle = new Battle(player, enemy);
+        battle.startBattle();
         UI.battleExit(enemy, player);
     }
 }

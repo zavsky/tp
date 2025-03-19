@@ -27,16 +27,16 @@ public class UI {
         System.out.println(lineSeparator);
         System.out.println("A text-based RPG game where your fate is determined by the roll of a die!!");
     }
-    public static void printPlayerInfo(Player player) {
+    public static void printPlayerInfo(Character player) {
         System.out.println();
     }
 
-    public static void battleEntry(Enemy enemy) {
+    public static void battleEntry(Character enemy) {
         System.out.println("A villainous " + enemy.getCharacterName() + " stands in your way!");
 
     }
 
-    public static void battleExit(Enemy enemy, Player player) {
+    public static void battleExit(Character enemy, Character player) {
         if (!player.isAlive) {
             System.out.println(enemy.getCharacterName() + " has defeated you. Another one bites the dust!");
             return;
@@ -53,7 +53,7 @@ public class UI {
         }
     }
 
-    public static void printPlayerAttack(Player player, Enemy enemy, int damage) {
+    public static void printPlayerAttack(Character player, Character enemy, int damage) {
         System.out.println("You punch the " + enemy.getCharacterName() + " with your bare fist!");
         if (damage > 30) {
             System.out.println("WHAMMM!! The " + enemy.getCharacterName() + " took a whopping " + damage + " damage!");
@@ -64,7 +64,7 @@ public class UI {
         }
     }
 
-    public static void printEnemyAttack(Player player, Enemy enemy, int damage) {
+    public static void printEnemyAttack(Character player, Character enemy, int damage) {
         System.out.println("The " + enemy.getCharacterName() + " lunges forward and attacks!");
         if (damage > 30) {
             System.out.println("Ouch!! The " + enemy.getCharacterName() + " nearly sends you flying! It dealt " + damage + " damage!");

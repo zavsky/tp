@@ -15,4 +15,18 @@ public class Player extends Character {
     public Player(int[] health, int attack, int defense, String name) {
         super(health, attack, defense, name);
     }
+
+    /**
+     * Get the defense value of player
+     *
+     * @return current defenseValue depending on whether player used DefendAction the previous turn
+     */
+    @Override
+    public int getDefenseValue() {
+        if (isDefending) {
+            return defenseValue * 3;
+        }
+        return defenseValue;
+    }
+
 }

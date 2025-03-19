@@ -1,15 +1,18 @@
 package Game.Characters;
 
+import Functionalities.UI;
+
 /**
  * A class to represent characters in the game.
  */
 public class Character {
-    private int[] healthBars;
-    private int attackValue;
-    private int defenseValue;
-    private String characterName;
+    protected boolean isDefending = false;
+    protected int[] healthBars;
+    protected int attackValue;
+    protected int defenseValue;
+    protected String characterName;
+    protected int currentHealthIndex = 0;
     public boolean isAlive;
-    public int currentHealthIndex = 0;
 
     /**
      * Construct a Character object.
@@ -72,6 +75,24 @@ public class Character {
     }
 
     /**
+     * Set the defending status of character
+     *
+     * @param isDefending Sets isDefending to a boolean status.
+     */
+    public void setDefending(boolean isDefending) {
+        this.isDefending = isDefending;
+    }
+
+    /**
+     * Get the defending status of character
+     *
+     * @return a boolean to indicate the defense status of character
+     */
+    public boolean getDefending() {
+        return isDefending;
+    }
+
+    /**
      * Performs an attack on the defender.
      *
      * @param defender character being attacked in the attack event.
@@ -79,9 +100,13 @@ public class Character {
     public void attack(Character defender) {
         int damage = calculateDamage(defender);
         defender.takeDamage(damage);
-        System.out.println(this.characterName + " attacks " + defender.getCharacterName() +
-                " for " + damage + " damage.");
 
+        if (this instanceof Player) {
+            UI.printPlayerAttack(this, defender, damage);
+        }
+        else {
+            UI.printEnemyAttack(defender, this, damage);
+        }
     }
 
     /**
@@ -92,10 +117,8 @@ public class Character {
      * @return an integer representing the damage value imposed on defender.
      */
     public int calculateDamage(Character defender){
-        double damageReduction = (double) 100 / (100 + defender.defenseValue);
-        int damageTaken = (int) (this.attackValue * damageReduction);
-        return damageTaken;
-
+        double damageReduction = (double) 100 / (100 + defender.getDefenseValue());
+        return (int) (this.attackValue * damageReduction);
     }
 
     /**

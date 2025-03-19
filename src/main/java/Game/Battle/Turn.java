@@ -7,5 +7,6 @@ public abstract class Turn {
       //  ATTACK, DEFEND, SURRENDER
     //}
     protected Action currentAction;
+    public boolean hasSurrendered = false;
 
 }
