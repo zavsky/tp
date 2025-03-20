@@ -1,13 +1,14 @@
 package Game.Battle;
 
-import Game.Characters.Character;
+import Game.Characters.Enemy;
+import Game.Characters.Player;
 
 /**
  * Represents a battle event in which player fights an enemy.
  */
 public class Battle {
-    private final Character player;
-    private final Character enemy;
+    private final Player player;
+    private final Enemy enemy;
     private boolean hasWon;
     /**
      * Constructs a Battle event object.
@@ -15,9 +16,15 @@ public class Battle {
      * @param player The player character in battle.
      * @param enemy The enemy character that player is facing.
      */
-    public Battle(Character player, Character enemy) {
+    public Battle(Player player, Enemy enemy) {
         this.player = player;
         this.enemy = enemy;
+    }
+
+    public Battle() {
+        this.player = null;
+        int[] enemyHealth = {50};
+        this.enemy = new Enemy(enemyHealth, 15, 5, "Goblin");
     }
 
     /**
@@ -32,6 +39,4 @@ public class Battle {
 
         return hasWon;
     }
-
-
 }

@@ -1,6 +1,7 @@
 package Game.Characters;
 
 import Functionalities.UI;
+import java.util.Arrays;
 
 /**
  * A class to represent characters in the game.
@@ -20,13 +21,17 @@ public class Character {
      * @param health an array to represent the character's health bar.
      * @param attack attack value of the character.
      * @param defense defense value of the character.
-     * @param Name the name of the character.
+     * @param name the name of the character.
      */
-    public Character(int[] health, int attack, int defense, String Name) {
+    public Character(int[] health, int attack, int defense, String name) {
+        assert health.length > 0 : "Health bar array must not be empty";
+        assert attack >= 0 : "Attack value must be non-negative";
+        assert defense >= 0 : "Defense value must be non-negative";
+        assert !name.isEmpty() : "Character name must not be empty";
         healthBars = health;
         attackValue = attack;
         defenseValue = defense;
-        characterName = Name;
+        characterName = name;
         isAlive = true;
     }
 
@@ -98,6 +103,9 @@ public class Character {
      * @param defender character being attacked in the attack event.
      */
     public void attack(Character defender) {
+        assert defender != null: "Defender must not be null";
+        assert defender.isAlive : "Defender must be alive";
+
         int damage = calculateDamage(defender);
         defender.takeDamage(damage);
 
@@ -117,6 +125,8 @@ public class Character {
      * @return an integer representing the damage value imposed on defender.
      */
     public int calculateDamage(Character defender){
+        assert defender != null: "Defender must not be null";
+        assert defender.isAlive : "Defender must be alive";
         double damageReduction = (double) 100 / (100 + defender.getDefenseValue());
         return (int) (this.attackValue * damageReduction);
     }
@@ -129,6 +139,7 @@ public class Character {
      * @param damage an integer representing the damage value.
      */
     public void takeDamage(int damage) {
+        assert damage > 0: "Damage must be non-negative";
 
         int remainingDamage = damage;
         while (remainingDamage > 0) {
@@ -149,6 +160,14 @@ public class Character {
                 break;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.characterName + "'s stats:" +
+                "\nHP: \t" + Arrays.toString(healthBars) +
+                "\nATK:\t" + this.attackValue +
+                "\nDEF:\t" + this.defenseValue;
     }
 
 }

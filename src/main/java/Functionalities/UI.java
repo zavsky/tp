@@ -13,10 +13,10 @@ public class UI {
             "|  _ <   " + "| |_| | " + "| |___  " + "| |___  " + " / /_\\ \\ " + "| |_| | " + " | |  " + "| |___  " + "\n" +
             "|_| \\_\\  " + " \\___/  " + "|_____| " + "|_____| " + "/_/   \\_\\" + "|____/  " + "|___| " + "|_____| ";
 
-    public static String playerModel =
+    public String playerModel =
             "";
 
-    public static void printMessage(String message) {
+    public void printMessage(String message) {
         System.out.println(message);
     }
 
@@ -33,8 +33,8 @@ public class UI {
 
     public static void battleEntry(Character enemy) {
         System.out.println("A villainous " + enemy.getCharacterName() + " stands in your way!");
-
     }
+
 
     public static void battleExit(Character enemy, Character player) {
         if (!player.isAlive) {

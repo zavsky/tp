@@ -1,5 +1,6 @@
 package Game.Battle;
 
+import Functionalities.UI;
 import Game.Characters.Character;
 
 /**
@@ -54,11 +55,15 @@ public class BattleLogic {
         if (playerTurn) {
             PlayerTurn turn = new PlayerTurn(player, enemy);
             turn.handleAction();
+            UI.printCharacterInfo(player);
+            UI.printCharacterInfo(enemy);
             checkBattleEnd(turn);
         }
         else {
             EnemyTurn turn = new EnemyTurn(player, enemy);
             turn.handleAction();
+            UI.printCharacterInfo(player);
+            UI.printCharacterInfo(enemy);
             checkBattleEnd(turn);
         }
         playerTurn = !playerTurn;

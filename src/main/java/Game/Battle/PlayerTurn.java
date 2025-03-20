@@ -1,10 +1,10 @@
 package Game.Battle;
 
+import Functionalities.UI;
 import Game.Actions.Action;
-import Game.Actions.AttackAction;
-import Game.Actions.DefendAction;
-import Game.Actions.EndAction;
-import Game.Actions.ExitAction;
+import Game.Actions.BattleAction.AttackAction;
+import Game.Actions.BattleAction.DefendAction;
+import Game.Actions.BattleAction.FleeAction;
 import Game.Characters.Character;
 
 import static Functionalities.Parser.getAction;
@@ -53,7 +53,7 @@ public class PlayerTurn extends Turn {
         else if (currentAction instanceof DefendAction) {
             player.setDefending(true);
         }
-        else if (currentAction instanceof EndAction) {
+        else if (currentAction instanceof FleeAction) {
             hasSurrendered = true;
         }
 

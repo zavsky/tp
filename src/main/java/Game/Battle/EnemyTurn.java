@@ -1,9 +1,9 @@
 package Game.Battle;
 
 import Game.Actions.Action;
-import Game.Actions.AttackAction;
-import Game.Actions.DefendAction;
-import Game.Actions.EndAction;
+import Game.Actions.BattleAction.AttackAction;
+import Game.Actions.BattleAction.DefendAction;
+import Game.Actions.BattleAction.FleeAction;
 import Game.Actions.ExitAction;
 import Game.Characters.Character;
 
