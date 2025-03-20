@@ -12,6 +12,7 @@ public class Character {
     private String characterName;
     public boolean isAlive;
     public int currentHealthIndex = 0;
+    private final int maxHealth;
 
     /**
      * Construct a Character object.
@@ -31,6 +32,7 @@ public class Character {
         defenseValue = defense;
         characterName = name;
         isAlive = true;
+        maxHealth = healthBars[0];
     }
 
     /**
@@ -145,12 +147,11 @@ public class Character {
     public String toString() {
         String animatedHealthBars = "";
         for (int health : healthBars) {
-            int maxhealth = 100;
             animatedHealthBars += "[";
             for (int i = 0; i < health; i++) {
                 animatedHealthBars += "#";
             }
-            for (int i = health; i < maxhealth; i++) {
+            for (int i = health; i < maxHealth; i++) {
                 animatedHealthBars += "_";
             }
             animatedHealthBars += "]";
