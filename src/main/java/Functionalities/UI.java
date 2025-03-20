@@ -169,6 +169,18 @@ public class UI {
         }
     }
 
+    public void printPlayerDefend(Character player, Character enemy, int damage) {
+        System.out.println("You raise your shield and brace yourself for the " + enemy.getCharacterName() + "'s attack");
+        if (damage > 30) {
+            System.out.println("Your defence was ineffective. You took " + damage + " damage!");
+        } else if (damage > 10) {
+            System.out.println("You blocked some of the damage, taking " + damage + " damage.");
+        } else {
+            System.out.println("Perfect block! You only took " + damage + " damage.");
+        }
+    }
+
+
     /**
      * Prints a message when the enemy attacks the player, including the damage dealt.
      *
