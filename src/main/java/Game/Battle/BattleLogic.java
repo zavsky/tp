@@ -48,7 +48,7 @@ public class BattleLogic {
     }
 
     /**
-     * Handles the player and enemy turns.
+     * Handles the player and enemy turns. Calls UI to print player and enemy info after enemy turn.
      *
      */
     private void handleTurnOrder() {
@@ -56,8 +56,6 @@ public class BattleLogic {
             turnNumber++;
             PlayerTurn turn = new PlayerTurn(player, enemy);
             turn.handleAction();
-            UI.printCharacterInfo(player);
-            UI.printCharacterInfo(enemy);
             checkBattleEnd(turn);
         }
         else {
