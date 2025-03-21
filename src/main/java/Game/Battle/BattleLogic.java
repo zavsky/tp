@@ -53,6 +53,7 @@ public class BattleLogic {
      */
     private void handleTurnOrder() {
         if (playerTurn) {
+            turnNumber++;
             PlayerTurn turn = new PlayerTurn(player, enemy);
             turn.handleAction();
             UI.printCharacterInfo(player);
