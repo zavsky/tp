@@ -27,7 +27,8 @@ public class Parser {
     private static final String ACTION_DEFEND = "defend";
     private static final String ACTION_ATTACK = "attack";
 
-    private String[] splitActionWordAndArgs(String rawUserInput) {
+
+    private static String[] splitActionWordAndArgs(String rawUserInput) {
         final String[] split = rawUserInput.trim().split("\\s+", 2);
         if (split.length == 2) {
             return split;
@@ -36,12 +37,14 @@ public class Parser {
         }
     }
 
-    public String readInput() {
+
+    public static String readInput() {
         String inputLine = SCANNER.nextLine().toLowerCase();
         return inputLine;
     }
 
-    public Action getAction(String userInputString) {
+    public static Action getAction() {
+        String userInputString = readInput();
         final String[] actionTypeAndParams = splitActionWordAndArgs(userInputString);
         final String actionType = actionTypeAndParams[0].toLowerCase();
         final String actionArgs = actionTypeAndParams[1];

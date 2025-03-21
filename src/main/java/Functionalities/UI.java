@@ -71,7 +71,7 @@ public class UI {
     /**
      * A placeholder string for the player's model, which can be used for player-related information.
      */
-    public String playerModel =
+    public static String playerModel =
             "      __      _\n" +
                     "     /__\\__  //\n" +
                     "    //_____\\///\n" +
@@ -91,7 +91,7 @@ public class UI {
      *
      * @param message The message to be printed.
      */
-    public void printMessage(String message) {
+    public static void printMessage(String message) {
         System.out.println(message);
     }
 
@@ -99,7 +99,7 @@ public class UI {
     /**
      * Prints a welcome message to the player, including the game logo and a description.
      */
-    public void printWelcomeMessage() {
+    public static void printWelcomeMessage() {
         System.out.println("Welcome to");
         System.out.println(lineSeparator);
         System.out.println(logo);
@@ -112,7 +112,7 @@ public class UI {
      *
      * @param player The player whose information is to be printed.
      */
-    public void printPlayerInfo(Player player) {
+    public static void printPlayerInfo(Player player) {
         System.out.println(playerModel);
     }
 
@@ -121,18 +121,8 @@ public class UI {
      *
      * @param enemy The enemy the player is about to face.
      */
-    public void battleEntry(Enemy enemy) {
+    public static void battleEntry(Enemy enemy) {
         System.out.println("A villainous " + enemy.getCharacterName() + " stands in your way!");
-    }
-
-
-    /**
-     * Prints information about a character, including their name and health.
-     *
-     * @param c The character whose information is to be printed.
-     */
-    public void printCharacterInfo(Character c) {
-        System.out.println(c.toString());
     }
 
     /**
@@ -142,61 +132,12 @@ public class UI {
      * @param player The player character involved in the battle.
      * @param enemy The enemy character involved in the battle.
      */
-    public void printBattleTurnStart(Character player, Character enemy) {
+    public static void printBattleTurnStart(Character player, Character enemy) {
         System.out.println(lineSeparator);
         printCharacterInfo(player);
         System.out.println(lineSeparator);
         printCharacterInfo(enemy);
         System.out.println(lineSeparator);
-    }
-
-
-    /**
-     * Prints a message when the player attacks the enemy, including the damage dealt.
-     *
-     * @param player The player performing the attack.
-     * @param enemy The enemy being attacked.
-     * @param damage The amount of damage dealt.
-     */
-    public void printPlayerAttack(Character player, Character enemy, int damage) {
-        System.out.println("You punch the " + enemy.getCharacterName() + " with your bare fist!");
-        if (damage > 30) {
-            System.out.println("WHAMMM!! The " + enemy.getCharacterName() + " took a whopping " + damage + " damage!");
-        } else if (damage > 10) {
-            System.out.println("You dealt " + damage + " damage.");
-        } else {
-            System.out.println("That tickled the " + enemy.getCharacterName() + ". You dealt a measly " + damage + " damage.");
-        }
-    }
-
-    public void printPlayerDefend(Character player, Character enemy, int damage) {
-        System.out.println("You raise your shield and brace yourself for the " + enemy.getCharacterName() + "'s attack");
-        if (damage > 30) {
-            System.out.println("Your defence was ineffective. You took " + damage + " damage!");
-        } else if (damage > 10) {
-            System.out.println("You blocked some of the damage, taking " + damage + " damage.");
-        } else {
-            System.out.println("Perfect block! You only took " + damage + " damage.");
-        }
-    }
-
-
-    /**
-     * Prints a message when the enemy attacks the player, including the damage dealt.
-     *
-     * @param player The player being attacked.
-     * @param enemy The enemy performing the attack.
-     * @param damage The amount of damage dealt.
-     */
-    public void printEnemyAttack(Character player, Character enemy, int damage) {
-        System.out.println("The " + enemy.getCharacterName() + " lunges forward and attacks!");
-        if (damage > 30) {
-            System.out.println("Ouch!! The " + enemy.getCharacterName() + " nearly sends you flying! It dealt " + damage + " damage!");
-        } else if (damage > 10) {
-            System.out.println("It dealt " + damage + " damage.");
-        } else {
-            System.out.println("You barely felt that attack... the " + enemy.getCharacterName() + " dealt only " + damage + " damage.");
-        }
     }
 
     /**
@@ -205,7 +146,7 @@ public class UI {
      * @param enemy The enemy that the player fought.
      * @param player The player involved in the battle.
      */
-    public void battleExit(Character player, Character enemy) {
+    public static void battleExit(Character player, Character enemy) {
         if (!player.isAlive) {
             System.out.println(enemy.getCharacterName() + " has defeated you. Another one bites the dust!");
             return;
@@ -222,5 +163,56 @@ public class UI {
         }
     }
 
+    public static void printPlayerAttack(Character player, Character enemy, int damage) {
+        System.out.println("You punch the " + enemy.getCharacterName() + " with your bare fist!");
+        if (damage > 30) {
+            System.out.println("WHAMMM!! The " + enemy.getCharacterName() + " took a whopping " + damage + " damage!");
+        } else if (damage > 10) {
+            System.out.println("You dealt " + damage + " damage.");
+        } else {
+            System.out.println("That tickled the " + enemy.getCharacterName() + ". You dealt a measly " + damage + " damage.");
+        }
+    }
+
+    public static void printPlayerDefend(Character player, Character enemy, int damage) {
+        System.out.println("You raise your shield and brace yourself for the " + enemy.getCharacterName() + "'s attack");
+        if (damage > 30) {
+            System.out.println("Your defence was ineffective. You took " + damage + " damage!");
+        } else if (damage > 10) {
+            System.out.println("You blocked some of the damage, taking " + damage + " damage.");
+        } else {
+            System.out.println("Perfect block! You only took " + damage + " damage.");
+        }
+    }
+
+
+    public static void printEnemyAttack(Character player, Character enemy, int damage) {
+        System.out.println("The " + enemy.getCharacterName() + " lunges forward and attacks!");
+        if (damage > 30) {
+            System.out.println("Ouch!! The " + enemy.getCharacterName() + " nearly sends you flying! It dealt " + damage + " damage!");
+        } else if (damage > 10) {
+            System.out.println("It dealt " + damage + " damage.");
+        } else {
+            System.out.println("You barely felt that attack... the " + enemy.getCharacterName() + " dealt only " + damage + " damage.");
+        }
+    }
+
+    public static void printCharacterInfo(Character c) {
+        System.out.println(c.getCharacterName());
+        System.out.print("Heath: ");
+        int[] healthBars = c.getHealthBars();
+        for (int health : healthBars) {
+            int maxHealth = 100;
+            System.out.print("[");
+            for (int i = 0; i < health; i++) {
+                System.out.print("#");
+            }
+            for (int i = health; i < maxHealth; i++) {
+                System.out.print("_");
+            }
+            System.out.print("] ");
+        }
+        System.out.println();
+    }
 }
 

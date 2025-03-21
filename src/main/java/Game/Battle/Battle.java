@@ -19,6 +19,7 @@ public class Battle {
     public Battle(Player player, Enemy enemy) {
         this.player = player;
         this.enemy = enemy;
+        hasWon = false;
     }
 
     public Battle() {
