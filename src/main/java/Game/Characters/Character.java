@@ -12,6 +12,7 @@ public class Character {
     private String characterName;
     public boolean isAlive;
     public int currentHealthIndex = 0;
+    private final int maxHealth;
 
     /**
      * Construct a Character object.
@@ -31,6 +32,7 @@ public class Character {
         defenseValue = defense;
         characterName = name;
         isAlive = true;
+        maxHealth = healthBars[0];
     }
 
     /**
@@ -143,8 +145,20 @@ public class Character {
 
     @Override
     public String toString() {
+        String animatedHealthBars = "";
+        for (int health : healthBars) {
+            animatedHealthBars += "[";
+            for (int i = 0; i < health; i++) {
+                animatedHealthBars += "#";
+            }
+            for (int i = health; i < maxHealth; i++) {
+                animatedHealthBars += "_";
+            }
+            animatedHealthBars += "]";
+        }
+
         return this.characterName + "'s stats:" +
-                "\nHP: \t" + Arrays.toString(healthBars) +
+                "\nHP: \t" + animatedHealthBars +
                 "\nATK:\t" + this.attackValue +
                 "\nDEF:\t" + this.defenseValue;
     }
