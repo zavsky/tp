@@ -5,5 +5,7 @@ import Functionalities.UI;
 import Game.Game;
 
 public class HelpAction extends Action {
-    public void execute(Game game, Storage storage, UI ui) {}
+    public boolean execute(Game game, Storage storage, UI ui) {
+        return false;
+    }
 }

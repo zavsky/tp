@@ -5,79 +5,100 @@ import Game.Characters.Enemy;
 import Game.Characters.Character;
 
 public class UI {
-    public static String lineSeparator = "======================================================================";
-    public static String logo =
-            " ____    " + "  ___   " + " _      " + " _      " + "    _    " + " ____   " + " ___  " + " _____  " + "\n" +
-            "|  _ \\   " + " / _ \\  " + "| |     " + "| |     " + "   / \\   " + "|  _ \\  " + "|_ _| " + "| ____| " + "\n" +
-            "| |_) |  " + "| | | | " + "| |     " + "| |     " + "  / _ \\  " + "| | | | " + " | |  " + "|  _|   " + "\n" +
-            "|  _ <   " + "| |_| | " + "| |___  " + "| |___  " + " / /_\\ \\ " + "| |_| | " + " | |  " + "| |___  " + "\n" +
-            "|_| \\_\\  " + " \\___/  " + "|_____| " + "|_____| " + "/_/   \\_\\" + "|____/  " + "|___| " + "|_____| ";
+    // Constants
+    private static final String LINE_SEPARATOR = "======================================================================";
+    private static final String WELCOME_MESSAGE = "Welcome to";
+    private static final String GAME_DESCRIPTION = "A text-based RPG game where your fate is determined by the roll of a die!!";
+    
+    private static final String BATTLE_ENTRY_MSG = "A villainous %s stands in your way!";
+    private static final String PLAYER_DEFEATED_MSG = "%s has defeated you. Another one bites the dust!";
+    private static final String ENEMY_DEFEATED_MSG = "You have vanquished %s.";
 
-    public String playerModel =
-            "";
+    private static final String PLAYER_ATTACK_MSG = "You punch the %s with your bare fist!";
+    private static final String PLAYER_CRITICAL_HIT_MSG = "WHAMMM!! The %s took a whopping %d damage!";
+    private static final String PLAYER_NORMAL_HIT_MSG = "You dealt %d damage.";
+    private static final String PLAYER_WEAK_HIT_MSG = "That tickled the %s. You dealt a measly %d damage.";
 
+    private static final String ENEMY_ATTACK_MSG = "The %s lunges forward and attacks!";
+    private static final String ENEMY_CRITICAL_HIT_MSG = "Ouch!! The %s nearly sends you flying! It dealt %d damage!";
+    private static final String ENEMY_NORMAL_HIT_MSG = "It dealt %d damage.";
+    private static final String ENEMY_WEAK_HIT_MSG = "You barely felt that attack... the %s dealt only %d damage.";
+
+    private static final String PLAYER_STATUS_HIGH = "\"Ha! that was easy!\", you thought to yourself, unaware of greater dangers that lurk ahead...";
+    private static final String PLAYER_STATUS_MEDIUM = "You dust yourself off, ready for whatever challenge comes your way...";
+    private static final String PLAYER_STATUS_LOW = "You stumble away from the battlefield, severely wounded...";
+
+    private static final int HIGH_HEALTH_THRESHOLD = 90;
+    private static final int MEDIUM_HEALTH_THRESHOLD = 50;
+
+    // Logo
+    private static final String LOGO =
+            " ____      ___    _       _          _      ____    ___   _____  \n" +
+            "|  _ \\    / _ \\  | |     | |        / \\    |  _ \\  |_ _| | ____| \n" +
+            "| |_) |  | | | | | |     | |       / _ \\   | | | |  | |  |  _|   \n" +
+            "|  _ <   | |_| | | |___  | |___   / /_\\ \\  | |_| |  | |  | |___  \n" +
+            "|_| \\_\\   \\___/  |_____| |_____| /_/   \\_\\ |____/  |___| |_____| ";
+
+    // Printing methods
     public void printMessage(String message) {
         System.out.println(message);
     }
 
     public void printWelcomeMessage() {
-        System.out.println("Welcome to");
-        System.out.println(lineSeparator);
-        System.out.println(logo);
-        System.out.println(lineSeparator);
-        System.out.println("A text-based RPG game where your fate is determined by the roll of a die!!");
-    }
-    public void printPlayerInfo(Player player) {
-        System.out.println();
+        System.out.println(WELCOME_MESSAGE);
+        System.out.println(LINE_SEPARATOR);
+        System.out.println(LOGO);
+        System.out.println(LINE_SEPARATOR);
+        System.out.println(GAME_DESCRIPTION);
     }
 
     public void battleEntry(Enemy enemy) {
-        System.out.println("A villainous " + enemy.getCharacterName() + " stands in your way!");
-
+        System.out.println(String.format(BATTLE_ENTRY_MSG, enemy.getCharacterName()));
     }
 
     public void battleExit(Enemy enemy, Player player) {
         if (!player.isAlive) {
-            System.out.println(enemy.getCharacterName() + " has defeated you. Another one bites the dust!");
+            System.out.println(String.format(PLAYER_DEFEATED_MSG, enemy.getCharacterName()));
             return;
-        } else {
-            System.out.println("You have vanquished " + enemy.getCharacterName());
         }
+        System.out.println(String.format(ENEMY_DEFEATED_MSG, enemy.getCharacterName()));
 
-        if (player.getHealthBars()[0] > 90) {
-            System.out.println("\"Ha! that was easy!\", you thought to yourself, unaware of greater dangers that lurk ahead...");
-        } else if (player.getHealthBars()[0] > 50) {
-            System.out.println("You dust yourself off, ready for whatever challenge comes your way...");
+        if (player.getHealthBars()[0] > HIGH_HEALTH_THRESHOLD) {
+            System.out.println(PLAYER_STATUS_HIGH);
+        } else if (player.getHealthBars()[0] > MEDIUM_HEALTH_THRESHOLD) {
+            System.out.println(PLAYER_STATUS_MEDIUM);
         } else {
-            System.out.println("You stumble away from the battlefield, severely wounded...");
+            System.out.println(PLAYER_STATUS_LOW);
         }
     }
 
     public void printPlayerAttack(Player player, Enemy enemy, int damage) {
-        System.out.println("You punch the " + enemy.getCharacterName() + " with your bare fist!");
+        System.out.println(String.format(PLAYER_ATTACK_MSG, enemy.getCharacterName()));
+
         if (damage > 30) {
-            System.out.println("WHAMMM!! The " + enemy.getCharacterName() + " took a whopping " + damage + " damage!");
+            System.out.println(String.format(PLAYER_CRITICAL_HIT_MSG, enemy.getCharacterName(), damage));
         } else if (damage > 10) {
-            System.out.println("You dealt " + damage + " damage.");
+            System.out.println(String.format(PLAYER_NORMAL_HIT_MSG, damage));
         } else {
-            System.out.println("That tickled the " + enemy.getCharacterName() + ". You dealt a measly " + damage + " damage.");
+            System.out.println(String.format(PLAYER_WEAK_HIT_MSG, enemy.getCharacterName(), damage));
         }
     }
 
     public void printEnemyAttack(Player player, Enemy enemy, int damage) {
-        System.out.println("The " + enemy.getCharacterName() + " lunges forward and attacks!");
+        System.out.println(String.format(ENEMY_ATTACK_MSG, enemy.getCharacterName()));
+
         if (damage > 30) {
-            System.out.println("Ouch!! The " + enemy.getCharacterName() + " nearly sends you flying! It dealt " + damage + " damage!");
+            System.out.println(String.format(ENEMY_CRITICAL_HIT_MSG, enemy.getCharacterName(), damage));
         } else if (damage > 10) {
-            System.out.println("It dealt " + damage + " damage.");
+            System.out.println(String.format(ENEMY_NORMAL_HIT_MSG, damage));
         } else {
-            System.out.println("You barely felt that attack... the " + enemy.getCharacterName() + " dealt only " + damage + " damage.");
+            System.out.println(String.format(ENEMY_WEAK_HIT_MSG, enemy.getCharacterName(), damage));
         }
     }
 
     public void printCharacterInfo(Character c) {
         System.out.println(c.getCharacterName());
-        System.out.print("Heath: ");
+        System.out.print("Health: ");
         int[] healthbars = c.getHealthBars();
         for (int health : healthbars) {
             int maxhealth = 100;
@@ -91,5 +112,9 @@ public class UI {
             System.out.print("] ");
         }
         System.out.println();
+    }
+
+    public void exit() {
+        System.out.println("Until next time...");
     }
 }

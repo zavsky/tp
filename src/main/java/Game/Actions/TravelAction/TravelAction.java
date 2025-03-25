@@ -10,10 +10,10 @@ import Game.Game;
 
 public abstract class TravelAction extends Action {
 
-    @Override
-    public void execute(Game game, Storage storage, UI ui) throws RolladieException {
+    public boolean execute(Game game, Storage storage, UI ui) throws RolladieException {
         if (game.getEventType() == EventType.TRAVEL) {
             executeTravelAction(game, storage, ui);
+            return false;
         } else {
             throw new InvalidActionException();
         }

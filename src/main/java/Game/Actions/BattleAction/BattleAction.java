@@ -10,10 +10,10 @@ import Game.Game;
 
 public abstract class BattleAction extends Action {
 
-    @Override
-    public void execute(Game game, Storage storage, UI ui) throws RolladieException {
+    public boolean execute(Game game, Storage storage, UI ui) throws RolladieException {
         if (game.getEventType() == EventType.BATTLE) {
             executeBattleAction(game, storage, ui);
+            return false;
         } else {
             throw new InvalidActionException();
         }
