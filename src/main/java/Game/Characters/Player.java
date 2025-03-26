@@ -35,6 +35,10 @@ public class Player extends Character {
         super(health, attack, defense, name);
     }
 
+    public Player(int[] healthBars, int attackValue, int defenseValue, String characterName, int maxHealth) {
+        super(healthBars, attackValue, defenseValue, characterName, maxHealth);
+    }
+
     /**
      * Get the defense value of player
      *

@@ -40,6 +40,14 @@ public class Character {
         maxHealth = healthBars[0];
     }
 
+    public Character(int[] health, int attack, int defense, String name, int maxHealth) {
+        this.healthBars = health;
+        this.attackValue = attack;
+        this.defenseValue = defense;
+        this.characterName = name;
+        this.isAlive = true;
+        this.maxHealth = maxHealth;
+    }
     /**
      * Return the character's name.
      *

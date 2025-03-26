@@ -1,6 +1,10 @@
 package Functionalities;
 
+import Exceptions.RolladieException;
+import Game.Characters.Character;
+import Game.Characters.Enemy;
 import Game.Characters.Player;
+import Game.Events.Battle.Battle;
 import Game.Events.Event;
 import Game.Game;
 
@@ -9,6 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -49,27 +55,71 @@ public class Storage {
         UI.printMessage("savefile.txt saved successfully");
     }
 
-/*    public static Game loadGame() {
+    private static Character parseCharacterFromText(String characterType, String[] parameters) throws RolladieException {
+        String healthBarsString = parameters[0];
+        // https://stackoverflow.com/questions/7646392/convert-string-to-int-array-in-java
+        String[] values = healthBarsString.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "").split(",");
+        int[]healthBars = new int[values.length];
+        for (int i = 0; i < values.length; i++) {
+            try {
+                healthBars[i] = Integer.parseInt(values[i]);
+            } catch (NumberFormatException nfe) {
+                UI.printMessage("Parsing failed");
+            }
+        }
+        int attackValue = Integer.parseInt(parameters[1]);
+        int defenseValue = Integer.parseInt(parameters[2]);
+        String characterName = parameters[3];
+        int maxHealth = Integer.parseInt(parameters[4]);
+        if (characterType.equals("Player")) {
+            return new Player(healthBars, attackValue, defenseValue, characterName, maxHealth);
+        } else if (characterType.equals("Enemy")) {
+            return new Enemy(healthBars, attackValue, defenseValue, characterName, maxHealth);
+        } else {
+            throw new RolladieException("Invalid Character Type");
+        }
+    }
+
+    private static Event parseEventFromText(Player player, String[] parameters) throws RolladieException {
+        Event temp = null;
+        String eventType = parameters[0];
+        switch(eventType) {
+        case "Battle":
+            Enemy enemy = (Enemy) parseCharacterFromText("Enemy", Arrays.copyOfRange(parameters, 1, parameters.length + 1));
+            return new Battle(player, enemy);
+        default:
+            throw new RolladieException("Invalid Event Type");
+        }
+    }
+
+    public static Game loadGame() {
         File f = new File(FILE_DIRECTORY + FILE_NAME);
         Scanner s = null;
         try {
             s = new Scanner(f);
+            // 1st line is player
+            String[] firstLine = s.nextLine().split(LOAD_DELIMITER);
+            Player player = (Player) parseCharacterFromText("Player", firstLine);
+
+            // 2nd line is currentEvent
+            String[] secondLine = s.nextLine().split(LOAD_DELIMITER);
+            Event currentEvent = parseEventFromText(player, secondLine);
+
+            // 3rd line onwards is eventsQueue
+            Queue<Event> eventsQueue = new LinkedList<>();
+            while (s.hasNext()) {
+                String[] remainingLine = s.nextLine().split(LOAD_DELIMITER);
+                Event event = parseEventFromText(player, remainingLine);
+                eventsQueue.add(event);
+            }
+            UI.printMessage("savefile.txt loaded successfully");
+            return new Game(player, currentEvent, eventsQueue);
+
         } catch (FileNotFoundException e) {
             UI.printMessage("savefile.txt not found!");
-            return new Game();
+        } catch (RolladieException e) {
+            UI.printMessage("savefile.txt corrupted");
         }
-        while (s.hasNext()) {
-            try {
-                Player player;
-                Event currentEvent;
-                Queue<Event> eventsQueue;
-                String[] commandArgs = s.nextLine().split(LOAD_DELIMITER);
-                temp = parseTasksFromText(commandArgs);
-            } catch (Exception e) {
-                return new Game();
-            }
-            tasks.add(tasks.size(), temp);
-        }
-        UI.printMessage("savefile.txt loaded successfully");
-    }*/
+        return new Game();
+    }
 }

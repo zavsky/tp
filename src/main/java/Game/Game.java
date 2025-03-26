@@ -16,7 +16,7 @@ public class Game {
     private static final int MAX_NUMBER_OF_EVENTS = 10;
     private static final Player HERO = new Player(new int[]{100}, 10, 10, "Hero");
 
-    private Queue<Event> eventsQueue = new LinkedList<>(); // Might not be needed
+    private Queue<Event> eventsQueue = new LinkedList<>();
     private Player player;
     private Event currentEvent;
     private int score = 0;
@@ -28,11 +28,10 @@ public class Game {
         saveGame();
     }
 
-    public Game(Player player, Queue<Event> eventsQueue, Event currentEvent) {
+    public Game(Player player, Event currentEvent, Queue<Event> eventsQueue) {
         this.player = player;
         this.eventsQueue = eventsQueue;
         this.currentEvent = currentEvent;
-        saveGame();
     }
 
     public void run() {

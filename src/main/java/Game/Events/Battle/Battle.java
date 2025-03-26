@@ -21,11 +21,11 @@ public class Battle extends Event {
      * @param player The player character in battle.
      * @param enemy The enemy character that player is facing.
      */
-/*    public Battle(Player player, Enemy enemy) {
-        this.player = player;
+    public Battle(Player player, Enemy enemy) {
+        super(player);
         this.enemy = enemy;
         hasWon = false;
-    }*/
+    }
 
     public Battle(Player player) {
         super(player);
