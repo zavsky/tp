@@ -1,5 +1,9 @@
 package Game.Characters;
 
+import java.util.Arrays;
+
+import static Functionalities.Storage.SAVE_DELIMITER;
+
 /**
  * A class to create the player object.
  */

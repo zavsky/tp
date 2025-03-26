@@ -25,12 +25,21 @@ public class Game {
         this.player = HERO;
         this.eventsQueue = generateEventQueue();
         this.currentEvent = nextEvent();
+        saveGame();
+    }
+
+    public Game(Player player, Queue<Event> eventsQueue, Event currentEvent) {
+        this.player = player;
+        this.eventsQueue = eventsQueue;
+        this.currentEvent = currentEvent;
+        saveGame();
     }
 
     public void run() {
         while(!eventsQueue.isEmpty() && this.player.isAlive) {
             this.currentEvent.run();
             this.currentEvent = nextEvent();
+            saveGame();
         }
         if (!this.player.isAlive) {
             UI.printMessage("Game over, you've died! L");
@@ -51,6 +60,10 @@ public class Game {
 
     private Event nextEvent() {
         return this.eventsQueue.poll();
+    }
+
+    private void saveGame(){
+        Storage.saveGame(this.player, this.currentEvent, this.eventsQueue);
     }
 
     @Override
