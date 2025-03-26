@@ -20,7 +20,7 @@ public class Rolladie {
             if (inputString.equals("start")) {
                 new StartAction().execute();
             } else {
-                UI.printMessage("You can only use \"Start\" bro");
+                UI.printMessage("You can only use \"start\" bro");
             }
             inputString = UI.readInput();
         }
