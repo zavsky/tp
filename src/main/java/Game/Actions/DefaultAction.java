@@ -7,9 +7,6 @@ import Functionalities.UI;
 import Game.Game;
 
 public class DefaultAction extends Action {
-    public void execute(Game game, Storage storage, UI ui) throws RolladieException {
-        throw new InvalidActionException();
-    }
 }
 
 

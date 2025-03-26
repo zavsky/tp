@@ -1,13 +1,12 @@
-package Game.Battle;
+package Game.Events.Battle;
 
+import Functionalities.Parser;
 import Functionalities.UI;
 import Game.Actions.Action;
 import Game.Actions.BattleAction.AttackAction;
 import Game.Actions.BattleAction.DefendAction;
 import Game.Actions.BattleAction.FleeAction;
 import Game.Characters.Character;
-
-import static Functionalities.Parser.getAction;
 
 /**
  * Represents the player's turn. Player can select different moves during his/her turn.
@@ -38,7 +37,8 @@ public class PlayerTurn extends Turn {
      * @return A String representing the action of the player.
      */
     private Action getCurrAction() {
-        return getAction();
+        String inputString = UI.readInput();
+        return Parser.getAction(inputString);
     }
 
     /**

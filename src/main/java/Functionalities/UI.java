@@ -4,6 +4,8 @@ import Game.Characters.Player;
 import Game.Characters.Enemy;
 import Game.Characters.Character;
 
+import java.util.Scanner;
+
 /**
  * The UI class is responsible for handling the user interface in the text-based RPG game.
  * It displays messages related to the game, player, and enemy interactions, and renders the game's logo.
@@ -13,6 +15,11 @@ public class UI {
      * A separator string used to format the output in the UI.
      */
     public static String lineSeparator = "======================================================================";
+
+    public static String readInput() {
+        String inputLine = new Scanner(System.in).nextLine().toLowerCase();
+        return inputLine;
+    }
 
     /**
      * A string containing the ASCII art logo of the game.
