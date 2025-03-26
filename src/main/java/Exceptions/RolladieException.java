@@ -1,5 +1,11 @@
 package Exceptions;
 
-public abstract class RolladieException extends Exception {
-    public abstract String getErrorMessage();
+public class RolladieException extends Exception {
+    public RolladieException(String message) {
+        super(message);
+    }
+
+    public String getErrorMessage() {
+        return "";
+    }
 }
