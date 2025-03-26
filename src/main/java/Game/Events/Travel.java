@@ -1,5 +1,4 @@
 package Game.Events;
-
 import Game.Characters.Player;
 import Game.Events.Battle;
 

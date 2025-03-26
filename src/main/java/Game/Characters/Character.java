@@ -1,18 +1,20 @@
 package Game.Characters;
 
+import Functionalities.UI;
 import java.util.Arrays;
 
 /**
  * A class to represent characters in the game.
  */
 public class Character {
-    private int[] healthBars;
-    private int attackValue;
-    private int defenseValue;
-    private String characterName;
+    protected boolean isDefending = false;
+    protected int[] healthBars;
+    protected int attackValue;
+    protected int defenseValue;
+    protected String characterName;
+    protected int currentHealthIndex = 0;
+    protected final int maxHealth;
     public boolean isAlive;
-    public int currentHealthIndex = 0;
-    private final int maxHealth;
 
     /**
      * Construct a Character object.
@@ -80,6 +82,24 @@ public class Character {
     }
 
     /**
+     * Set the defending status of character
+     *
+     * @param isDefending Sets isDefending to a boolean status.
+     */
+    public void setDefending(boolean isDefending) {
+        this.isDefending = isDefending;
+    }
+
+    /**
+     * Get the defending status of character
+     *
+     * @return a boolean to indicate the defense status of character
+     */
+    public boolean getDefending() {
+        return isDefending;
+    }
+
+    /**
      * Performs an attack on the defender.
      *
      * @param defender character being attacked in the attack event.
@@ -90,9 +110,13 @@ public class Character {
 
         int damage = calculateDamage(defender);
         defender.takeDamage(damage);
-        System.out.println(this.characterName + " attacks " + defender.getCharacterName() +
-                " for " + damage + " damage.");
 
+        if (this instanceof Player) {
+            UI.printPlayerAttack(this, defender, damage);
+        }
+        else {
+            UI.printEnemyAttack(defender, this, damage);
+        }
     }
 
     /**
@@ -105,11 +129,8 @@ public class Character {
     public int calculateDamage(Character defender){
         assert defender != null: "Defender must not be null";
         assert defender.isAlive : "Defender must be alive";
-
-        double damageReduction = (double) 100 / (100 + defender.defenseValue);
-        int damageTaken = (int) (this.attackValue * damageReduction);
-        return damageTaken;
-
+        double damageReduction = (double) 100 / (100 + defender.getDefenseValue());
+        return (int) (this.attackValue * damageReduction);
     }
 
     /**
