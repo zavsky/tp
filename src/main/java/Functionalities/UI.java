@@ -4,11 +4,22 @@ import Game.Characters.Player;
 import Game.Characters.Enemy;
 import Game.Characters.Character;
 
+import java.util.Scanner;
+
 /**
  * The UI class is responsible for handling the user interface in the text-based RPG game.
  * It displays messages related to the game, player, and enemy interactions, and renders the game's logo.
  */
 public class UI {
+    private final Scanner scanner;
+
+    UI() {
+        this.scanner = new Scanner(System.in);
+    }
+    UI(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
     /**
      * A separator string used to format the output in the UI.
      */
@@ -158,16 +169,19 @@ public class UI {
      * @param enemy The enemy being attacked.
      * @param damage The amount of damage dealt.
      */
-    public void printPlayerAttack(Character player, Character enemy, int damage) {
-        System.out.println("You punch the " + enemy.getCharacterName() + " with your bare fist!");
-        if (damage > 30) {
-            System.out.println("WHAMMM!! The " + enemy.getCharacterName() + " took a whopping " + damage + " damage!");
-        } else if (damage > 10) {
-            System.out.println("You dealt " + damage + " damage.");
-        } else {
-            System.out.println("That tickled the " + enemy.getCharacterName() + ". You dealt a measly " + damage + " damage.");
-        }
+    public void printPlayerMediumAttack(Character player, Character enemy, int damage) {
+        System.out.println("You dealt " + damage + " damage.");
     }
+
+    public void printPlayerLightAttack(Character player, Character enemy, int damage) {
+        System.out.println("That tickled the " + enemy.getCharacterName() + ". You dealt a measly " + damage + " damage.");
+    }
+
+    public void printPlayerHeavyAttack(Character player, Character enemy, int damage) {
+        System.out.println("WHAMMM!! The " + enemy.getCharacterName() + " took a whopping " + damage + " damage!");
+    }
+
+
 
     public void printPlayerDefend(Character player, Character enemy, int damage) {
         System.out.println("You raise your shield and brace yourself for the " + enemy.getCharacterName() + "'s attack");
