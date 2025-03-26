@@ -1,9 +1,13 @@
 package Game.Characters;
 
+import Game.Currency.Gold;
+
 /**
  * A class to create the player object.
  */
 public class Player extends Character {
+    private Gold gold;
+
     private static final String playerModel =
             "      __      _\n" +
                     "     /__\\__  //\n" +
@@ -29,6 +33,15 @@ public class Player extends Character {
      */
     public Player(int[] health, int attack, int defense, String name) {
         super(health, attack, defense, name);
+        this.gold = new Gold(0);
+    }
+
+    public void earnGold(int amount) {
+        this.gold = gold.earnGold(amount);
+    }
+
+    public void spendGold(int amount) {
+        this.gold = gold.spendGold(amount);
     }
 
     /**
