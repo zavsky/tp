@@ -27,7 +27,7 @@ public class Game {
      * Polls the first event from the queue to be the current event
      */
     public Game() {
-        this.player = new Player(new int[]{100}, 10, 10, "Hero");;
+        this.player = new Player(new int[]{100}, 10, 10, "Hero");
         this.eventsQueue = generateEventQueue();
         this.currentEvent = nextEvent();
     }
