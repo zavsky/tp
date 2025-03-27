@@ -1,6 +1,11 @@
 package Game.Characters;
 
+import java.util.Arrays;
+
+import static Functionalities.Storage.SAVE_DELIMITER;
+
 import Game.Currency.Gold;
+
 
 /**
  * A class to create the player object.
@@ -42,6 +47,10 @@ public class Player extends Character {
 
     public void spendGold(int amount) {
         this.gold = gold.spendGold(amount);
+    }
+
+    public Player(int[] healthBars, int attackValue, int defenseValue, String characterName, int maxHealth) {
+        super(healthBars, attackValue, defenseValue, characterName, maxHealth);
     }
 
     /**

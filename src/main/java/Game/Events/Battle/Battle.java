@@ -7,6 +7,8 @@ import Game.Characters.Player;
 import Game.Events.Event;
 import Game.Events.EventType;
 
+import static Functionalities.Storage.SAVE_DELIMITER;
+
 /**
  * Represents a battle event in which player fights an enemy.
  */
@@ -19,11 +21,11 @@ public class Battle extends Event {
      * @param player The player character in battle.
      * @param enemy The enemy character that player is facing.
      */
-/*    public Battle(Player player, Enemy enemy) {
-        this.player = player;
+    public Battle(Player player, Enemy enemy) {
+        super(player);
         this.enemy = enemy;
         hasWon = false;
-    }*/
+    }
 
     public Battle(Player player) {
         super(player);
@@ -39,8 +41,15 @@ public class Battle extends Event {
         UI.battleExit(this.enemy, this.player);
     }
 
-    public EventType getEventType() {
-        return EventType.BATTLE;
+    @Override
+    public String getEventIcon() {
+        return "Battle";
+    }
+
+    @Override
+    public String toText() {
+        return this.getEventIcon() + SAVE_DELIMITER +
+                this.enemy.toText();
     }
 
     /**

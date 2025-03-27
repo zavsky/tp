@@ -12,9 +12,6 @@ public abstract class Event {
     }
 
     public abstract void run();
-
-    @Override
-    public String toString() {
-        return "Event: ";
-    }
+    public abstract String getEventIcon();
+    public abstract String toText();
 }

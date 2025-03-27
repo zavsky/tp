@@ -3,6 +3,9 @@ package Game.Characters;
 import Functionalities.UI;
 import java.util.Arrays;
 
+import static Functionalities.Storage.SAVE_DELIMITER;
+import static Functionalities.Storage.saveGame;
+
 /**
  * A class to represent characters in the game.
  */
@@ -35,6 +38,15 @@ public class Character {
         characterName = name;
         isAlive = true;
         maxHealth = healthBars[0];
+    }
+
+    public Character(int[] health, int attack, int defense, String name, int maxHealth) {
+        this.healthBars = health;
+        this.attackValue = attack;
+        this.defenseValue = defense;
+        this.characterName = name;
+        this.isAlive = true;
+        this.maxHealth = maxHealth;
     }
 
     public Character(int health, int attack, int defense, String name) {
@@ -194,6 +206,14 @@ public class Character {
                 "\nHP: \t" + animatedHealthBars +
                 "\nATK:\t" + this.attackValue +
                 "\nDEF:\t" + this.defenseValue;
+    }
+
+    public String toText() {
+        return Arrays.toString(this.healthBars) + SAVE_DELIMITER +
+                this.attackValue + SAVE_DELIMITER +
+                this.defenseValue + SAVE_DELIMITER +
+                this.characterName + SAVE_DELIMITER +
+                this.maxHealth;
     }
 
 }

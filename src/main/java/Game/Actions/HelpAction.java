@@ -5,5 +5,4 @@ import Functionalities.UI;
 import Game.Game;
 
 public class HelpAction extends Action {
-    public void execute() {}
 }

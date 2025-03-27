@@ -16,7 +16,7 @@ public class Game {
     private static final int MAX_NUMBER_OF_EVENTS = 10;
     private static final Player HERO = new Player(new int[]{100}, 10, 10, "Hero");
 
-    private Queue<Event> eventsQueue = new LinkedList<>(); // Might not be needed
+    private Queue<Event> eventsQueue = new LinkedList<>();
     private Player player;
     private Event currentEvent;
     private int score = 0;
@@ -25,12 +25,20 @@ public class Game {
         this.player = HERO;
         this.eventsQueue = generateEventQueue();
         this.currentEvent = nextEvent();
+        saveGame();
+    }
+
+    public Game(Player player, Event currentEvent, Queue<Event> eventsQueue) {
+        this.player = player;
+        this.eventsQueue = eventsQueue;
+        this.currentEvent = currentEvent;
     }
 
     public void run() {
         while(!eventsQueue.isEmpty() && this.player.isAlive) {
             this.currentEvent.run();
             this.currentEvent = nextEvent();
+            saveGame();
         }
         if (!this.player.isAlive) {
             UI.printMessage("Game over, you've died! L");
@@ -51,6 +59,10 @@ public class Game {
 
     private Event nextEvent() {
         return this.eventsQueue.poll();
+    }
+
+    private void saveGame(){
+        Storage.saveGame(this.player, this.currentEvent, this.eventsQueue);
     }
 
     @Override

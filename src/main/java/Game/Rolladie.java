@@ -1,9 +1,8 @@
 package Game;
 
 import Exceptions.RolladieException;
+import Functionalities.Storage;
 import Functionalities.UI;
-import Game.Actions.ExitAction;
-import Game.Actions.StartAction;
 
 
 public class Rolladie {
@@ -18,12 +17,18 @@ public class Rolladie {
         String inputString = UI.readInput();
         while (!inputString.equals("exit")) {
             if (inputString.equals("start")) {
-                new StartAction().execute();
+                Game game = new Game();
+                game.run();
+                UI.printWelcomeMessage();
+            } else if (inputString.equals("load")) {
+                Game game = Storage.loadGame();
+                game.run();
+                UI.printWelcomeMessage();
             } else {
-                UI.printMessage("You can only use \"start\" bro");
+                UI.printMessage("You can only use \"start\" or \"load\" bro");
             }
             inputString = UI.readInput();
         }
-        new ExitAction().execute();
+        UI.printMessage("Leaving so soon? I expected more from you!");
     }
 }
