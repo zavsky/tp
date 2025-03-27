@@ -7,24 +7,28 @@ import Functionalities.UI;
 
 public class Rolladie {
     /**
-     * Main entry-point for the java.duke.Duke application.
+     * Main menu of Rolladie Game
      */
 
-    public static void main(String[] args) throws RolladieException {
+    public static void main(String[] args) {
         assert false : "dummy assertion set to fail";
 
         UI.printWelcomeMessage();
         String inputString = UI.readInput();
         while (!inputString.equals("exit")) {
-            if (inputString.equals("start")) {
-                Game game = new Game();
+            Game game;
+            switch(inputString) {
+            case "start":
+                game = new Game();
                 game.run();
                 UI.printWelcomeMessage();
-            } else if (inputString.equals("load")) {
-                Game game = Storage.loadGame();
+                break;
+            case "load":
+                game = Storage.loadGame();
                 game.run();
                 UI.printWelcomeMessage();
-            } else {
+                break;
+            default:
                 UI.printMessage("You can only use \"start\" or \"load\" bro");
             }
             inputString = UI.readInput();

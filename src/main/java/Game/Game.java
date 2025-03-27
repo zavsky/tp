@@ -1,10 +1,7 @@
 package Game;
 
-import Exceptions.RolladieException;
 import Functionalities.Storage;
 import Functionalities.UI;
-import Functionalities.Parser;
-import Game.Actions.Action;
 import Game.Characters.Player;
 import Game.Events.Battle.Battle;
 import Game.Events.Event;
@@ -13,19 +10,16 @@ import java.util.Queue;
 import java.util.LinkedList;
 
 public class Game {
-    private static final int MAX_NUMBER_OF_EVENTS = 10;
-    private static final Player HERO = new Player(new int[]{100}, 10, 10, "Hero");
-
+    private static final int MAX_NUMBER_OF_EVENTS = 5;
     private Queue<Event> eventsQueue = new LinkedList<>();
     private Player player;
     private Event currentEvent;
     private int score = 0;
 
     public Game() {
-        this.player = HERO;
+        this.player = new Player(new int[]{100}, 10, 10, "Hero");;
         this.eventsQueue = generateEventQueue();
         this.currentEvent = nextEvent();
-        saveGame();
     }
 
     public Game(Player player, Event currentEvent, Queue<Event> eventsQueue) {
@@ -35,10 +29,10 @@ public class Game {
     }
 
     public void run() {
-        while(!eventsQueue.isEmpty() && this.player.isAlive) {
+        while(this.currentEvent!=null && this.player.isAlive) {
+            saveGame();
             this.currentEvent.run();
             this.currentEvent = nextEvent();
-            saveGame();
         }
         if (!this.player.isAlive) {
             UI.printMessage("Game over, you've died! L");
