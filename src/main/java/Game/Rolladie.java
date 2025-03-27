@@ -4,11 +4,12 @@ import Exceptions.RolladieException;
 import Functionalities.Storage;
 import Functionalities.UI;
 
+/**
+ * Entry point of the Rolladie application
+ * Initializes the main menu and starts interactions with the user
+ */
 
 public class Rolladie {
-    /**
-     * Main menu of Rolladie Game
-     */
 
     public static void main(String[] args) {
         assert false : "dummy assertion set to fail";
@@ -17,19 +18,23 @@ public class Rolladie {
         String inputString = UI.readInput();
         while (!inputString.equals("exit")) {
             Game game;
-            switch(inputString) {
-            case "start":
-                game = new Game();
-                game.run();
-                UI.printWelcomeMessage();
-                break;
-            case "load":
-                game = Storage.loadGame();
-                game.run();
-                UI.printWelcomeMessage();
-                break;
-            default:
-                UI.printMessage("You can only use \"start\" or \"load\" bro");
+            try {
+                switch (inputString) {
+                case "start":
+                    game = new Game();
+                    game.run();
+                    UI.printWelcomeMessage();
+                    break;
+                case "load":
+                    game = Storage.loadGame();
+                    game.run();
+                    UI.printWelcomeMessage();
+                    break;
+                default:
+                    throw new RolladieException("You can only use \"start\", \"load\" or \"exit\" bro");
+                }
+            } catch (RolladieException e) {
+                UI.printMessage(e.getMessage());
             }
             inputString = UI.readInput();
         }

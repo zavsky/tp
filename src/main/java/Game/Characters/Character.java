@@ -208,6 +208,10 @@ public class Character {
                 "\nDEF:\t" + this.defenseValue;
     }
 
+    /**
+     * Returns the encoded string of player attributes to be saved
+     * @return encoded string
+     */
     public String toText() {
         return Arrays.toString(this.healthBars) + SAVE_DELIMITER +
                 this.attackValue + SAVE_DELIMITER +
