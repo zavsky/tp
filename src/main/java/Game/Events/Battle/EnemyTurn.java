@@ -1,13 +1,6 @@
-package Game.Battle;
+package Game.Events.Battle;
 
-import Game.Actions.Action;
-import Game.Actions.BattleAction.AttackAction;
-import Game.Actions.BattleAction.DefendAction;
-import Game.Actions.BattleAction.FleeAction;
-import Game.Actions.ExitAction;
 import Game.Characters.Character;
-
-import static Functionalities.Parser.getAction;
 
 /**
  * Represents the enemy's turn. Enemy can only attack for now.

@@ -1,66 +1,56 @@
 package Game;
 
-import Game.Characters.Character;
+import Exceptions.RolladieException;
+import Functionalities.Storage;
+import Functionalities.UI;
+import Functionalities.Parser;
+import Game.Actions.Action;
 import Game.Characters.Player;
+import Game.Events.Battle.Battle;
 import Game.Events.Event;
-import Game.Events.EventType;
-import Game.Events.Travel;
 
 import java.util.Queue;
 import java.util.LinkedList;
 
 public class Game {
+    private static final int MAX_NUMBER_OF_EVENTS = 10;
+    private static final Player HERO = new Player(new int[]{100}, 10, 10, "Hero");
+
     private Queue<Event> eventsQueue = new LinkedList<>(); // Might not be needed
-    private Queue<Character> characterQueue = new LinkedList<>();
     private Player player;
     private Event currentEvent;
     private int score = 0;
 
     public Game() {
-        int[] health1 = {100};
-        this.player = new Player(health1, 10, 10, "Hero");
-        queueCharacter(this.player);
-        this.currentEvent = new Travel(this.player);
+        this.player = HERO;
+        this.eventsQueue = generateEventQueue();
+        this.currentEvent = nextEvent();
     }
 
-    public String move() {
-        String message = "Moving to ";
-        this.currentEvent = this.currentEvent.move();
-        return message + this.currentEvent.toString();
+    public void run() {
+        while(!eventsQueue.isEmpty() && this.player.isAlive) {
+            this.currentEvent.run();
+            this.currentEvent = nextEvent();
+        }
+        if (!this.player.isAlive) {
+            UI.printMessage("Game over, you've died! L");
+        }
+    }
+    
+    private Queue<Event> generateEventQueue() {
+        Queue<Event> eventsQueue = new LinkedList<>();
+        for (int i = 0; i < MAX_NUMBER_OF_EVENTS; i++) {
+            eventsQueue.add(generateEvent());
+        }
+        return eventsQueue;
     }
 
-    public String attack() {
-        this.currentEvent = this.currentEvent.attack();
-        return this.currentEvent.toString();
+    private Event generateEvent() {
+        return new Battle(this.player);
     }
 
-    public String defend() {
-        this.currentEvent = this.currentEvent.defend();
-        return this.currentEvent.toString();
-    }
-
-    public String flee() {
-        this.currentEvent = this.currentEvent.flee();
-        return this.currentEvent.toString();
-    }
-
-    public EventType getEventType() {
-        return this.currentEvent.getEventType();
-    }
-    public void queueEvent(Event event) {
-        eventsQueue.add(event);
-    }
-
-    public Event nextEvent() {
-        return eventsQueue.poll();
-    }
-
-    public void queueCharacter(Character character) {
-        characterQueue.add(character);
-    }
-
-    public Character nextCharacter() {
-        return characterQueue.poll();
+    private Event nextEvent() {
+        return this.eventsQueue.poll();
     }
 
     @Override

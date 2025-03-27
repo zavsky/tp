@@ -1,34 +1,29 @@
 package Game;
 
 import Exceptions.RolladieException;
-import Functionalities.Parser;
-import Functionalities.Storage;
 import Functionalities.UI;
-import Game.Battle.Battle;
-import Game.Characters.Enemy;
-import Game.Characters.Player;
-import Game.Actions.Action;
+import Game.Actions.ExitAction;
+import Game.Actions.StartAction;
 
 
 public class Rolladie {
     /**
      * Main entry-point for the java.duke.Duke application.
      */
-    private static final Game GAME = new Game();
-    private static final Parser PARSER = new Parser();
-    private static final Storage STORAGE = new Storage();
 
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RolladieException {
         assert false : "dummy assertion set to fail";
+
         UI.printWelcomeMessage();
-        int[] health1 = {100};
-        int[] health2 = {50};
-        Player player = new Player(health1, 10, 10, "Player");
-        Enemy enemy = new Enemy(health2, 10, 10, "Enemy");
-        UI.battleEntry(enemy);
-        Battle battle = new Battle(player, enemy);
-        battle.startBattle();
-        UI.battleExit(enemy, player);
+        String inputString = UI.readInput();
+        while (!inputString.equals("exit")) {
+            if (inputString.equals("start")) {
+                new StartAction().execute();
+            } else {
+                UI.printMessage("You can only use \"start\" bro");
+            }
+            inputString = UI.readInput();
+        }
+        new ExitAction().execute();
     }
 }

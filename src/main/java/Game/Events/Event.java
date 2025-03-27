@@ -1,28 +1,20 @@
 package Game.Events;
 
+import Functionalities.Parser;
+import Functionalities.UI;
 import Game.Characters.Player;
 
 public abstract class Event {
-    public abstract EventType getEventType();
+    protected Player player;
 
-    public Event move() {
-        return null;
+    public Event(Player player) {
+        this.player = player;
     }
 
-    public Event attack() {
-        return null;
-    }
-
-    public Event defend() {
-        return null;
-    }
+    public abstract void run();
 
     @Override
     public String toString() {
         return "Event: ";
-    }
-
-    public Event flee() {
-        return null;
     }
 }

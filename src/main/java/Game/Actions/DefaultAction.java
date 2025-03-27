@@ -1,14 +1,10 @@
 package Game.Actions;
 
-import Exceptions.InvalidActionException;
 import Exceptions.RolladieException;
-import Functionalities.Storage;
-import Functionalities.UI;
-import Game.Game;
 
 public class DefaultAction extends Action {
-    public void execute(Game game, Storage storage, UI ui) throws RolladieException {
-        throw new InvalidActionException();
+    public void execute() throws RolladieException {
+        throw new RolladieException("What kind of Action is that? Do you need \"Help\"?");
     }
 }
 
