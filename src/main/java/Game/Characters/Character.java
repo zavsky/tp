@@ -48,6 +48,19 @@ public class Character {
         this.isAlive = true;
         this.maxHealth = maxHealth;
     }
+
+    public Character(int health, int attack, int defense, String name) {
+        assert attack >= 0 : "Attack value must be non-negative";
+        assert defense >= 0 : "Defense value must be non-negative";
+        assert !name.isEmpty() : "Character name must not be empty";
+        healthBars = new int[health];
+        attackValue = attack;
+        defenseValue = defense;
+        characterName = name;
+        isAlive = true;
+        maxHealth = healthBars[0];
+    }
+
     /**
      * Return the character's name.
      *
