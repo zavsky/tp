@@ -7,6 +7,7 @@ import Game.Actions.BattleAction.AttackAction;
 import Game.Actions.BattleAction.DefendAction;
 import Game.Actions.BattleAction.FleeAction;
 import Game.Characters.Character;
+import Game.RollDice;
 
 /**
  * Represents the player's turn. Player can select different moves during his/her turn.
@@ -47,15 +48,23 @@ public class PlayerTurn extends Turn {
      */
     public void handleAction() {
         Action currentAction = getCurrAction();
+        int diceValue = RollDice.rollDice();
+        int diceOutcome = RollDice.diceOutcome(diceValue);
+
         if (currentAction instanceof AttackAction) {
+            player.setAttackBonus(diceOutcome);
             player.attack(enemy);
         }
         else if (currentAction instanceof DefendAction) {
+            player.setDefenseBonus(diceOutcome);
             player.setDefending(true);
         }
         else if (currentAction instanceof FleeAction) {
             hasSurrendered = true;
         }
+
+        player.setAttackBonus(0);
+        player.setDefenseBonus(0);
 
     }
 
