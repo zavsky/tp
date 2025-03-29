@@ -145,13 +145,7 @@ public class Character {
 
         int remainingDamage = damage;
         while (remainingDamage > 0) {
-
             /* Case 1 */
-            if (currentHealthIndex >= healthBars.length) {
-                isAlive = false;
-                break;
-            }
-            /* Case 2 */
             if (healthBars[currentHealthIndex] - remainingDamage <= 0) {
                 remainingDamage -= healthBars[currentHealthIndex];
                 healthBars[currentHealthIndex] = 0;
@@ -159,6 +153,11 @@ public class Character {
             }
             else {
                 healthBars[currentHealthIndex] -= remainingDamage;
+                break;
+            }
+            /* Case 2 */
+            if (currentHealthIndex >= healthBars.length) {
+                isAlive = false;
                 break;
             }
         }

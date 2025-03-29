@@ -1,5 +1,7 @@
 package Game.Battle;
 
+import Exceptions.ExceptionMessage;
+import Exceptions.RolladieException;
 import Game.Characters.Enemy;
 import Game.Characters.Player;
 
@@ -10,13 +12,27 @@ public class Battle {
     private final Player player;
     private final Enemy enemy;
     private boolean hasWon;
+
     /**
-     * Constructs a Battle event object.
-     *
+     * Constructs a valid Battle event object.
+     * Initialises hasWon to be false at start of battle.
      * @param player The player character in battle.
      * @param enemy The enemy character that player is facing.
      */
-    public Battle(Player player, Enemy enemy) {
+    public Battle(Player player, Enemy enemy) throws ExceptionMessage {
+        final int FIRST_HEALTH_BAR = 0;
+        if (player.getHealthBars()[FIRST_HEALTH_BAR] <= 0) {
+            throw new ExceptionMessage("Player health bar is empty.");
+        }
+        else if (enemy.getHealthBars()[FIRST_HEALTH_BAR] <= 0) {
+            throw new ExceptionMessage("Enemy health bar is empty.");
+        }
+        if (player.getAttackValue() < 0) {
+            throw new ExceptionMessage("Player attack value is negative.");
+        }
+        else if (enemy.getAttackValue() < 0) {
+            throw new ExceptionMessage("Enemy attack value is negative.");
+        }
         this.player = player;
         this.enemy = enemy;
         hasWon = false;

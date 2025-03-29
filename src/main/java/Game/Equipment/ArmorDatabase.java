@@ -1,5 +1,6 @@
 package Game.Equipment;
 
+import Exceptions.ExceptionMessage;
 import Exceptions.RolladieException;
 
 import java.util.ArrayList;
@@ -25,12 +26,12 @@ public class ArmorDatabase {
      * @param name Name of the armor being queried
      * @return Corresponding armor
      */
-    public static Armor getArmorByName(String name) throws RolladieException {
+    public static Armor getArmorByName(String name) throws ExceptionMessage {
         for (Armor armor : armorList) {
             if (armor.getArmorName().equalsIgnoreCase(name)) {
                 return armor;
             }
         }
-        throw new RolladieException("Armor not found!");
+        throw new ExceptionMessage("Armor not found!");
     }
 }

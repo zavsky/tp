@@ -33,20 +33,11 @@ public class PlayerTurn extends Turn {
     }
 
     /**
-     * Uses parser to scan for user input to carry out an action.
-     *
-     * @return A String representing the action of the player.
-     */
-    private Action getCurrAction() {
-        return getAction();
-    }
-
-    /**
      * Handles the user input during user's turn
      *
      */
     public void handleAction() {
-        Action currentAction = getCurrAction();
+        Action currentAction = getAction();
         if (currentAction instanceof AttackAction) {
             player.attack(enemy);
         }
