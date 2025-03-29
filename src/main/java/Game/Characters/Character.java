@@ -3,6 +3,9 @@ package Game.Characters;
 import Functionalities.UI;
 import java.util.Arrays;
 
+import static Functionalities.Storage.SAVE_DELIMITER;
+import static Functionalities.Storage.saveGame;
+
 /**
  * A class to represent characters in the game.
  */
@@ -30,6 +33,27 @@ public class Character {
         assert defense >= 0 : "Defense value must be non-negative";
         assert !name.isEmpty() : "Character name must not be empty";
         healthBars = health;
+        attackValue = attack;
+        defenseValue = defense;
+        characterName = name;
+        isAlive = true;
+        maxHealth = healthBars[0];
+    }
+
+    public Character(int[] health, int attack, int defense, String name, int maxHealth) {
+        this.healthBars = health;
+        this.attackValue = attack;
+        this.defenseValue = defense;
+        this.characterName = name;
+        this.isAlive = true;
+        this.maxHealth = maxHealth;
+    }
+
+    public Character(int health, int attack, int defense, String name) {
+        assert attack >= 0 : "Attack value must be non-negative";
+        assert defense >= 0 : "Defense value must be non-negative";
+        assert !name.isEmpty() : "Character name must not be empty";
+        healthBars = new int[health];
         attackValue = attack;
         defenseValue = defense;
         characterName = name;
@@ -181,6 +205,14 @@ public class Character {
                 "\nHP: \t" + animatedHealthBars +
                 "\nATK:\t" + this.attackValue +
                 "\nDEF:\t" + this.defenseValue;
+    }
+
+    public String toText() {
+        return Arrays.toString(this.healthBars) + SAVE_DELIMITER +
+                this.attackValue + SAVE_DELIMITER +
+                this.defenseValue + SAVE_DELIMITER +
+                this.characterName + SAVE_DELIMITER +
+                this.maxHealth;
     }
 
 }

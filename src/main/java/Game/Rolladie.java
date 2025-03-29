@@ -1,40 +1,35 @@
 package Game;
 
-import Exceptions.ExceptionMessage;
 import Exceptions.RolladieException;
 import Functionalities.Parser;
 import Functionalities.Storage;
 import Functionalities.UI;
-import Game.Battle.Battle;
-import Game.Characters.Enemy;
-import Game.Characters.Player;
-import Game.Actions.Action;
 
 
 public class Rolladie {
     /**
      * Main entry-point for the java.duke.Duke application.
      */
-    private static final Game GAME = new Game();
-    private static final Parser PARSER = new Parser();
-    private static final Storage STORAGE = new Storage();
 
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RolladieException {
         assert false : "dummy assertion set to fail";
+
         UI.printWelcomeMessage();
-        int[] health1 = {100};
-        int[] health2 = {50};
-        Player player = new Player(health1, 10, 10, "Player");
-        Enemy enemy = new Enemy(health2, 10, 10, "Enemy");
-        try {
-            UI.battleEntry(enemy);
-            Battle battle = new Battle(player, enemy);
-            battle.startBattle();
-            UI.battleExit(enemy, player);
+        String inputString = Parser.readInput();
+        while (!inputString.equals("exit")) {
+            if (inputString.equals("start")) {
+                Game game = new Game();
+                game.run();
+                UI.printWelcomeMessage();
+            } else if (inputString.equals("load")) {
+                Game game = Storage.loadGame();
+                game.run();
+                UI.printWelcomeMessage();
+            } else {
+                UI.printMessage("You can only use \"start\" or \"load\" bro");
+            }
+            inputString = Parser.readInput();
         }
-        catch (ExceptionMessage e){
-            System.out.println(e.getMessage());
-        }
+        UI.printMessage("Leaving so soon? I expected more from you!");
     }
 }

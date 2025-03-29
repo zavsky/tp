@@ -1,18 +1,20 @@
 package Game.Battle;
 
-import Exceptions.ExceptionMessage;
-import org.junit.jupiter.api.Test;
+import Exceptions.RolladieException;
+import Game.Rolladie;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 
-import Game.Battle.Battle;
-import Game.Battle.BattleLogic;
+import Game.Events.Battle.Battle;
+import Game.Events.Battle.BattleLogic;
 import Game.Characters.Player;
 import Game.Characters.Enemy;
+import Game.Events.Battle.PlayerTurn;
 
 
 public class BattleTest {
@@ -69,7 +71,7 @@ public class BattleTest {
             Battle battle = new Battle(new Player(new int[]{0}, 10, 0, "p"), new Enemy(new int[]{10}, 10, 0, "e"));
             fail();
         }
-        catch (ExceptionMessage e) {
+        catch (RolladieException e) {
             assertEquals("Player health bar is empty.", e.getMessage());
         }
         //Enemy hp initialised to zero.
@@ -77,7 +79,7 @@ public class BattleTest {
             Battle battle = new Battle(new Player(new int[]{10}, 10, 0, "p"), new Enemy(new int[]{0}, 10, 0, "e"));
             fail();
         }
-        catch (ExceptionMessage e) {
+        catch (RolladieException e) {
             assertEquals("Enemy health bar is empty.", e.getMessage());
         }
     }

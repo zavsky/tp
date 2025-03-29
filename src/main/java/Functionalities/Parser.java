@@ -7,8 +7,6 @@ import Game.Actions.BattleAction.DefendAction;
 import Game.Actions.BattleAction.FleeAction;
 import Game.Actions.ExitAction;
 import Game.Actions.HelpAction;
-import Game.Actions.TravelAction.MoveAction;
-import Game.Actions.StartAction;
 
 import java.util.Scanner;
 
@@ -18,8 +16,6 @@ import java.util.Scanner;
  */
 
 public class Parser {
-    private static final Scanner SCANNER = new Scanner(System.in);
-    private static final String ACTION_START = "start";
     private static final String ACTION_MOVE = "move";
     private static final String ACTION_HELP = "help";
     private static final String ACTION_EXIT = "exit";
@@ -37,22 +33,11 @@ public class Parser {
         }
     }
 
-
-    public static String readInput() {
-        String inputLine = SCANNER.nextLine().toLowerCase();
-        return inputLine;
-    }
-
-    public static Action getAction() {
-        String userInputString = readInput();
+    public static Action getAction(String userInputString) {
         final String[] actionTypeAndParams = splitActionWordAndArgs(userInputString);
         final String actionType = actionTypeAndParams[0].toLowerCase();
         final String actionArgs = actionTypeAndParams[1];
         switch (actionType) {
-        case ACTION_START:
-            return new StartAction();
-        case ACTION_MOVE:
-            return new MoveAction();
         case ACTION_HELP:
             return new HelpAction();
         case ACTION_EXIT:
@@ -67,4 +52,9 @@ public class Parser {
             return new DefaultAction();
         }
     }
+    public static String readInput() {
+        String inputLine = new Scanner(System.in).nextLine().toLowerCase();
+        return inputLine;
+    }
+
 }

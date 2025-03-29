@@ -1,5 +1,6 @@
-package Game.Battle;
+package Game.Events.Battle;
 
+import Functionalities.Parser;
 import Functionalities.UI;
 import Game.Actions.Action;
 import Game.Actions.BattleAction.AttackAction;
@@ -33,11 +34,21 @@ public class PlayerTurn extends Turn {
     }
 
     /**
+     * Uses parser to scan for user input to carry out an action.
+     *
+     * @return A String representing the action of the player.
+     */
+    private Action getCurrAction() {
+        String inputString = Parser.readInput();
+        return getAction(inputString);
+    }
+
+    /**
      * Handles the user input during user's turn
      *
      */
     public void handleAction() {
-        Action currentAction = getAction();
+        Action currentAction = getCurrAction();
         if (currentAction instanceof AttackAction) {
             player.attack(enemy);
         }
@@ -49,6 +60,4 @@ public class PlayerTurn extends Turn {
         }
 
     }
-
-
 }
