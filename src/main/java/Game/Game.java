@@ -1,10 +1,7 @@
 package Game;
 
-import Exceptions.RolladieException;
 import Functionalities.Storage;
-import Functionalities.UI;
-import Functionalities.Parser;
-import Game.Actions.Action;
+import Functionalities.UI.UI;
 import Game.Characters.Player;
 import Game.Events.Battle.Battle;
 import Game.Events.Event;
@@ -41,7 +38,7 @@ public class Game {
             saveGame();
         }
         if (!this.player.isAlive) {
-            UI.printMessage("Game over, you've died! L");
+            UI.printDeathMessage();
         }
     }
     

@@ -1,6 +1,6 @@
 package Game.Events.Battle;
 
-import Functionalities.UI;
+import Functionalities.UI.UI;
 import Game.Characters.Character;
 
 /**

@@ -9,11 +9,16 @@ public class Weapon extends Equipment {
      * @param health Health value the weapon possesses.
      * @param agility Agility value the weapon possesses.
      */
-    public Weapon(String name, int attack, int health, int agility) {
+    public Weapon(String name, int attack, int health, int agility, int value) {
         this.name = name;
         this.attack = attack;
         this.health = health;
         this.agility = agility;
         this.defense = 0;
+        this.value = value;
+    }
+
+    public String getEquipmentType() {
+        return "weapon";
     }
 }

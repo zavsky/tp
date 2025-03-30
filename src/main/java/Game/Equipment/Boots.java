@@ -8,11 +8,16 @@ public class Boots extends Equipment{
      * @param defense Defense value associated with boots.
      * @param agility Agility value associated with boots.
      */
-    public Boots(String name, int defense, int agility) {
+    public Boots(String name, int defense, int agility, int value) {
         this.name = name;
         this.defense = defense;
         this.agility = agility;
         this.attack = 0;
         this.health = 0;
+    }
+
+    @Override
+    public String getEquipmentType() {
+        return "boots";
     }
 }

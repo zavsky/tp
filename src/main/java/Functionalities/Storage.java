@@ -1,6 +1,7 @@
 package Functionalities;
 
 import Exceptions.RolladieException;
+import Functionalities.UI.UI;
 import Game.Characters.Character;
 import Game.Characters.Enemy;
 import Game.Characters.Player;
@@ -12,7 +13,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -50,9 +50,9 @@ public class Storage {
 
             fw.close();
         } catch (IOException e) {
-            UI.printMessage("savefile.txt failed to save");
+            UI.printErrorMessage("savefile.txt failed to save");
         }
-        UI.printMessage("savefile.txt saved successfully");
+        UI.printErrorMessage("savefile.txt saved successfully");
     }
 
     private static Character parseCharacterFromText(String characterType, String[] parameters) throws RolladieException {
@@ -64,7 +64,7 @@ public class Storage {
             try {
                 healthBars[i] = Integer.parseInt(values[i]);
             } catch (NumberFormatException nfe) {
-                UI.printMessage("Parsing failed");
+                UI.printErrorMessage("Parsing failed");
             }
         }
         int attackValue = Integer.parseInt(parameters[1]);
@@ -117,13 +117,13 @@ public class Storage {
                 Event event = parseEventFromText(player, remainingLine);
                 eventsQueue.add(event);
             }
-            UI.printMessage("savefile.txt loaded successfully");
+            UI.printErrorMessage("savefile.txt loaded successfully");
             return new Game(player, currentEvent, eventsQueue);
 
         } catch (FileNotFoundException e) {
-            UI.printMessage("savefile.txt not found!");
+            UI.printErrorMessage("savefile.txt not found!");
         } catch (RolladieException e) {
-            UI.printMessage("savefile.txt corrupted");
+            UI.printErrorMessage("savefile.txt corrupted");
         }
         return new Game();
     }
