@@ -1,5 +1,6 @@
 package Game.Events.Battle;
 
+import Exceptions.RolladieException;
 import Functionalities.Parser;
 import Functionalities.UI;
 import Game.Actions.Action;
@@ -49,7 +50,7 @@ public class PlayerTurn extends Turn {
      * Handles the user input during user's turn
      *
      */
-    public void handleAction() {
+    public void handleAction() throws RolladieException {
         ((Player) player).setAttackBonus(0);
         ((Player) player).setDefenseBonus(0);
 

@@ -1,5 +1,6 @@
 package Game;
 
+import Exceptions.RolladieException;
 import Functionalities.UI;
 import java.util.Random;
 
@@ -80,21 +81,23 @@ public class RollDice {
      * @param diceValue Integer to represent the total outcome of rolling 2 dice
      * @return Integer to represent the effect of rolling dice.
      */
-    public static int diceOutcome(int diceValue){
+    public static int diceOutcome(int diceValue) throws RolladieException{
 
-        if(diceValue < 5){
+        if (diceValue < 2 || diceValue > 12) {
+            throw new RolladieException("Invalid dice value: must be between 2 and 12.");
+        }
+
+        if (diceValue >= 2 && diceValue < 5) {
             System.out.println("Öops, you got 0 bonus point for this action :(");
             return MISS;
-        }else if(diceValue < 10){
+        } else if (diceValue < 10) {
             System.out.println("10 bonus points for this action!");
             return HIT;
-        }else{
+        } else {
             System.out.println("20 bonus points for this action :)");
             return CRUCIAL_HIT;
         }
 
     }
-
-
 
 }

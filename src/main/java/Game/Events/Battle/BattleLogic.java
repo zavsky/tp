@@ -1,5 +1,6 @@
 package Game.Events.Battle;
 
+import Exceptions.RolladieException;
 import Functionalities.UI;
 import Game.Characters.Character;
 
@@ -59,7 +60,7 @@ public class BattleLogic {
      * Handles the player and enemy turns.
      * Calls UI to print player and enemy info after enemy turn.
      */
-    private void handleTurnOrder() {
+    private void handleTurnOrder() throws RolladieException {
         if (playerTurn) {
             turnNumber++;
             PlayerTurn turn = new PlayerTurn(player, enemy);
@@ -81,7 +82,7 @@ public class BattleLogic {
      *
      * @return a boolean on whether the player has won the battle.
      */
-    public boolean BattleSequence() {
+    public boolean BattleSequence() throws RolladieException{
         while (!hasBattleEnded) {
             handleTurnOrder();
         }
