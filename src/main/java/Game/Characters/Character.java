@@ -18,8 +18,6 @@ public class Character {
     protected int currentHealthIndex = 0;
     protected final int maxHealth;
     public boolean isAlive;
-    protected int attackBonus;
-    protected int defenseBonus;
 
     /**
      * Construct a Character object.
@@ -40,8 +38,6 @@ public class Character {
         characterName = name;
         isAlive = true;
         maxHealth = healthBars[0];
-        attackBonus = 0;
-        defenseBonus = 0;
     }
 
     public Character(int[] health, int attack, int defense, String name, int maxHealth) {
@@ -89,7 +85,7 @@ public class Character {
      * @return an integer representing the character's attack value.
      */
     public int getAttackValue() {
-        return attackValue + attackBonus;
+        return attackValue;
     }
 
     /**
@@ -98,7 +94,7 @@ public class Character {
      * @return an integer representing the character's defense value.
      */
     public int getDefenseValue() {
-        return defenseValue + defenseBonus;
+        return defenseValue;
     }
 
     /**
@@ -127,13 +123,6 @@ public class Character {
         return isDefending;
     }
 
-    public void setAttackBonus(int bonus){
-        attackBonus = bonus;
-    }
-
-    public void setDefenseBonus(int bonus){
-        defenseBonus = bonus;
-    }
 
     /**
      * Performs an attack on the defender.
@@ -166,6 +155,7 @@ public class Character {
     public int calculateDamage(Character defender){
         assert defender != null: "Defender must not be null";
         assert defender.isAlive : "Defender must be alive";
+
         double damageReduction = (double) 100 / (100 + defender.getDefenseValue());
         return (int) (this.getAttackValue() * damageReduction);
     }
