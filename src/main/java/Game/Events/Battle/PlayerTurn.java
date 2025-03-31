@@ -1,7 +1,6 @@
 package Game.Events.Battle;
 
 import Functionalities.Parser;
-import Functionalities.UI;
 import Game.Actions.Action;
 import Game.Actions.BattleAction.AttackAction;
 import Game.Actions.BattleAction.DefendAction;

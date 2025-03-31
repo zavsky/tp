@@ -8,17 +8,24 @@ public class Armor extends Equipment {
      * @param health Health Value associated with armor.
      * @param agility Agility Value associated with armor.
      */
-    public Armor(String name, int defense, int health, int agility) {
+    public Armor(String name, int defense, int health, int agility, int value) {
         this.name = name;
         this.health = health;
         this.defense = defense;
         this.agility = agility;
         this.attack = 0;
+        this.value = value;
     }
 
     public String getArmorName() {
         return name;
     }
+
+    @Override
+    public String getEquipmentType() {
+        return "armor";
+    }
+
     public int getDefense() {
         return defense;
     }
