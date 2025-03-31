@@ -47,9 +47,13 @@ public class Battle extends Event {
 
     @Override
     public void run() {
-        BattleUI.battleEntry(this.enemy);
-        startBattle();
-        BattleUI.battleExit(this.enemy, this.player);
+        try {
+            BattleUI.battleEntry(this.enemy);
+            startBattle();
+            BattleUI.battleExit(this.enemy, this.player);
+        } catch (RolladieException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -69,7 +73,7 @@ public class Battle extends Event {
      *
      * @return A boolean representing whether the player has won the battle.
      */
-    public boolean startBattle() {
+    public boolean startBattle() throws RolladieException {
         BattleLogic battleLogic = new BattleLogic(player, enemy);
         hasWon = battleLogic.BattleSequence();
 

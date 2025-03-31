@@ -123,6 +123,7 @@ public class Character {
         return isDefending;
     }
 
+
     /**
      * Performs an attack on the defender.
      *
@@ -141,6 +142,7 @@ public class Character {
         else {
             BattleUI.printEnemyAttack(defender, this, damage);
         }
+
     }
 
     /**
@@ -153,8 +155,9 @@ public class Character {
     public int calculateDamage(Character defender){
         assert defender != null: "Defender must not be null";
         assert defender.isAlive : "Defender must be alive";
+
         double damageReduction = (double) 100 / (100 + defender.getDefenseValue());
-        return (int) (this.attackValue * damageReduction);
+        return (int) (this.getAttackValue() * damageReduction);
     }
 
     /**
@@ -174,8 +177,7 @@ public class Character {
                 remainingDamage -= healthBars[currentHealthIndex];
                 healthBars[currentHealthIndex] = 0;
                 currentHealthIndex++;
-            }
-            else {
+            }else {
                 healthBars[currentHealthIndex] -= remainingDamage;
                 break;
             }

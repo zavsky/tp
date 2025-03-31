@@ -1,11 +1,14 @@
 package Game.Events.Battle;
 
+import Exceptions.RolladieException;
 import Functionalities.Parser;
 import Game.Actions.Action;
 import Game.Actions.BattleAction.AttackAction;
 import Game.Actions.BattleAction.DefendAction;
 import Game.Actions.BattleAction.FleeAction;
 import Game.Characters.Character;
+import Game.Characters.Player;
+import Game.RollDice;
 
 import static Functionalities.Parser.getAction;
 
@@ -46,13 +49,22 @@ public class PlayerTurn extends Turn {
      * Handles the user input during user's turn
      *
      */
-    public void handleAction() {
+    public void handleAction() throws RolladieException {
+        ((Player) player).setAttackBonus(0);
+        ((Player) player).setDefenseBonus(0);
+
         Action currentAction = getCurrAction();
+        int diceValue = RollDice.rollDice();
+        int diceOutcome = RollDice.diceOutcome(diceValue);
+
         if (currentAction instanceof AttackAction) {
+            ((Player) player).setAttackBonus(diceOutcome);
             player.attack(enemy);
         }
         else if (currentAction instanceof DefendAction) {
+            ((Player) player).setDefenseBonus(diceOutcome);
             player.setDefending(true);
+            //System.out.println("defense, defenseBonus" +((Player) player).getDefenseValue()+" "+((Player) player).defenseBonus );
         }
         else if (currentAction instanceof FleeAction) {
             hasSurrendered = true;
