@@ -1,7 +1,5 @@
 package Game.Events;
 
-import Functionalities.Parser;
-import Functionalities.UI;
 import Game.Characters.Player;
 
 public abstract class Event {

@@ -5,6 +5,8 @@ import java.util.Arrays;
 import static Functionalities.Storage.SAVE_DELIMITER;
 
 import Game.Currency.Gold;
+import Game.Equipment.Equipment;
+import Game.Equipment.EquipmentList;
 
 
 /**
@@ -14,6 +16,7 @@ public class Player extends Character {
     private Gold gold;
     private int attackBonus;
     private int defenseBonus;
+    private EquipmentList equipments;
 
     private static final String playerModel =
             "      __      _\n" +
@@ -41,6 +44,7 @@ public class Player extends Character {
     public Player(int[] health, int attack, int defense, String name) {
         super(health, attack, defense, name);
         this.gold = new Gold(0);
+        this.equipments = new EquipmentList();
     }
 
     public Player(int[] healthBars, int attackValue, int defenseValue, String characterName, int maxHealth) {
@@ -61,6 +65,24 @@ public class Player extends Character {
      */
     public void spendGold(int amount) {
         this.gold = gold.spendGold(amount);
+    }
+
+
+    public void earnGold(Gold earnedGold) {
+        this.gold = gold.earnGold(earnedGold);
+    }
+
+    public void spendGold(Gold spentGold) {
+        this.gold = gold.spendGold(spentGold);
+    }
+
+    public Gold getGold() {
+        return gold;
+    }
+
+    public void buyEquipment(Equipment equipment) {
+        this.equipments.addEquipment(equipment);
+        spendGold(new Gold(equipment.getValue()));
     }
 
     /**

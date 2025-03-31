@@ -3,7 +3,7 @@ package Game;
 import Exceptions.RolladieException;
 import Functionalities.Parser;
 import Functionalities.Storage;
-import Functionalities.UI;
+import Functionalities.UI.UI;
 
 /**
  * Main entry-point for the java.duke.Duke application.
@@ -31,10 +31,10 @@ public class Rolladie {
                 game.run();
                 UI.printWelcomeMessage();
             } else {
-                UI.printMessage("You can only use \"start\" or \"load\" bro");
+                UI.printErrorMessage("You can only use \"start\" or \"load\" bro");
             }
             inputString = Parser.readInput();
         }
-        UI.printMessage("Leaving so soon? I expected more from you!");
+        UI.printExitMessage();
     }
 }

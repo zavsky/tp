@@ -1,7 +1,7 @@
 package Game.Events.Battle;
 
 import Exceptions.RolladieException;
-import Functionalities.UI;
+import Functionalities.UI.BattleUI;
 import Game.Characters.Enemy;
 import Game.Characters.Player;
 import Game.Events.Event;
@@ -48,9 +48,9 @@ public class Battle extends Event {
     @Override
     public void run() {
         try {
-            UI.battleEntry(this.enemy);
+            BattleUI.battleEntry(this.enemy);
             startBattle();
-            UI.battleExit(this.enemy, this.player);
+            BattleUI.battleExit(this.enemy, this.player);
         } catch (RolladieException e) {
             e.printStackTrace();
         }

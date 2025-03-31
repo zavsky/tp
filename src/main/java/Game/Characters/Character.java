@@ -1,10 +1,10 @@
 package Game.Characters;
 
-import Functionalities.UI;
+import Functionalities.UI.BattleUI;
+
 import java.util.Arrays;
 
 import static Functionalities.Storage.SAVE_DELIMITER;
-import static Functionalities.Storage.saveGame;
 
 /**
  * A class to represent characters in the game.
@@ -137,9 +137,10 @@ public class Character {
         defender.takeDamage(damage);
 
         if (this instanceof Player) {
-            UI.printPlayerAttack(this, defender, damage);
-        }else {
-            UI.printEnemyAttack(defender, this, damage);
+            BattleUI.printPlayerAttack(this, defender, damage);
+        }
+        else {
+            BattleUI.printEnemyAttack(defender, this, damage);
         }
 
     }

@@ -6,14 +6,14 @@ import Exceptions.RolladieException;
 import java.util.ArrayList;
 
 public class ArmorDatabase {
-    private static ArrayList<Armor> armorList = new ArrayList<>();
+    private static final ArrayList<Armor> armorList = new ArrayList<>();
 
     // Static block to initialize predefined armors
     static {
-        armorList.add(new Armor("Iron Armor", 50, 100, 5));
-        armorList.add(new Armor("Steel Armor", 70, 150, 3));
-        armorList.add(new Armor("Leather Armor", 20, 50, 10));
-        armorList.add(new Armor("Dragon Scale Armor", 150, 200, 20));
+        armorList.add(new Armor("Iron Armor", 50, 100, 5, 10));
+        armorList.add(new Armor("Steel Armor", 70, 150, 3, 15));
+        armorList.add(new Armor("Leather Armor", 20, 50, 10, 5));
+        armorList.add(new Armor("Dragon Scale Armor", 150, 200, 20, 50));
     }
 
     // Get all armor
