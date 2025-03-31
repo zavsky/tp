@@ -138,8 +138,7 @@ public class Character {
 
         if (this instanceof Player) {
             UI.printPlayerAttack(this, defender, damage);
-        }
-        else {
+        }else {
             UI.printEnemyAttack(defender, this, damage);
         }
 
@@ -177,8 +176,7 @@ public class Character {
                 remainingDamage -= healthBars[currentHealthIndex];
                 healthBars[currentHealthIndex] = 0;
                 currentHealthIndex++;
-            }
-            else {
+            }else {
                 healthBars[currentHealthIndex] -= remainingDamage;
                 break;
             }

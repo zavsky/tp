@@ -43,16 +43,24 @@ public class Player extends Character {
         this.gold = new Gold(0);
     }
 
+    public Player(int[] healthBars, int attackValue, int defenseValue, String characterName, int maxHealth) {
+        super(healthBars, attackValue, defenseValue, characterName, maxHealth);
+    }
+
+    /**
+     * Gold amount earned by player
+     * @param amount An integer to represent the amount earned.
+     */
     public void earnGold(int amount) {
         this.gold = gold.earnGold(amount);
     }
 
+    /**
+     * Gold amount spent by player.
+     * @param amount An integer to represent the amount spent.
+     */
     public void spendGold(int amount) {
         this.gold = gold.spendGold(amount);
-    }
-
-    public Player(int[] healthBars, int attackValue, int defenseValue, String characterName, int maxHealth) {
-        super(healthBars, attackValue, defenseValue, characterName, maxHealth);
     }
 
     /**
@@ -96,6 +104,11 @@ public class Player extends Character {
     }
 
 
+    /**
+     * Return the information of a player.
+     *
+     * @return A string that show information of a player.
+     */
     @Override
     public String toString() {
         return playerModel + "\n" + super.toString();

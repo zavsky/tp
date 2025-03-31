@@ -5,12 +5,17 @@ import Functionalities.Parser;
 import Functionalities.Storage;
 import Functionalities.UI;
 
-
+/**
+ * Main entry-point for the java.duke.Duke application.
+ */
 public class Rolladie {
-    /**
-     * Main entry-point for the java.duke.Duke application.
-     */
 
+    /**
+     * The main entry point of RollaDie game.
+     *
+     * @param args Command-line arguments.
+     * @throws RolladieException Exception thrown if error occurs during game execution.
+     */
     public static void main(String[] args) throws RolladieException {
         assert false : "dummy assertion set to fail";
 

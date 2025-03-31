@@ -4,20 +4,35 @@ import Functionalities.UI;
 import java.util.Random;
 
 /**
- *
+ * A class to represent the dice.
  */
 public class RollDice {
+    /**
+     * An integer to represent the maximum dice value.
+     */
     public static final int MAX = 6;
+    /**
+     * An integer to represent the minimum dice value.
+     */
     public static final int MIN = 1;
+    /**
+     * No bonus point given for MISS case.
+     */
     public static final int MISS = 0;
+    /**
+     * 10 bonus point given for HIT case.
+     */
     public static final int HIT = 10;
+    /**
+     * 20 bonus point given for CRUCIAL_HIT case.
+     */
     public static final int CRUCIAL_HIT = 20;
     private static int first_dice;
     private static int second_dice;
 
     /**
-     *
-     * @return
+     * Return the outcome of rolling 2 dice.
+     * @return An integer to represent the outcome of rolling dice.
      */
     public static int rollDice(){
         Random rand = new Random();
@@ -30,8 +45,12 @@ public class RollDice {
         return first_dice + second_dice;
     }
 
-
-    private static void printDiceImage(int diceValue){
+    /**
+     * Method to print the dice image to the terminal according to the outcome of dice.
+     *
+     * @param diceValue An integer to represent the current outcome of rolling dice.
+     */
+    public static void printDiceImage(int diceValue){
         switch (diceValue){
         case 1:
             System.out.println(UI.dieFace1);
@@ -53,14 +72,13 @@ public class RollDice {
             break;
         }
     }
-    //2,3,4,5,6,7,8,9,10,11,12
-    // hit, crucial, miss
-    // 1-4 --> miss, 5 -9 = hit, 10-12 = crucial hit
 
     /**
+     * Return the effect of rolling dice.
+     * Three possible outcome: MISS, HIT, CRUCIAL_HIT
      *
-     * @param diceValue
-     * @return
+     * @param diceValue Integer to represent the total outcome of rolling 2 dice
+     * @return Integer to represent the effect of rolling dice.
      */
     public static int diceOutcome(int diceValue){
 
