@@ -5,6 +5,8 @@ public abstract class Equipment {
     protected int health;
     protected int defense;
     protected int agility;
+    protected int value;
+    protected String name;
 
     public int getAttack() {
         return attack;
@@ -18,4 +20,6 @@ public abstract class Equipment {
     public int getAgility() {
         return agility;
     }
+    public int getValue() { return value; }
+    public abstract String getEquipmentType();
 }

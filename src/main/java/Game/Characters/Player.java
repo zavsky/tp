@@ -5,6 +5,8 @@ import java.util.Arrays;
 import static Functionalities.Storage.SAVE_DELIMITER;
 
 import Game.Currency.Gold;
+import Game.Equipment.Equipment;
+import Game.Equipment.EquipmentList;
 
 
 /**
@@ -12,6 +14,9 @@ import Game.Currency.Gold;
  */
 public class Player extends Character {
     private Gold gold;
+    private int attackBonus;
+    private int defenseBonus;
+    private EquipmentList equipments;
 
     private static final String playerModel =
             "      __      _\n" +
@@ -39,18 +44,37 @@ public class Player extends Character {
     public Player(int[] health, int attack, int defense, String name) {
         super(health, attack, defense, name);
         this.gold = new Gold(0);
-    }
-
-    public void earnGold(int amount) {
-        this.gold = gold.earnGold(amount);
-    }
-
-    public void spendGold(int amount) {
-        this.gold = gold.spendGold(amount);
+        this.equipments = new EquipmentList();
     }
 
     public Player(int[] healthBars, int attackValue, int defenseValue, String characterName, int maxHealth) {
         super(healthBars, attackValue, defenseValue, characterName, maxHealth);
+    }
+
+    /**
+     * Gold amount earned by player
+     * @param earnedGold An integer to represent the amount earned.
+     */
+    public void earnGold(Gold earnedGold) {
+        this.gold = gold.earnGold(earnedGold);
+    }
+
+    /**
+     * Gold amount spent by player.
+     * @param spentGold An integer to represent the amount spent.
+     */
+
+    public void spendGold(Gold spentGold) {
+        this.gold = gold.spendGold(spentGold);
+    }
+
+    public Gold getGold() {
+        return gold;
+    }
+
+    public void buyEquipment(Equipment equipment) {
+        this.equipments.addEquipment(equipment);
+        spendGold(new Gold(equipment.getValue()));
     }
 
     /**
@@ -61,11 +85,44 @@ public class Player extends Character {
     @Override
     public int getDefenseValue() {
         if (isDefending) {
-            return defenseValue * 3;
+            return (defenseValue + defenseBonus) * 3;
         }
-        return defenseValue;
+        return defenseValue + defenseBonus;
     }
 
+    /**
+     * Return the character's attack value.
+     *
+     * @return an integer representing the character's attack value.
+     */
+    public int getAttackValue() {
+        return attackValue + attackBonus;
+    }
+
+    /**
+     * Set player's attack bonus value.
+     *
+     * @param bonus dice outcome for attack action.
+     */
+    public void setAttackBonus(int bonus){
+        attackBonus = bonus;
+    }
+
+    /**
+     * Set player's defend bonus value.
+     *
+     * @param bonus dice outcome for defend action.
+     */
+    public void setDefenseBonus(int bonus){
+        defenseBonus = bonus;
+    }
+
+
+    /**
+     * Return the information of a player.
+     *
+     * @return A string that show information of a player.
+     */
     @Override
     public String toString() {
         return playerModel + "\n" + super.toString();

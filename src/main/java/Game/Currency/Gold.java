@@ -5,19 +5,19 @@ public class Gold {
     private final int amount;
 
     public Gold(int amount) {
-        this.amount = amount;
+        this.amount = Math.max(amount, 0);
     }
 
     public int getAmount() {
         return amount;
     }
 
-    public Gold earnGold(int earned) {
-        return new Gold(amount + earned);
+    public Gold earnGold(Gold earned) {
+        return new Gold(amount + earned.getAmount());
     }
 
-    public Gold spendGold(int spent) {
-        return new Gold(amount - spent);
+    public Gold spendGold(Gold spent) {
+        return new Gold(amount - spent.getAmount());
     }
 
     public String toString() {

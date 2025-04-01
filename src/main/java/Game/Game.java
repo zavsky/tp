@@ -2,7 +2,7 @@ package Game;
 
 import Exceptions.RolladieException;
 import Functionalities.Storage;
-import Functionalities.UI;
+import Functionalities.UI.UI;
 import Game.Characters.Player;
 import Game.Events.Battle.Battle;
 import Game.Events.Event;
@@ -56,11 +56,11 @@ public class Game {
                 this.currentEvent.run();
                 this.currentEvent = nextEvent();
             } catch (RolladieException e) {
-                UI.printMessage(e.getMessage());
+                UI.printErrorMessage(e.getMessage());
             }
         }
         if (!this.player.isAlive) {
-            UI.printMessage("Game over, you've died! L");
+            UI.printDeathMessage();
         }
     }
 

@@ -1,8 +1,9 @@
 package Game;
 
 import Exceptions.RolladieException;
+import Functionalities.Parser;
 import Functionalities.Storage;
-import Functionalities.UI;
+import Functionalities.UI.UI;
 
 /**
  * Entry point of the Rolladie application
@@ -15,7 +16,7 @@ public class Rolladie {
         assert false : "dummy assertion set to fail";
 
         UI.printWelcomeMessage();
-        String inputString = UI.readInput();
+        String inputString = Parser.readInput();
         while (!inputString.equals("exit")) {
             Game game;
             try {
@@ -34,10 +35,10 @@ public class Rolladie {
                     throw new RolladieException("You can only use \"start\", \"load\" or \"exit\" bro");
                 }
             } catch (RolladieException e) {
-                UI.printMessage(e.getMessage());
+                UI.printErrorMessage(e.getMessage());
             }
-            inputString = UI.readInput();
+            inputString = Parser.readInput();
         }
-        UI.printMessage("Leaving so soon? I expected more from you!");
+        UI.printExitMessage();
     }
 }

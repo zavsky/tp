@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnemyDatabase {
-    private static ArrayList<Enemy> enemyList = new ArrayList<>();
+    private static final ArrayList<Enemy> enemyList = new ArrayList<>();
 
     // Static block to initialize predefined enemies
     static {

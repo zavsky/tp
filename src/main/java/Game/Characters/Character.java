@@ -1,10 +1,10 @@
 package Game.Characters;
 
-import Functionalities.UI;
+import Functionalities.UI.BattleUI;
+
 import java.util.Arrays;
 
 import static Functionalities.Storage.SAVE_DELIMITER;
-import static Functionalities.Storage.saveGame;
 
 /**
  * A class to represent characters in the game.
@@ -123,6 +123,7 @@ public class Character {
         return isDefending;
     }
 
+
     /**
      * Performs an attack on the defender.
      *
@@ -136,11 +137,12 @@ public class Character {
         defender.takeDamage(damage);
 
         if (this instanceof Player) {
-            UI.printPlayerAttack(this, defender, damage);
+            BattleUI.printPlayerAttack(this, defender, damage);
         }
         else {
-            UI.printEnemyAttack(defender, this, damage);
+            BattleUI.printEnemyAttack(defender, this, damage);
         }
+
     }
 
     /**
@@ -153,8 +155,9 @@ public class Character {
     public int calculateDamage(Character defender){
         assert defender != null: "Defender must not be null";
         assert defender.isAlive : "Defender must be alive";
+
         double damageReduction = (double) 100 / (100 + defender.getDefenseValue());
-        return (int) (this.attackValue * damageReduction);
+        return (int) (this.getAttackValue() * damageReduction);
     }
 
     /**
@@ -169,20 +172,18 @@ public class Character {
 
         int remainingDamage = damage;
         while (remainingDamage > 0) {
-
             /* Case 1 */
-            if (currentHealthIndex >= healthBars.length) {
-                isAlive = false;
-                break;
-            }
-            /* Case 2 */
             if (healthBars[currentHealthIndex] - remainingDamage <= 0) {
                 remainingDamage -= healthBars[currentHealthIndex];
                 healthBars[currentHealthIndex] = 0;
                 currentHealthIndex++;
-            }
-            else {
+            }else {
                 healthBars[currentHealthIndex] -= remainingDamage;
+                break;
+            }
+            /* Case 2 */
+            if (currentHealthIndex >= healthBars.length) {
+                isAlive = false;
                 break;
             }
         }

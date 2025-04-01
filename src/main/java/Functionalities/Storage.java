@@ -1,6 +1,7 @@
 package Functionalities;
 
 import Exceptions.RolladieException;
+import Functionalities.UI.UI;
 import Game.Characters.Character;
 import Game.Characters.Enemy;
 import Game.Characters.Player;
@@ -67,7 +68,7 @@ public class Storage {
         } catch (IOException e) {
             throw new RolladieException("savefile.txt failed to save");
         }
-        UI.printMessage("savefile.txt saved successfully");
+        UI.printErrorMessage("savefile.txt saved successfully");
     }
 
     /**
@@ -95,9 +96,9 @@ public class Storage {
         String characterName = parameters[3];
         int maxHealth = Integer.parseInt(parameters[4]);
         if (characterType.equals("Player")) {
-            return new Player(healthBars, attackValue, defenseValue, characterName, maxHealth);
+            return new Player(healthBars, attackValue, defenseValue, characterName);
         } else if (characterType.equals("Enemy")) {
-            return new Enemy(healthBars, attackValue, defenseValue, characterName, maxHealth);
+            return new Enemy(healthBars, attackValue, defenseValue, characterName);
         } else {
             throw new RolladieException("Invalid Character Type");
         }
@@ -115,8 +116,13 @@ public class Storage {
         String eventType = parameters[0];
         switch (eventType) {
         case "Battle":
-            Enemy enemy = (Enemy) parseCharacterFromText("Enemy", Arrays.copyOfRange(parameters, 1, parameters.length + 1));
-            return new Battle(player, enemy);
+            try {
+                Enemy enemy = (Enemy) parseCharacterFromText("Enemy", Arrays.copyOfRange(parameters, 1, parameters.length + 1));
+                return new Battle(player, enemy);
+            }
+            catch (RolladieException e){
+                System.out.println(e.getMessage());
+        }
         default:
             throw new RolladieException("Invalid Event Type");
         }
@@ -146,13 +152,13 @@ public class Storage {
                 Event event = parseEventFromText(player, remainingLine);
                 eventsQueue.add(event);
             }
-            UI.printMessage("savefile.txt loaded successfully");
+            UI.printErrorMessage("savefile.txt loaded successfully");
             return new Game(player, currentEvent, eventsQueue);
 
         } catch (FileNotFoundException e) {
             throw new RolladieException("savefile.txt not found!");
         } catch (RolladieException e) {
-            UI.printMessage("savefile.txt corrupted");
+            UI.printErrorMessage("savefile.txt corrupted");
         }
         return new Game();
     }
