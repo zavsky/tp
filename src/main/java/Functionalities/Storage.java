@@ -68,7 +68,6 @@ public class Storage {
         } catch (IOException e) {
             throw new RolladieException("savefile.txt failed to save");
         }
-        UI.printErrorMessage("savefile.txt saved successfully");
     }
 
     /**
@@ -96,9 +95,9 @@ public class Storage {
         String characterName = parameters[3];
         int maxHealth = Integer.parseInt(parameters[4]);
         if (characterType.equals("Player")) {
-            return new Player(healthBars, attackValue, defenseValue, characterName);
+            return new Player(healthBars, attackValue, defenseValue, characterName, maxHealth);
         } else if (characterType.equals("Enemy")) {
-            return new Enemy(healthBars, attackValue, defenseValue, characterName);
+            return new Enemy(healthBars, attackValue, defenseValue, characterName, maxHealth);
         } else {
             throw new RolladieException("Invalid Character Type");
         }
@@ -152,13 +151,12 @@ public class Storage {
                 Event event = parseEventFromText(player, remainingLine);
                 eventsQueue.add(event);
             }
-            UI.printErrorMessage("savefile.txt loaded successfully");
             return new Game(player, currentEvent, eventsQueue);
 
         } catch (FileNotFoundException e) {
             throw new RolladieException("savefile.txt not found!");
         } catch (RolladieException e) {
-            UI.printErrorMessage("savefile.txt corrupted");
+            UI.printErrorMessage("savefile.txt corrupted\nStarting new game");
         }
         return new Game();
     }

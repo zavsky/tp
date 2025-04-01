@@ -47,6 +47,15 @@ public class Player extends Character {
         this.equipments = new EquipmentList();
     }
 
+    /**
+     * Overloaded Constructor to construct a player object with defined parameters
+     * Usage within Storage Class for loading game
+     * @param healthBars
+     * @param attackValue
+     * @param defenseValue
+     * @param characterName
+     * @param maxHealth
+     */
     public Player(int[] healthBars, int attackValue, int defenseValue, String characterName, int maxHealth) {
         super(healthBars, attackValue, defenseValue, characterName, maxHealth);
     }

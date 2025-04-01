@@ -18,12 +18,17 @@ public class Enemy extends Character {
     }
 
 
+    /**
+     * Overloaded Constructor to construct an enemy object with defined parameters
+     * Usage within Storage Class for loading game
+     * @param healthBars
+     * @param attackValue
+     * @param defenseValue
+     * @param characterName
+     * @param maxHealth
+     */
     public Enemy(int[] healthBars, int attackValue, int defenseValue, String characterName, int maxHealth) {
         super(healthBars, attackValue, defenseValue, characterName, maxHealth);
-    }
-
-    public Enemy(int health, int attack, int defense, String name) {
-        super(health, attack, defense, name);
     }
 
     public String getEnemyName() {
