@@ -25,8 +25,4 @@ public class Armor extends Equipment {
     public String getEquipmentType() {
         return "armor";
     }
-
-    public int getDefense() {
-        return defense;
-    }
 }

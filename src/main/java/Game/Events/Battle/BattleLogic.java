@@ -14,10 +14,10 @@ public class BattleLogic {
 
     private Character player;
     private Character enemy;
-    private int turnNumber = START_OF_TURN;
-    private boolean playerTurn = true;
-    private boolean hasWon = false;
-    private boolean hasBattleEnded = false;
+    private int turnNumber;
+    private boolean playerTurn;
+    private boolean hasWon;
+    private boolean hasBattleEnded;
 
     /**
      * Constructs a Battle Logic object.
@@ -28,6 +28,10 @@ public class BattleLogic {
     public BattleLogic(Character player, Character enemy) {
         this.player = player;
         this.enemy = enemy;
+        this.turnNumber = START_OF_TURN;
+        this.playerTurn = true;
+        this.hasWon = false;
+        this.hasBattleEnded = false;
     }
 
     public boolean getHasWon() {
