@@ -38,6 +38,7 @@ public class Battle extends Event {
         hasWon = false;
     }
 
+
     public Battle(Player player) {
         super(player);
         int[] enemyHealth = {50};

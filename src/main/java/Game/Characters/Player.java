@@ -47,30 +47,31 @@ public class Player extends Character {
         this.equipments = new EquipmentList();
     }
 
+    /**
+     * Overloaded Constructor to construct a player object with defined parameters
+     * Usage within Storage Class for loading game
+     * @param healthBars
+     * @param attackValue
+     * @param defenseValue
+     * @param characterName
+     * @param maxHealth
+     */
     public Player(int[] healthBars, int attackValue, int defenseValue, String characterName, int maxHealth) {
         super(healthBars, attackValue, defenseValue, characterName, maxHealth);
     }
 
     /**
      * Gold amount earned by player
-     * @param amount An integer to represent the amount earned.
+     * @param earnedGold An integer to represent the amount earned.
      */
-    public void earnGold(int amount) {
-        this.gold = gold.earnGold(amount);
+    public void earnGold(Gold earnedGold) {
+        this.gold = gold.earnGold(earnedGold);
     }
 
     /**
      * Gold amount spent by player.
-     * @param amount An integer to represent the amount spent.
+     * @param spentGold An integer to represent the amount spent.
      */
-    public void spendGold(int amount) {
-        this.gold = gold.spendGold(amount);
-    }
-
-
-    public void earnGold(Gold earnedGold) {
-        this.gold = gold.earnGold(earnedGold);
-    }
 
     public void spendGold(Gold spentGold) {
         this.gold = gold.spendGold(spentGold);

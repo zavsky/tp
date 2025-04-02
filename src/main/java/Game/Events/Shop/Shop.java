@@ -11,9 +11,13 @@ import static Functionalities.Storage.SAVE_DELIMITER;
 public class Shop extends Event {
     private Equipment[] equipments;
 
-    Shop(Player player, Equipment[] epuipments) {
+    Shop(Player player, Equipment[] equipments) {
         super(player);
+<<<<<<< HEAD
         this.equipments = epuipments;
+=======
+        this.epuipments = equipments;
+>>>>>>> d833ec3eac813ac0ee394bd7d7c9b4556e831876
     }
 
     @Override

@@ -40,12 +40,22 @@ public class Character {
         maxHealth = healthBars[0];
     }
 
+    /**
+     * Overloaded constructor to construct character object with defined parameters
+     * Usage within Storage class for loading game
+     * @param health
+     * @param attack
+     * @param defense
+     * @param name
+     * @param maxHealth
+     */
+
     public Character(int[] health, int attack, int defense, String name, int maxHealth) {
         this.healthBars = health;
         this.attackValue = attack;
         this.defenseValue = defense;
         this.characterName = name;
-        this.isAlive = true;
+        this.isAlive = health[0] <= 0;
         this.maxHealth = maxHealth;
     }
 
@@ -209,6 +219,10 @@ public class Character {
                 "\nDEF:\t" + this.defenseValue;
     }
 
+    /**
+     * Returns the encoded string of player attributes to be saved
+     * @return encoded string
+     */
     public String toText() {
         return Arrays.toString(this.healthBars) + SAVE_DELIMITER +
                 this.attackValue + SAVE_DELIMITER +
