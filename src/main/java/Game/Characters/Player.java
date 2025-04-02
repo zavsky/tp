@@ -144,6 +144,7 @@ public class Player extends Character {
      */
     @Override
     public String toString() {
-        return super.toString();
+        return super.toString() +  "\nEquipments: "
+                + equipments.toString();
     }
 }

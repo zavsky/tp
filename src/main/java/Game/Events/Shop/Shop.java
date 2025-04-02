@@ -72,7 +72,7 @@ public class Shop extends Event {
 
     public void startShopping() throws RolladieException {
         while (!isDone) {
-            ShopUI.printShopCollection(equipments);
+            ShopUI.printShopCollection(player, equipments);
             handleAction();
         }
     }
