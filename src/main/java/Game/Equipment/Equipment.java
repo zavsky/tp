@@ -23,7 +23,7 @@ public abstract class Equipment {
     public int getValue() { return value; }
     public String getName() { return name; }
     public abstract String getEquipmentType();
-
+  
     public String toString() {
         return name + "\n\ttype: " + getEquipmentType()
                 + "\n\tattack: " + getAttack()
