@@ -1,0 +1,13 @@
+  \---java
+    +---Game
+    |   |   RolladieTest.java
+    |   |   RollDiceTest.java
+    |   |   
+    |   +---Battle
+    |   |       BattleTest.java
+    |   |       
+    |   \---Characters
+    |           CharacterTest.java
+    |           
+    \---seedu
+        \---duke
