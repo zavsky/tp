@@ -109,4 +109,10 @@ public class EquipmentList {
                 .map(x -> x.get().getAgility())
                 .reduce(0, Integer::sum);
     }
+
+    public String toString() {
+        return equipmentSlot.stream().filter(Optional::isPresent)
+                .map(x -> x.get().toString())
+                .reduce("", (x, y) -> x + "\n___________________\n" + y);
+    }
 }
