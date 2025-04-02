@@ -54,6 +54,14 @@ public class MenuSystem {
         }
     }
 
+    public void clearScreen() {
+        try {
+            terminal.clearScreen();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private boolean exitApplication() {
         System.exit(0);
         return true;
