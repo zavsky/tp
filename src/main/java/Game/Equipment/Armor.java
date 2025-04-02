@@ -17,16 +17,9 @@ public class Armor extends Equipment {
         this.value = value;
     }
 
-    public String getArmorName() {
-        return name;
-    }
-
     @Override
     public String getEquipmentType() {
         return "armor";
     }
 
-    public int getDefense() {
-        return defense;
-    }
 }
