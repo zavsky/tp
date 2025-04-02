@@ -1,17 +1,22 @@
 package Game.Characters;
 
+import Functionalities.UIHandler;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
  * A class to represent characters in the game.
  */
 public class Character {
-    private int[] healthBars;
-    private int attackValue;
-    private int defenseValue;
-    private String characterName;
+    protected boolean isDefending = false;
+    protected int[] healthBars;
+    protected int attackValue;
+    protected int defenseValue;
+    protected String characterName;
+    protected int currentHealthIndex = 0;
+    protected final int maxHealth;
     public boolean isAlive;
-    public int currentHealthIndex = 0;
 
     /**
      * Construct a Character object.
@@ -31,6 +36,7 @@ public class Character {
         defenseValue = defense;
         characterName = name;
         isAlive = true;
+        maxHealth = healthBars[0];
     }
 
     /**
@@ -48,7 +54,20 @@ public class Character {
      * @return integer array representing the character's health.
      */
     public int[] getHealthBars() {
-        return healthBars;
+        return getNonZeroElements(healthBars);
+    }
+
+    public static int[] getNonZeroElements(int[] arr) {
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        for (int num : arr) {
+            if (num > 0) {
+                result.add(num);
+            }
+        }
+        
+        // Convert ArrayList to int array
+        return result.stream().mapToInt(Integer::intValue).toArray();
     }
 
     /**
@@ -78,6 +97,24 @@ public class Character {
     }
 
     /**
+     * Set the defending status of character
+     *
+     * @param isDefending Sets isDefending to a boolean status.
+     */
+    public void setDefending(boolean isDefending) {
+        this.isDefending = isDefending;
+    }
+
+    /**
+     * Get the defending status of character
+     *
+     * @return a boolean to indicate the defense status of character
+     */
+    public boolean getDefending() {
+        return isDefending;
+    }
+
+    /**
      * Performs an attack on the defender.
      *
      * @param defender character being attacked in the attack event.
@@ -88,9 +125,13 @@ public class Character {
 
         int damage = calculateDamage(defender);
         defender.takeDamage(damage);
-        System.out.println(this.characterName + " attacks " + defender.getCharacterName() +
-                " for " + damage + " damage.");
 
+        if (this instanceof Player) {
+            UIHandler.printPlayerAttack(this, defender, damage);
+        }
+        else {
+            UIHandler.printEnemyAttack(defender, this, damage);
+        }
     }
 
     /**
@@ -103,11 +144,8 @@ public class Character {
     public int calculateDamage(Character defender){
         assert defender != null: "Defender must not be null";
         assert defender.isAlive : "Defender must be alive";
-
-        double damageReduction = (double) 100 / (100 + defender.defenseValue);
-        int damageTaken = (int) (this.attackValue * damageReduction);
-        return damageTaken;
-
+        double damageReduction = (double) 100 / (100 + defender.getDefenseValue());
+        return (int) (this.attackValue * damageReduction);
     }
 
     /**
@@ -143,8 +181,16 @@ public class Character {
 
     @Override
     public String toString() {
+        String animatedHealthBars = "";
+        for (int health : healthBars) {
+            animatedHealthBars += "[";
+            animatedHealthBars += "#".repeat(health);
+            animatedHealthBars += "_".repeat(maxHealth - health);
+            animatedHealthBars += "]";
+        }
+
         return this.characterName + "'s stats:" +
-                "\nHP: \t" + Arrays.toString(healthBars) +
+                "\nHP: \t" + animatedHealthBars +
                 "\nATK:\t" + this.attackValue +
                 "\nDEF:\t" + this.defenseValue;
     }
