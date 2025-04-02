@@ -11,5 +11,10 @@ public abstract class Event {
 
     public abstract void run();
     public abstract String getEventIcon();
+
+    /**
+     * returns encoded string of the Event attributes to be saved
+     * @return Encoded String
+     */
     public abstract String toText();
 }
