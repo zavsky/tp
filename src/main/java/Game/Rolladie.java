@@ -22,10 +22,10 @@ public class Rolladie {
     public static void main(String[] args) {
         assert false : "dummy assertion set to fail";
 
-        final MenuSystem menuSystem = new MenuSystem();
-
         while (true) {
             try {
+                MenuSystem menuSystem = new MenuSystem();
+                
                 Map<String, MenuAction> mainMenu = new LinkedHashMap<>();
 
                 mainMenu.put("Start Game", () -> { 
@@ -85,4 +85,9 @@ public class Rolladie {
         game.run();
         UI.printWelcomeMessage();
     }
+
+    public static void clearScreen() {  
+        System.out.print("\033[H\033[2J");  
+        System.out.flush();  
+    }  
 }
