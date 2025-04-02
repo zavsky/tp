@@ -79,6 +79,10 @@ public class UI {
         System.out.println(message);
     }
 
+    public static void printMessage(String message) {
+        System.out.println(message);
+    }
+
 
     /**
      * Prints a welcome message to the player, including the game logo and a description.

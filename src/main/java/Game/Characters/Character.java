@@ -215,8 +215,8 @@ public class Character {
 
         return this.characterName + "'s stats:" +
                 "\nHP: \t" + animatedHealthBars +
-                "\nATK:\t" + this.attackValue +
-                "\nDEF:\t" + this.defenseValue;
+                "\nATK:\t" + this.getAttackValue() +
+                "\nDEF:\t" + this.getDefenseValue();
     }
 
     /**
@@ -225,8 +225,8 @@ public class Character {
      */
     public String toText() {
         return Arrays.toString(this.healthBars) + SAVE_DELIMITER +
-                this.attackValue + SAVE_DELIMITER +
-                this.defenseValue + SAVE_DELIMITER +
+                this.getAttackValue() + SAVE_DELIMITER +
+                this.getDefenseValue() + SAVE_DELIMITER +
                 this.characterName + SAVE_DELIMITER +
                 this.maxHealth;
     }

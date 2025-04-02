@@ -1,22 +1,33 @@
 package Game.Events.Shop;
 
+import Exceptions.RolladieException;
+import Functionalities.Parser;
+import Functionalities.Storage;
 import Functionalities.UI.ShopUI;
+import Functionalities.UI.UI;
+import Game.Actions.Action;
+import Game.Actions.ShopAction.BuyAction;
 import Game.Characters.Player;
 import Game.Equipment.Equipment;
 import Game.Events.Event;
+import Game.Game;
+import Game.RollDice;
 
+import static Functionalities.Parser.getShopAction;
 import static Functionalities.Storage.SAVE_DELIMITER;
 
 public class Shop extends Event {
-    private Equipment[] epuipments;
+    private Equipment[] equipments;
+    private boolean isDone;
 
     Shop(Player player, Equipment[] equipments) {
         super(player);
-        this.epuipments = equipments;
+        this.equipments = equipments;
+        isDone = false;
     }
 
     @Override
-    public void run() {
+    public void run() throws RolladieException {
         ShopUI.printShopEntry();
         startShopping();
         ShopUI.printShopExit();
@@ -32,7 +43,37 @@ public class Shop extends Event {
         return this.getEventIcon();
     }
 
-    public void startShopping() {
+    private Action getCurrAction() {
+        String inputString = Parser.readInput();
+        return getShopAction(inputString);
+    }
 
+    public void handleAction() throws RolladieException {
+        Action currentAction = getCurrAction();
+
+        switch (currentAction.getName()) {
+        case "buy":
+            int equipmentIndex = Integer.parseInt(currentAction.getArgs()) - 1;
+            player.buyEquipment(equipments[equipmentIndex]);
+            ShopUI.printBuyEquipment(equipments[equipmentIndex]);
+            break;
+        case "sell":
+            String equipmentType = currentAction.getArgs();
+            player.sellEquipment(equipmentType);
+            ShopUI.printSellEquipment(player.getEquipment(equipmentType));
+            break;
+        case "leave":
+            isDone = true;
+        default:
+            throw new RolladieException("You can only use \"buy\", \"sell\" or \"leave\" bro");
+        }
+    }
+
+
+    public void startShopping() throws RolladieException {
+        while (!isDone) {
+            ShopUI.printShopCollection(equipments);
+            handleAction();
+        }
     }
 }

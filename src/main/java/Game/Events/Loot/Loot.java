@@ -1,14 +1,18 @@
 package Game.Events.Loot;
 
+import Exceptions.RolladieException;
+import Functionalities.UI.UI;
 import Game.Characters.Player;
 import Game.Currency.Gold;
 import Game.Events.Event;
 import Functionalities.UI.LootUI;
+import Game.RollDice;
+
 import static Functionalities.Storage.SAVE_DELIMITER;
 
 public class Loot extends Event {
-    private Gold loot;
-    private static final String chest =
+    private static final int DEFAULT_LOOT = 50;
+    private static final String CHEST =
             "                            _.--.\n" +
                     "                        _.-'_:-'||\n" +
                     "                    _.-'_.-::::'||\n" +
@@ -30,16 +34,24 @@ public class Loot extends Event {
                     "                    '-.||_/.-'";
 
 
-    Loot(Player player, int amount) {
+    Loot(Player player) {
         super(player);
-        this.loot = new Gold(amount);
     }
 
     @Override
-    public void run() {
+    public void run() throws RolladieException {
         LootUI.printLootEntry();
+        Gold loot = null;
+        loot = generateRandomLoot();
         player.earnGold(loot);
-        LootUI.printLootExit(chest, loot.getAmount(), player);
+        LootUI.printLootExit(CHEST, loot.getAmount(), player);
+    }
+
+    public Gold generateRandomLoot() throws RolladieException {
+        int diceValue = RollDice.rollDice();
+        int bonusLoot = RollDice.diceOutcome(diceValue) / 2;
+        UI.printMessage("You get a bonus of " + bonusLoot + "gold.");
+        return new Gold(DEFAULT_LOOT + bonusLoot);
     }
 
     @Override
@@ -49,7 +61,6 @@ public class Loot extends Event {
 
     @Override
     public String toText() {
-        return this.getEventIcon() + SAVE_DELIMITER +
-                this.loot.getAmount();
+        return this.getEventIcon();
     }
 }

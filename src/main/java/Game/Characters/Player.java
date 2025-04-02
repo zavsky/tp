@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import static Functionalities.Storage.SAVE_DELIMITER;
 
+import Exceptions.RolladieException;
 import Game.Currency.Gold;
 import Game.Equipment.Equipment;
 import Game.Equipment.EquipmentList;
@@ -18,7 +19,7 @@ public class Player extends Character {
     private int defenseBonus;
     private EquipmentList equipments;
 
-    private static final String playerModel =
+    private static final String PLAYER_MODEL =
             "      __      _\n" +
                     "     /__\\__  //\n" +
                     "    //_____\\///\n" +
@@ -65,7 +66,7 @@ public class Player extends Character {
      * @param earnedGold An integer to represent the amount earned.
      */
     public void earnGold(Gold earnedGold) {
-        this.gold = gold.earnGold(earnedGold);
+        this.gold = this.gold.earnGold(earnedGold);
     }
 
     /**
@@ -74,16 +75,25 @@ public class Player extends Character {
      */
 
     public void spendGold(Gold spentGold) {
-        this.gold = gold.spendGold(spentGold);
+        this.gold = this.gold.spendGold(spentGold);
     }
 
     public Gold getGold() {
         return gold;
     }
 
-    public void buyEquipment(Equipment equipment) {
-        this.equipments.addEquipment(equipment);
+    public void buyEquipment(Equipment equipment) throws RolladieException {
+        this.equipments = this.equipments.addEquipment(equipment);
         spendGold(new Gold(equipment.getValue()));
+    }
+
+    public void sellEquipment(String equipmentType) throws RolladieException {
+        this.equipments = this.equipments.removeEquipment(equipmentType);
+        earnGold(new Gold(equipments.getEquipment(equipmentType).getValue() / 2));
+    }
+
+    public Equipment getEquipment(String equipmentType) throws RolladieException {
+        return this.equipments.getEquipment(equipmentType);
     }
 
     /**
@@ -94,9 +104,9 @@ public class Player extends Character {
     @Override
     public int getDefenseValue() {
         if (isDefending) {
-            return (defenseValue + defenseBonus) * 3;
+            return (defenseValue + defenseBonus + equipments.getEquipmentDefense()) * 3;
         }
-        return defenseValue + defenseBonus;
+        return defenseValue + defenseBonus + equipments.getEquipmentDefense();
     }
 
     /**
@@ -105,7 +115,7 @@ public class Player extends Character {
      * @return an integer representing the character's attack value.
      */
     public int getAttackValue() {
-        return attackValue + attackBonus;
+        return attackValue + attackBonus + equipments.getEquipmentAttack();
     }
 
     /**
@@ -134,6 +144,6 @@ public class Player extends Character {
      */
     @Override
     public String toString() {
-        return playerModel + "\n" + super.toString();
+        return super.toString();
     }
 }

@@ -1,5 +1,6 @@
 package Game.Equipment;
 
+import Exceptions.RolladieException;
 import Functionalities.UI.UI;
 import Game.Actions.BattleAction.AttackAction;
 import Game.Actions.BattleAction.DefendAction;
@@ -9,71 +10,103 @@ import Game.Actions.ExitAction;
 import Game.Actions.HelpAction;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * EquipmentList class to store information on the equipment that the player is using
  */
 public class EquipmentList {
-    private ArrayList<Equipment> equipmentList;
-    private int maxNumberOfEquipment;
-    private int totalAttack;
-    private int totalDefense;
-    private int totalHp;
-    private int totalAgility;
-    private Equipment[] equipmentSlot;
+    private static final int MAX_EQUIPMENTS = 3;
+    private List<Optional<Equipment>> equipmentSlot;
     //player only allowed to equip one armour, one pair of boots and one weapon
-    private static final int AMOUR_SLOT = 0;
+    private static final int ARMOUR_SLOT = 0;
     private static final int BOOTS_SLOT = 1;
     private static final int WEAPON_SLOT = 2;
 
-    public EquipmentList(int maxNumberOfEquipment) {
-        this.maxNumberOfEquipment = maxNumberOfEquipment;
-        equipmentList = new ArrayList<>();
-    }
-
     public EquipmentList() {
-        this.equipmentSlot = new Equipment[3];
+        equipmentSlot =  List.of(Optional.empty(), Optional.empty(), Optional.empty());
     }
 
-    public void addEquipment(Equipment equipment) {
+    public EquipmentList(List<Optional<Equipment>> equipmentSlot) {
+        this.equipmentSlot = equipmentSlot;
+    }
+
+    public EquipmentList addEquipment(Equipment equipment) throws RolladieException {
         switch(equipment.getEquipmentType()) {
         case "armour":
-            addArmour(equipment);
+            return new EquipmentList(addToEquipmentList(equipment, ARMOUR_SLOT));
         case "boots":
-            addBoots(equipment);
+            return new EquipmentList(addToEquipmentList(equipment, BOOTS_SLOT));
         case "weapon":
-            addWeapon(equipment);
+            return new EquipmentList(addToEquipmentList(equipment, WEAPON_SLOT));
         default:
-            UI.printErrorMessage("Invalid Equipment type!");
+            throw new RolladieException("Invalid Equipment type!");
         }
     }
 
-    private void addArmour(Equipment equipment) {
-        if (equipmentSlot[AMOUR_SLOT] == null) {
-            equipmentSlot[AMOUR_SLOT] = equipment;
-        } else {
-            UI.printErrorMessage("Equipment already exists!");
+    private List<Optional<Equipment>> addToEquipmentList(Equipment equipment, int equipmentType) throws RolladieException {
+        Optional<Equipment> currSlot = equipmentSlot.get(equipmentType);
+        if (currSlot.isPresent()) {
+            throw new RolladieException(currSlot.get().getEquipmentType() + " is already equipped!");
         }
+        return equipmentSlot.stream()
+                .map(e -> equipmentSlot.indexOf(e) == equipmentType ? Optional.of(equipment) : e)
+                .toList();
     }
 
-    private void addBoots(Equipment equipment) {
-        if (equipmentSlot[BOOTS_SLOT] == null) {
-            equipmentSlot[BOOTS_SLOT] = equipment;
-        } else {
-            UI.printErrorMessage("Equipment already exists!");
+    public EquipmentList removeEquipment(String equipmentType) throws RolladieException {
+        Equipment equipment = getEquipment(equipmentType);
+        List<Optional<Equipment>> newSlot = equipmentSlot.stream()
+                .map(e -> e.filter(x -> !x.equals(equipment)))
+                .toList();
+        return new EquipmentList(newSlot);
+    }
+
+    public Equipment getEquipment(String equipmentType) throws RolladieException {
+        int curr_index;
+        switch(equipmentType) {
+        case "armour":
+            curr_index = ARMOUR_SLOT;
+            break;
+        case "boots":
+            curr_index = BOOTS_SLOT;
+            break;
+        case "weapon":
+            curr_index = WEAPON_SLOT;
+            break;
+        default:
+            throw new RolladieException("Invalid Equipment type!");
         }
+
+        Optional<Equipment> currSlot = equipmentSlot.get(curr_index);
+
+        return currSlot.orElseThrow(() -> new RolladieException(equipmentType + " is not equipped!"));
     }
 
-    private void addWeapon(Equipment equipment) {
-        if (equipmentSlot[WEAPON_SLOT] == null) {
-            equipmentSlot[WEAPON_SLOT] = equipment;
-        } else {
-            UI.printErrorMessage("Equipment already exists!");
-        }
+    public int getEquipmentAttack() {
+        return equipmentSlot.stream().filter(Optional::isPresent)
+                .map(x -> x.get().getAttack())
+                .reduce(0, Integer::sum);
     }
 
-    public void removeEquipment(Equipment equipment) {
-        equipmentList.remove(equipment);
+    public int getEquipmentHealth() {
+        return equipmentSlot.stream().filter(Optional::isPresent)
+                .map(x -> x.get().getHealth())
+                .reduce(0, Integer::sum);
     }
 
+    public int getEquipmentDefense() {
+        return equipmentSlot.stream().filter(Optional::isPresent)
+                .map(x -> x.get().getDefense())
+                .reduce(0, Integer::sum);
+    }
+
+    public int getEquipmentAgility() {
+        return equipmentSlot.stream().filter(Optional::isPresent)
+                .map(x -> x.get().getAgility())
+                .reduce(0, Integer::sum);
+    }
 }

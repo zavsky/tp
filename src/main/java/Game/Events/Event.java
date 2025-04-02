@@ -1,5 +1,6 @@
 package Game.Events;
 
+import Exceptions.RolladieException;
 import Game.Characters.Player;
 
 public abstract class Event {
@@ -9,7 +10,7 @@ public abstract class Event {
         this.player = player;
     }
 
-    public abstract void run();
+    public abstract void run() throws RolladieException;
     public abstract String getEventIcon();
 
     /**

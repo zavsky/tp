@@ -57,6 +57,23 @@ public class PlayerTurn extends Turn {
         int diceValue = RollDice.rollDice();
         int diceOutcome = RollDice.diceOutcome(diceValue);
 
+        switch (currentAction.getName()) {
+        case "defend":
+            ((Player) player).setDefenseBonus(diceOutcome);
+            player.setDefending(true);
+            break;
+        case "attack":
+            ((Player) player).setAttackBonus(diceOutcome);
+            player.attack(enemy);
+            break;
+        case "flee":
+            hasSurrendered = true;
+            break;
+        default:
+            throw new RolladieException("You can only use \"defend\", \"attack\" or \"flee\" bro");
+        }
+
+        /*
         if (currentAction instanceof AttackAction) {
             ((Player) player).setAttackBonus(diceOutcome);
             player.attack(enemy);
@@ -69,6 +86,6 @@ public class PlayerTurn extends Turn {
         else if (currentAction instanceof FleeAction) {
             hasSurrendered = true;
         }
-
+        */
     }
 }
