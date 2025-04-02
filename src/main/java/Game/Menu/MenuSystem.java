@@ -2,6 +2,9 @@ package Game.Menu;
 
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+
+import Exceptions.RolladieException;
+
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;

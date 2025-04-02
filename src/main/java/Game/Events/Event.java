@@ -1,28 +1,21 @@
 package Game.Events;
 
+import Exceptions.RolladieException;
 import Game.Characters.Player;
 
 public abstract class Event {
-    public abstract EventType getEventType();
+    protected Player player;
 
-    public Event move() {
-        return null;
+    public Event(Player player) {
+        this.player = player;
     }
 
-    public Event attack() {
-        return null;
-    }
+    public abstract void run() throws RolladieException;
+    public abstract String getEventIcon();
 
-    public Event defend() {
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return "Event: ";
-    }
-
-    public Event flee() {
-        return null;
-    }
+    /**
+     * returns encoded string of the Event attributes to be saved
+     * @return Encoded String
+     */
+    public abstract String toText();
 }

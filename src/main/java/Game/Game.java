@@ -1,111 +1,109 @@
 package Game;
 
-import Game.Battle.Battle;
-import Game.Characters.Character;
-import Game.Characters.Enemy;
+import Exceptions.RolladieException;
+import Functionalities.Storage;
+import Functionalities.UI.UI;
 import Game.Characters.Player;
+import Game.Events.Battle.Battle;
 import Game.Events.Event;
-import Game.Events.EventType;
-import Game.Events.Travel;
-import Game.Menu.MenuSystem;
-import Game.Menu.MenuSystem.MenuAction;
 
 import java.util.Queue;
-
-import Functionalities.UIHandler;
-
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+/**
+ * Manages all game logic specifically: Event Generation and Sequence
+ */
 public class Game {
-    private Queue<Event> eventsQueue = new LinkedList<>(); // Might not be needed
-    private Queue<Character> characterQueue = new LinkedList<>();
+    private static final int MAX_NUMBER_OF_EVENTS = 5;
+    private Queue<Event> eventsQueue = new LinkedList<>();
     private Player player;
     private Event currentEvent;
     private int score = 0;
 
-    private UIHandler UI = new UIHandler();
-    private MenuSystem menuSystem = new MenuSystem();
-
-    public Game(MenuSystem menuSystem) {
-        
-        this.menuSystem = menuSystem;
+    /**
+     * Constructor to instantiate a new game
+     * Creates a new player based on a Hero preset
+     * Generates the event queue
+     * Polls the first event from the queue to be the current event
+     */
+    public Game() {
+        this.player = new Player(new int[]{100}, 10, 10, "Hero");
+        this.eventsQueue = generateEventQueue();
+        this.currentEvent = nextEvent();
     }
 
-    public boolean gameStart() {
-        this.player = new Player("Player");
-        queueCharacter(this.player);
-        this.currentEvent = new Travel(this.player);
-        
-        menuSystem.exitPrivateMode();
-        UI.printWelcomeMessage();
-        UI.printMessage(this.toString());
+    /**
+     * Overloaded constructor used to generate defined game
+     * Main usage is within the Storage class to load game from save file
+     * @param player
+     * @param currentEvent
+     * @param eventsQueue
+     */
+    public Game(Player player, Event currentEvent, Queue<Event> eventsQueue) {
+        this.player = player;
+        this.eventsQueue = eventsQueue;
+        this.currentEvent = currentEvent;
+    }
 
-        while (player.isAlive) {
-            int[] enemyHealth = {10, 10};
-            Enemy enemy = new Enemy(enemyHealth, 10, 10, "Enemy");
-            UI.battleEntry(enemy);
-            Battle battle = new Battle(player, enemy);
-            battle.startBattle();
-            UI.battleExit(enemy, player);
+    /**
+     * Runs the current game until the event sequence is completed
+     * Ends the game prematurely if the player died within the event
+     */
+    public void run() {
+        while(this.currentEvent!=null && this.player.isAlive) {
+            try {
+                saveGame();
+                this.currentEvent.run();
+                this.currentEvent = nextEvent();
+            } catch (RolladieException e) {
+                UI.printErrorMessage(e.getMessage());
+            }
         }
-        menuSystem.enterPrivateMode();
-        return false;
+        if (!this.player.isAlive) {
+            UI.printDeathMessage();
+        }
     }
 
-    public void start() throws IOException {
-        Map<String, MenuAction> mainMenu = new LinkedHashMap<>();
-        mainMenu.put("Start Game", () -> { gameStart(); return false; });
-        mainMenu.put("Load Game", () -> { System.out.println("Loading game..."); return false; });
-        mainMenu.put("Exit", () -> { System.exit(0); return true; });
 
-        menuSystem.displayMenu("Main Menu", mainMenu);
+    /**
+     * Returns a filled queue of events
+     * Used during the construction of a new game
+     * @return eventsQueue
+     */
+    private Queue<Event> generateEventQueue() {
+        Queue<Event> eventsQueue = new LinkedList<>();
+        for (int i = 0; i < MAX_NUMBER_OF_EVENTS; i++) {
+            eventsQueue.add(generateEvent());
+        }
+        return eventsQueue;
     }
 
-    public String move() {
-        String message = "Moving to ";
-        this.currentEvent = this.currentEvent.move();
-        return message + this.currentEvent.toString();
+    /**
+     * Returns an event to insert into the event queue
+     * Current version only has a Battle event
+     * Future development would include a more robust event generation
+     * Idea: Interleaving the event queue with Battle and Non-Battle events
+     * @return Event
+     */
+    private Event generateEvent() {
+        return new Battle(this.player);
     }
 
-    public String attack() {
-        this.currentEvent = this.currentEvent.attack();
-        return this.currentEvent.toString();
+    /**
+     * returns the next event inside the event queue
+     * @return Event
+     */
+    private Event nextEvent() {
+        return this.eventsQueue.poll();
     }
 
-    public String defend() {
-        this.currentEvent = this.currentEvent.defend();
-        return this.currentEvent.toString();
-    }
-
-    public String flee() {
-        this.currentEvent = this.currentEvent.flee();
-        return this.currentEvent.toString();
-    }
-
-    public EventType getEventType() {
-        return this.currentEvent.getEventType();
-    }
-    public void queueEvent(Event event) {
-        eventsQueue.add(event);
-    }
-
-    public Event nextEvent() {
-        return eventsQueue.poll();
-    }
-
-    public void queueCharacter(Character character) {
-        characterQueue.add(character);
-    }
-
-    public Character nextCharacter() {
-        return characterQueue.poll();
-    }
-
-    @Override
-    public String toString() {
-        return this.currentEvent.toString();
+    /**
+     * Calls the Storage class to save the current game status
+     */
+    private void saveGame() throws RolladieException {
+        Storage.saveGame(this.player, this.currentEvent, this.eventsQueue);
     }
 }
