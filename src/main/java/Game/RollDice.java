@@ -1,7 +1,7 @@
 package Game;
 
 import Exceptions.RolladieException;
-import Functionalities.UI;
+import Functionalities.UI.UI;
 import java.util.Random;
 
 /**
