@@ -22,4 +22,5 @@ public abstract class Equipment {
     }
     public int getValue() { return value; }
     public abstract String getEquipmentType();
+    public String getName() { return name; }
 }
