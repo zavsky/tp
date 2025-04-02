@@ -54,22 +54,22 @@ public class RollDice {
     public static void printDiceImage(int diceValue){
         switch (diceValue){
         case 1:
-            System.out.println(UI.dieFace1);
+            System.out.println(UI.DIE_FACE_1);
             break;
         case 2:
-            System.out.println(UI.dieFace2);
+            System.out.println(UI.DIE_FACE_2);
             break;
         case 3:
-            System.out.println(UI.dieFace3);
+            System.out.println(UI.DIE_FACE_3);
             break;
         case 4:
-            System.out.println(UI.dieFace4);
+            System.out.println(UI.DIE_FACE_4);
             break;
         case 5:
-            System.out.println(UI.dieFace5);
+            System.out.println(UI.DIE_FACE_5);
             break;
         case 6:
-            System.out.println(UI.dieFace6);
+            System.out.println(UI.DIE_FACE_6);
             break;
         }
     }

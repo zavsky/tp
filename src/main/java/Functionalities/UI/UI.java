@@ -5,20 +5,20 @@ import Game.Characters.Player;
 
 /**
  * The UI class is responsible for handling the user interface in the text-based RPG game.
- * It displays messages related to the game, player, and enemy interactions, and renders the game's logo.
+ * It displays messages related to the game, player, and enemy interactions, and renders the game's LOGO.
  */
 public class UI {
     /**
      * A separator string used to format the output in the UI.
      */
-    public static String lineSeparator = "======================================================================";
+    public static String LINE_SEPARATOR = "======================================================================";
 
 
 
     /**
-     * A string containing the ASCII art logo of the game.
+     * A string containing the ASCII art LOGO of the game.
      */
-    public static String logo =
+    public static String LOGO =
         " ____    " + "  ___   " + " _      " + " _      " + "    _    " + " ____   " + " ___  " + " _____  " + "\n" +
         "|  _ \\   " + " / _ \\  " + "| |     " + "| |     " + "   / \\   " + "|  _ \\  " + "|_ _| " + "| ____| " + "\n" +
         "| |_) |  " + "| | | | " + "| |     " + "| |     " + "  / _ \\  " + "| | | | " + " | |  " + "|  _|   " + "\n" +
@@ -26,42 +26,42 @@ public class UI {
         "|_| \\_\\  " + " \\___/  " + "|_____| " + "|_____| " + "/_/   \\_\\" + "|____/  " + "|___| " + "|_____| ";
 
 
-    public static String dieFace1 =
+    public static String DIE_FACE_1 =
         " _______ \n" +
         "|       |\n" +
         "|   O   |\n" +
         "|       |\n" +
         " ------- \n";
 
-    public static String dieFace2 =
+    public static String DIE_FACE_2 =
         " _______ \n" +
         "| O     |\n" +
         "|       |\n" +
         "|     O |\n" +
         " ------- \n";
 
-    public static String dieFace3 =
+    public static String DIE_FACE_3 =
         " _______ \n" +
         "| O     |\n" +
         "|   O   |\n" +
         "|     O |\n" +
         " ------- \n";
 
-    public static String dieFace4 =
+    public static String DIE_FACE_4 =
         " _______ \n" +
         "| O   O |\n" +
         "|       |\n" +
         "| O   O |\n" +
         " ------- \n";
 
-    public static String dieFace5 =
+    public static String DIE_FACE_5 =
         " _______ \n" +
         "| O   O |\n" +
         "|   O   |\n" +
         "| O   O |\n" +
         " ------- \n";
 
-    public static String dieFace6 =
+    public static String DIE_FACE_6 =
         " _______ \n" +
         "| O   O |\n" +
         "| O   O |\n" +
@@ -85,13 +85,13 @@ public class UI {
 
 
     /**
-     * Prints a welcome message to the player, including the game logo and a description.
+     * Prints a welcome message to the player, including the game LOGO and a description.
      */
     public static void printWelcomeMessage() {
         System.out.println("Welcome to");
-        System.out.println(lineSeparator);
-        System.out.println(logo);
-        System.out.println(lineSeparator);
+        System.out.println(LINE_SEPARATOR);
+        System.out.println(LOGO);
+        System.out.println(LINE_SEPARATOR);
         System.out.println("A text-based RPG game where your fate is determined by the roll of a die!!");
     }
 

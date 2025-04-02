@@ -12,9 +12,9 @@ public class BattleUI extends UI {
      * @param enemy The enemy the player is about to face.
      */
     public static void battleEntry(Enemy enemy) {
-        System.out.println(lineSeparator);
+        System.out.println(LINE_SEPARATOR);
         System.out.println("Narrator: A villainous " + enemy.getCharacterName() + " stands in your way!");
-        System.out.println(lineSeparator);
+        System.out.println(LINE_SEPARATOR);
     }
 
     /**
@@ -25,11 +25,11 @@ public class BattleUI extends UI {
      * @param enemy The enemy character involved in the battle.
      */
     public static void printBattleTurnStart(Game.Characters.Character player, Character enemy) {
-        System.out.println(lineSeparator);
+        System.out.println(LINE_SEPARATOR);
         printCharacterInfo(player);
-        System.out.println(lineSeparator);
+        System.out.println(LINE_SEPARATOR);
         printCharacterInfo(enemy);
-        System.out.println(lineSeparator);
+        System.out.println(LINE_SEPARATOR);
     }
 
     /**
