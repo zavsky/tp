@@ -17,4 +17,9 @@ public abstract class Action {
     public String getArgs() {
         return args;
     };
+
+    // public abstract boolean execute(Game game, Storage storage, UIHandler ui) throws RolladieException;
+    // public String toString() {
+    //     return this.getClass().getSimpleName();
+    // }
 }

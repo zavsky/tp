@@ -2,6 +2,7 @@ package Game.Characters;
 
 import Functionalities.UI.BattleUI;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static Functionalities.Storage.SAVE_DELIMITER;
@@ -86,7 +87,20 @@ public class Character {
      * @return integer array representing the character's health.
      */
     public int[] getHealthBars() {
-        return healthBars;
+        return getNonZeroElements(healthBars);
+    }
+
+    public static int[] getNonZeroElements(int[] arr) {
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        for (int num : arr) {
+            if (num > 0) {
+                result.add(num);
+            }
+        }
+        
+        // Convert ArrayList to int array
+        return result.stream().mapToInt(Integer::intValue).toArray();
     }
 
     /**
@@ -204,12 +218,8 @@ public class Character {
         String animatedHealthBars = "";
         for (int health : healthBars) {
             animatedHealthBars += "[";
-            for (int i = 0; i < health; i++) {
-                animatedHealthBars += "#";
-            }
-            for (int i = health; i < maxHealth; i++) {
-                animatedHealthBars += "_";
-            }
+            animatedHealthBars += "#".repeat(health);
+            animatedHealthBars += "_".repeat(maxHealth - health);
             animatedHealthBars += "]";
         }
 
