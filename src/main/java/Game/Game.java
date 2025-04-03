@@ -117,6 +117,7 @@ public class Game {
 
     private void optionalShopEvent() {
         if (Math.random() <= (0.3 + 0.2 * turnsWithoutShop)) {
+            turnsWithoutShop = 0;
             // shop entered
             Equipment[] equipmentsForSale = {
                 ArmorDatabase.getArmorByIndex((int) (Math.random() * ArmorDatabase.getNumberOfArmorTypes())),
