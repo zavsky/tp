@@ -1,62 +1,46 @@
 @startuml
+hide footbox
 
 actor User
-participant "Main" as Main
-participant "Game" as Game
-participant "Battle" as Battle
+participant "Parser" as Parser
+participant "UI" as UI
 participant "BattleLogic" as BattleLogic
 participant "PlayerTurn" as PlayerTurn
 participant "EnemyTurn" as EnemyTurn
 participant "RollDice" as RollDice
-participant "AttackAction" as AttackAction
 participant "Enemy" as Enemy
 participant "Player" as Player
-participant "UI" as UI
 participant "Character" as Character
 
-User -> Main: Start game
-Main -> Game: game.run()
-Game -> Battle: currentEvent.run()
 
-Battle -> UI: battleEntry(enemy)
-
-Battle -> Battle: startBattle()
-Battle -> BattleLogic: new BattleLogic(player, enemy)
-activate BattleLogic
-BattleLogic -> BattleLogic: BattleSequence()
 
 loop Until Battle Ends
-    BattleLogic -> BattleLogic: handleTurnOrder()
 
     alt playerTurn is true
-        BattleLogic -> PlayerTurn: new PlayerTurn(player, enemy)
-        activate PlayerTurn
-        PlayerTurn -> PlayerTurn: handleAction()
 
-        PlayerTurn -> PlayerTurn: getCurrAction()
+        User -> Parser: enter command
+        Parser -> Parser: readInput()
+        Parser --> PlayerTurn: return inputString
+        PlayerTurn -> PlayerTurn: getAction(inputString)
+
+
         PlayerTurn -> RollDice: rollDice()
-
-        activate RollDice
         RollDice --> PlayerTurn: return diceValue
-        deactivate RollDice
-
         PlayerTurn -> RollDice: diceOutcome(diceValue)
+        RollDice --> PlayerTurn: return diceOutcome
 
-        activate RollDice
-        RollDice --> PlayerTurn: return outcome
-        deactivate RollDice
-
-        PlayerTurn -> AttackAction: check if action is attack
-        PlayerTurn -> Character: player.attack(enemy)
+        PlayerTurn -> Player: setAttackBonus(diceOutcome)
+        PlayerTurn -> Character: attack(enemy)
         Character -> Character: calculateDamage(enemy)
         Character --> Enemy: takeDamage(damage)
         PlayerTurn -> UI: printPlayerAttack(player, enemy, damage)
-
         PlayerTurn -> BattleLogic: checkBattleEnd(turn)
         deactivate PlayerTurn
+
     else playerTurn is false
         BattleLogic -> EnemyTurn: new EnemyTurn(player, enemy)
         activate EnemyTurn
+
         EnemyTurn -> EnemyTurn: handleAction()
         EnemyTurn -> Character: enemy.attack(player)
         Character -> Character: calculateDamage(player)
@@ -67,15 +51,12 @@ loop Until Battle Ends
         EnemyTurn -> UI: printCharacterInfo(player)
         EnemyTurn -> UI: printCharacterInfo(enemy)
         EnemyTurn -> BattleLogic: checkBattleEnd(turn)
-
         deactivate EnemyTurn
     end
 
     BattleLogic -> BattleLogic: checkBattleEnd()
 end
 deactivate BattleLogic
-
-Battle -> UI: battleExit(player, enemy)
 
 @enduml
 
