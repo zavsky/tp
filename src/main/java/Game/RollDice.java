@@ -4,6 +4,8 @@ import Exceptions.RolladieException;
 import Functionalities.UI.UI;
 import java.util.Random;
 
+import com.googlecode.lanterna.terminal.Terminal;
+
 /**
  * A class to represent the dice.
  */
@@ -50,25 +52,25 @@ public class RollDice {
      *
      * @param diceValue An integer to represent the current outcome of rolling dice.
      */
-    public static void printDiceImage(int diceValue){
+    public static void printDiceImage(Terminal terminal, int diceValue){
         switch (diceValue){
         case 1:
-            System.out.println(UI.DIE_FACE_1);
+            UI.printDieFace(terminal, 1, 0, 0);
             break;
         case 2:
-            System.out.println(UI.DIE_FACE_2);
+            UI.printDieFace(terminal, 2, 0, 0);
             break;
         case 3:
-            System.out.println(UI.DIE_FACE_3);
+            UI.printDieFace(terminal, 3, 0, 0);
             break;
         case 4:
-            System.out.println(UI.DIE_FACE_4);
+            UI.printDieFace(terminal, 4, 0, 0);
             break;
         case 5:
-            System.out.println(UI.DIE_FACE_5);
+            UI.printDieFace(terminal, 5, 0, 0);
             break;
         case 6:
-            System.out.println(UI.DIE_FACE_6);
+            UI.printDieFace(terminal, 6, 0, 0);
             break;
         }
     }
@@ -79,15 +81,11 @@ public class RollDice {
      * @param diceValues list of integer values representing rolled dice value
      */
     public static void printDiceImages(int... diceValues) {
-        // Store dice faces as 2D string arrays (each die is 5x7 or similar)
-        String[][] diceFaces = {
-            UI.DIE_FACE_1.split("\n"),
-            UI.DIE_FACE_2.split("\n"),
-            UI.DIE_FACE_3.split("\n"),
-            UI.DIE_FACE_4.split("\n"),
-            UI.DIE_FACE_5.split("\n"),
-            UI.DIE_FACE_6.split("\n")
-        };
+        String[][] diceFaces = new String[UI.DIE_FACES.length][];
+
+        for (int i = 0; i < UI.DIE_FACES.length; i++) {
+            diceFaces[i] = UI.DIE_FACES[i].split("\n");
+        }
     
         // Get the height of the dice face
         int faceHeight = diceFaces[0].length; 

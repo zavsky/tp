@@ -68,7 +68,7 @@ public class EquipmentList {
     public Equipment getEquipment(String equipmentType) throws RolladieException {
         int curr_index;
         switch(equipmentType) {
-        case "armour":
+        case "armor":
             curr_index = ARMOUR_SLOT;
             break;
         case "boots":
