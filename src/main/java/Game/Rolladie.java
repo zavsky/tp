@@ -20,7 +20,7 @@ import Game.Menu.TerminalUtils;
 public class Rolladie {
 
     public static void main(String[] args) {
-        assert false : "dummy assertion set to fail";
+        // assert false : "dummy assertion set to fail";
 
         try {
             TerminalUtils.saveTerminalState(); // Before launching Lanterna

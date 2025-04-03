@@ -13,6 +13,7 @@ import Game.Events.Shop.Shop;
 import Game.Events.Event;
 
 import java.util.Queue;
+import java.util.Scanner;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -63,8 +64,9 @@ public class Game {
             try {
                 saveGame();
                 this.currentEvent.run();
-                ///////
-                optionalShopEvent();
+                if (player.isAlive) {
+                    optionalShopEvent();
+                }
                 this.currentEvent = nextEvent();
             } catch (RolladieException e) {
                 UI.printErrorMessage(e.getMessage());
@@ -73,6 +75,10 @@ public class Game {
         if (!this.player.isAlive) {
             UI.printDeathMessage();
         }
+
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+        scanner.close();
     }
 
 
