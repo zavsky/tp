@@ -83,7 +83,7 @@ public class Parser {
             return new LeaveAction();
         default:
             UI.printMessage("Invalid action");
-            return getAction(readInput());
+            return getShopAction(readInput());
         }
     }
 

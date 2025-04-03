@@ -33,4 +33,12 @@ public class BootsDatabase {
         }
         throw new RolladieException("Boots not found!");
     }
+
+    public static int getNumberOfBootsTypes() {
+        return bootsList.size();
+    }
+
+    public static Boots getBootsByIndex(int index) {
+        return bootsList.get(index);
+    }
 }

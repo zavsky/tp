@@ -40,4 +40,12 @@ public class ArmorDatabase {
         }
         throw new RolladieException("Armor not found!");
     }
+
+    public static int getNumberOfArmorTypes() {
+        return armorList.size();
+    }
+
+    public static Armor getArmorByIndex(int index) {
+        return armorList.get(index);
+    }
 }
