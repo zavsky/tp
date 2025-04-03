@@ -11,14 +11,14 @@ participant "RollDice" as RollDice
 participant "AttackAction" as AttackAction
 participant "Enemy" as Enemy
 participant "Player" as Player
-participant "UI" as UI
+participant "BattleUI" as BattleUI
 participant "Character" as Character
 
 User -> Main: Start game
 Main -> Game: game.run()
 Game -> Battle: currentEvent.run()
 
-Battle -> UI: battleEntry(enemy)
+Battle -> BattleUI: battleEntry(enemy)
 
 Battle -> Battle: startBattle()
 Battle -> BattleLogic: new BattleLogic(player, enemy)
@@ -50,7 +50,7 @@ loop Until Battle Ends
         PlayerTurn -> Character: player.attack(enemy)
         Character -> Character: calculateDamage(enemy)
         Character --> Enemy: takeDamage(damage)
-        PlayerTurn -> UI: printPlayerAttack(player, enemy, damage)
+        PlayerTurn -> BattleUI: printPlayerAttack(player, enemy, damage)
 
         PlayerTurn -> BattleLogic: checkBattleEnd(turn)
         deactivate PlayerTurn
@@ -62,10 +62,10 @@ loop Until Battle Ends
         Character -> Character: calculateDamage(player)
         Character --> Player: takeDamage(damage)
 
-        EnemyTurn -> UI: printEnemyAttack(enemy, player, damage)
+        EnemyTurn -> BattleUI: printEnemyAttack(enemy, player, damage)
 
-        EnemyTurn -> UI: printCharacterInfo(player)
-        EnemyTurn -> UI: printCharacterInfo(enemy)
+        EnemyTurn -> BattleUI: printCharacterInfo(player)
+        EnemyTurn -> BattleUI: printCharacterInfo(enemy)
         EnemyTurn -> BattleLogic: checkBattleEnd(turn)
 
         deactivate EnemyTurn
@@ -75,7 +75,7 @@ loop Until Battle Ends
 end
 deactivate BattleLogic
 
-Battle -> UI: battleExit(player, enemy)
+Battle -> BattleUI: battleExit(player, enemy)
 
 @enduml
 
