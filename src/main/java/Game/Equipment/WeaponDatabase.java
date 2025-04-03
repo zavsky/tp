@@ -39,4 +39,12 @@ public class WeaponDatabase {
         }
         throw new RolladieException("Weapon not found!");
     }
+
+    public static int getNumberOfWeaponTypes() {
+        return weaponList.size();
+    }
+
+    public static Weapon getWeaponByIndex(int index) {
+        return weaponList.get(index);
+    }
 }

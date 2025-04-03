@@ -20,7 +20,7 @@ public class Shop extends Event {
     private Equipment[] equipments;
     private boolean isDone;
 
-    Shop(Player player, Equipment[] equipments) {
+    public Shop(Player player, Equipment[] equipments) {
         super(player);
         this.equipments = equipments;
         isDone = false;
