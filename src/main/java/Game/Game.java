@@ -4,7 +4,12 @@ import Exceptions.RolladieException;
 import Functionalities.Storage;
 import Functionalities.UI.UI;
 import Game.Characters.Player;
+import Game.Equipment.ArmorDatabase;
+import Game.Equipment.BootsDatabase;
+import Game.Equipment.Equipment;
+import Game.Equipment.WeaponDatabase;
 import Game.Events.Battle.Battle;
+import Game.Events.Shop.Shop;
 import Game.Events.Event;
 
 import java.util.Queue;
@@ -22,6 +27,7 @@ public class Game {
     private Player player;
     private Event currentEvent;
     private int score = 0;
+    private int turnsWithoutShop = 0;
 
     /**
      * Constructor to instantiate a new game
@@ -57,6 +63,8 @@ public class Game {
             try {
                 saveGame();
                 this.currentEvent.run();
+                ///////
+                optionalShopEvent();
                 this.currentEvent = nextEvent();
             } catch (RolladieException e) {
                 UI.printErrorMessage(e.getMessage());
@@ -105,5 +113,25 @@ public class Game {
      */
     private void saveGame() throws RolladieException {
         Storage.saveGame(this.player, this.currentEvent, this.eventsQueue);
+    }
+
+    private void optionalShopEvent() {
+        if (Math.random() <= (0.3 + 0.2 * turnsWithoutShop)) {
+            // shop entered
+            Equipment[] equipmentsForSale = {
+                ArmorDatabase.getArmorByIndex((int) (Math.random() * ArmorDatabase.getNumberOfArmorTypes())),
+                BootsDatabase.getBootsByIndex((int) (Math.random() * BootsDatabase.getNumberOfBootsTypes())),
+                WeaponDatabase.getWeaponByIndex((int) (Math.random() * WeaponDatabase.getNumberOfWeaponTypes()))
+            };
+            
+            try {
+                new Shop(player, equipmentsForSale).run();
+            } catch (RolladieException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // shop not provisioned
+            turnsWithoutShop++;
+        }
     }
 }

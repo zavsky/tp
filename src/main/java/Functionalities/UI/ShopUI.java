@@ -32,7 +32,7 @@ public class ShopUI extends UI {
         System.out.println(LINE_SEPARATOR);
     }
 
-    public static void printShopCollection(Player player, Equipment[] equipments) {
+    public static void printShopCollection(Player player, Equipment... equipments) {
         System.out.println(LINE_SEPARATOR);
         System.out.println("Shop Equipment Collection:");
         for (int i = 0; i < equipments.length; i++) {
