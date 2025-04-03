@@ -6,6 +6,7 @@ import Game.Characters.Character;
 import Game.Characters.Enemy;
 import Game.Characters.Player;
 import Game.Events.Battle.Battle;
+import Game.Menu.MenuSystem;
 import Game.Events.Event;
 import Game.Game;
 
@@ -133,7 +134,7 @@ public class Storage {
      * Returns Game object after decoding text from savefile into game parameters
      * @return Game
      */
-    public static Game loadGame(Terminal terminal) throws RolladieException {
+    public static Game loadGame(Terminal terminal, MenuSystem menuSystem) throws RolladieException {
         File f = new File(FILE_DIRECTORY + FILE_NAME);
         Scanner s;
         try {
@@ -160,6 +161,6 @@ public class Storage {
         } catch (RolladieException e) {
             // UI.printErrorMessage("savefile.txt corrupted\nStarting new game");
         }
-        return new Game(terminal);
+        return new Game(terminal, menuSystem);
     }
 }

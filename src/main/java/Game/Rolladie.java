@@ -25,7 +25,7 @@ public class Rolladie {
     private static Terminal terminal = null;
 
     public static void main(String[] args) {
-        assert false : "dummy assertion set to fail";
+        // assert false : "dummy assertion set to fail";
 
         try {
             terminal = new DefaultTerminalFactory().createTerminal();
@@ -47,7 +47,7 @@ public class Rolladie {
                 return false; });
             mainMenu.put("Load Game", () -> { 
                 try {
-                    Game game = Storage.loadGame(terminal); // May throw RolladieException
+                    Game game = Storage.loadGame(terminal, menuSystem); // May throw RolladieException
                     gameStart(game, menuSystem);
                 } catch (RolladieException e) {
                     e.printStackTrace();

@@ -17,6 +17,7 @@ import java.util.Queue;
 
 import com.googlecode.lanterna.terminal.Terminal;
 
+import java.util.Scanner;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -72,8 +73,9 @@ public class Game {
             try {
                 saveGame();
                 this.currentEvent.run();
-                ///////
-                optionalShopEvent();
+                if (player.isAlive) {
+                    optionalShopEvent();
+                }
                 this.currentEvent = nextEvent();
             } catch (RolladieException e) {
                 e.printStackTrace();
@@ -82,6 +84,10 @@ public class Game {
         if (!this.player.isAlive) {
             UI.printDeathMessage(terminal, 0, terminalYPos);
         }
+
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+        scanner.close();
     }
 
 
