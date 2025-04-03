@@ -91,7 +91,7 @@ public class Game {
     private Queue<Event> generateEventQueue() {
         Queue<Event> eventsQueue = new LinkedList<>();
         for (int i = 0; i < MAX_NUMBER_OF_EVENTS; i++) {
-            eventsQueue = generateEvent(eventsQueue, i);
+            eventsQueue.add(generateEvent(i));
         }
         return eventsQueue;
     }
@@ -103,12 +103,8 @@ public class Game {
      * Idea: Interleaving the event queue with Battle and Non-Battle events
      * @return Event
      */
-    private Queue<Event> generateEvent(Queue<Event> eventsQueue, int turn) {
-        eventsQueue.add(new Battle(this.player, turn));
-        eventsQueue.add(new Loot(this.player));
-        Equipment[] equipments = new Equipment[]{ArmorDatabase.getArmorByIndex(turn), BootsDatabase.getBootsByIndex(turn), WeaponDatabase.getWeaponByIndex(turn)};
-        eventsQueue.add(new Shop(this.player, equipments));
-        return eventsQueue;
+    private Event generateEvent(int turn) {
+        return new Battle(this.player, turn);
     }
 
     /**

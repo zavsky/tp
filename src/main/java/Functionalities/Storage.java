@@ -5,16 +5,22 @@ import Functionalities.UI.UI;
 import Game.Characters.Character;
 import Game.Characters.Enemy;
 import Game.Characters.Player;
+import Game.Equipment.ArmorDatabase;
+import Game.Equipment.BootsDatabase;
 import Game.Equipment.Equipment;
 import Game.Equipment.EquipmentList;
+import Game.Equipment.WeaponDatabase;
 import Game.Events.Battle.Battle;
 import Game.Events.Event;
+import Game.Events.Loot.Loot;
 import Game.Game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -74,8 +80,51 @@ public class Storage {
             throw new RolladieException("savefile.txt failed to save");
         }
     }
-    private static EquipmentList parseEquipmentListFromText(String[] parameters) {
-        return null;
+
+    private static Equipment[] parseEquipmentArrayFromText(String[] parameters) throws RolladieException {
+        ArrayList<Equipment> equipments = new ArrayList<>();
+        for (int i = 0; i < parameters.length; i += 2) {
+            String equipmentType = parameters[i];
+            String equipmentName = parameters[i + 1];
+            switch (equipmentType) {
+            case "armor":
+                equipments.add(ArmorDatabase.getArmorByName(equipmentName));
+                break;
+            case "boots":
+                equipments.add(BootsDatabase.getBootsByName(equipmentName));
+                break;
+            case "weapon":
+                equipments.add(WeaponDatabase.getWeaponByName(equipmentName));
+                break;
+            default:
+                throw new RolladieException("Invalid equipment type");
+            }
+        }
+        return (Equipment[]) equipments.toArray();
+    }
+
+    private static EquipmentList parseEquipmentListFromText(String[] parameters) throws RolladieException {
+        Optional<Equipment> armor = Optional.empty();
+        Optional<Equipment> boots = Optional.empty();
+        Optional<Equipment> weapon = Optional.empty();
+        for (int i = 0; i < parameters.length; i += 2) {
+            String equipmentType = parameters[i];
+            String equipmentName = parameters[i + 1];
+            switch (equipmentType) {
+            case "armor":
+                armor = Optional.of(ArmorDatabase.getArmorByName(equipmentName));
+                break;
+            case "boots":
+                boots = Optional.of(BootsDatabase.getBootsByName(equipmentName));
+                break;
+            case "weapon":
+                weapon = Optional.of(WeaponDatabase.getWeaponByName(equipmentName));
+                break;
+            default:
+                throw new RolladieException("Invalid equipment type");
+            }
+        }
+        return new EquipmentList(List.of(armor, boots, weapon));
     }
 
     /**
@@ -134,6 +183,10 @@ public class Storage {
             } catch (RolladieException e) {
                 System.out.println(e.getMessage());
             }
+        case "Loot":
+            return new Loot(player);
+        case "Shop":
+            Equipment[] equipments = parseEquipmentArrayFromText(Arrays.copyOfRange(parameters, 1, parameters.length + 1));
         default:
             throw new RolladieException("Invalid Event Type");
         }
