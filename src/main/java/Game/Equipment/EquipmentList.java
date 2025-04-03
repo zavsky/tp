@@ -36,7 +36,7 @@ public class EquipmentList {
 
     public EquipmentList addEquipment(Equipment equipment) throws RolladieException {
         switch(equipment.getEquipmentType()) {
-        case "armour":
+        case "armor":
             return new EquipmentList(addToEquipmentList(equipment, ARMOUR_SLOT));
         case "boots":
             return new EquipmentList(addToEquipmentList(equipment, BOOTS_SLOT));
@@ -85,6 +85,14 @@ public class EquipmentList {
 
         return currSlot.orElseThrow(() -> new RolladieException(equipmentType + " is not equipped!"));
     }
+
+    public Equipment[] getEquipmentArray() {
+        return equipmentSlot.stream()
+                .filter(Optional::isPresent)  // Remove empty slots
+                .map(Optional::get)           // Extract Equipment objects
+                .toArray(Equipment[]::new);   // Convert to an array
+    }
+    
 
     public int getEquipmentAttack() {
         return equipmentSlot.stream().filter(Optional::isPresent)

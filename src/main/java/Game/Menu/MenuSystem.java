@@ -4,6 +4,7 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
 import Exceptions.RolladieException;
+import Game.Actions.Action;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -11,15 +12,8 @@ import java.util.Map;
 
 public class MenuSystem {
     private Terminal terminal = null;
-    public MenuSystem() {
-        try {
-            terminal = new DefaultTerminalFactory().createTerminal();
-            // terminal.enterPrivateMode();
-            // terminal.clearScreen();
-            // terminal.setCursorVisible(false);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public MenuSystem(Terminal terminal) {
+        this.terminal = terminal;
     }
 
     public boolean displayMenu(String title, Map<String, MenuAction> options) throws IOException {
@@ -27,13 +21,48 @@ public class MenuSystem {
 
         Menu menu = new Menu(terminal, title, optionTitles);
 
-        while (true) {
+        // while (true) {
             int selectedOption = menu.display();
             MenuAction action = options.get(optionTitles[selectedOption]);
 
             boolean shouldExit = action.execute();
             if (shouldExit) return true;
+            return false;
+        // }
+    }
+
+    public Action displayParserMenu(String title, Map<String, Action> options) {
+        String[] optionTitles = options.keySet().toArray(new String[0]);
+
+        Menu menu = new Menu(terminal, title, optionTitles);
+        int selectedOption = 0;
+
+        try {
+            selectedOption = menu.display();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        Action action = options.get(optionTitles[selectedOption]);
+
+        return action;
+    }
+
+    public int displayBuyMenu(String title, Map<String, Integer> options) {
+        String[] optionTitles = options.keySet().toArray(new String[0]);
+
+        Menu menu = new Menu(terminal, title, optionTitles);
+        int selectedOption = 0;
+
+        try {
+            selectedOption = menu.display();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        int index = options.get(optionTitles[selectedOption]);
+
+        return index;
     }
 
     public void reinitializeTerminal() throws IOException {

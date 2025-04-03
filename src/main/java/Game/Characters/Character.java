@@ -2,8 +2,12 @@ package Game.Characters;
 
 import Functionalities.UI.BattleUI;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import com.googlecode.lanterna.terminal.Terminal;
 
 import static Functionalities.Storage.SAVE_DELIMITER;
 
@@ -19,6 +23,7 @@ public class Character {
     protected int currentHealthIndex = 0;
     protected final int maxHealth;
     public boolean isAlive;
+    private Terminal terminal;
 
     /**
      * Construct a Character object.
@@ -39,6 +44,13 @@ public class Character {
         characterName = name;
         isAlive = true;
         maxHealth = healthBars[0];
+        
+        try {
+            terminal = new DefaultTerminalFactory().createTerminal();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     /**
@@ -161,10 +173,10 @@ public class Character {
         defender.takeDamage(damage);
 
         if (this instanceof Player) {
-            BattleUI.printPlayerAttack(this, defender, damage);
+            BattleUI.printPlayerAttack(terminal, this, defender, damage);
         }
         else {
-            BattleUI.printEnemyAttack(defender, this, damage);
+            BattleUI.printEnemyAttack(terminal, defender, this, damage);
         }
 
     }

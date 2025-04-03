@@ -74,8 +74,13 @@ public class Player extends Character {
      * @param spentGold An integer to represent the amount spent.
      */
 
-    public void spendGold(Gold spentGold) {
-        this.gold = this.gold.spendGold(spentGold);
+    public boolean spendGold(Gold spentGold) {
+        Gold tempGold = this.gold.spendGold(spentGold);
+        if (tempGold.getAmount() >= 0) {
+            this.gold = tempGold;
+            return true;
+        }
+        return false;
     }
 
     public Gold getGold() {
@@ -83,8 +88,11 @@ public class Player extends Character {
     }
 
     public void buyEquipment(Equipment equipment) throws RolladieException {
-        this.equipments = this.equipments.addEquipment(equipment);
-        spendGold(new Gold(equipment.getValue()));
+        // if sufficient gold to purchase item, equip the item
+        if (spendGold(new Gold(equipment.getValue()))) {
+            this.equipments = this.equipments.addEquipment(equipment);
+        }
+        
     }
 
     public void sellEquipment(String equipmentType) throws RolladieException {
@@ -146,5 +154,9 @@ public class Player extends Character {
     public String toString() {
         return super.toString() +  "\nEquipments: "
                 + equipments.toString();
+    }
+
+    public Equipment[] getEquipments() {
+        return equipments.getEquipmentArray();
     }
 }

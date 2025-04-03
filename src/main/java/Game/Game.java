@@ -10,9 +10,13 @@ import Game.Equipment.Equipment;
 import Game.Equipment.WeaponDatabase;
 import Game.Events.Battle.Battle;
 import Game.Events.Shop.Shop;
+import Game.Menu.MenuSystem;
 import Game.Events.Event;
 
 import java.util.Queue;
+
+import com.googlecode.lanterna.terminal.Terminal;
+
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -28,6 +32,9 @@ public class Game {
     private Event currentEvent;
     private int score = 0;
     private int turnsWithoutShop = 0;
+    private Terminal terminal;
+    private int terminalYPos = 0;
+    private MenuSystem menuSystem;
 
     /**
      * Constructor to instantiate a new game
@@ -35,10 +42,12 @@ public class Game {
      * Generates the event queue
      * Polls the first event from the queue to be the current event
      */
-    public Game() {
+    public Game(Terminal terminal, MenuSystem menuSystem) {
         this.player = new Player(new int[]{100}, 10, 10, "Hero");
         this.eventsQueue = generateEventQueue();
         this.currentEvent = nextEvent();
+        this.terminal = terminal;
+        this.menuSystem = menuSystem;
     }
 
     /**
@@ -67,11 +76,11 @@ public class Game {
                 optionalShopEvent();
                 this.currentEvent = nextEvent();
             } catch (RolladieException e) {
-                UI.printErrorMessage(e.getMessage());
+                e.printStackTrace();
             }
         }
         if (!this.player.isAlive) {
-            UI.printDeathMessage();
+            UI.printDeathMessage(terminal, 0, terminalYPos);
         }
     }
 
@@ -119,6 +128,7 @@ public class Game {
         if (Math.random() <= (0.3 + 0.2 * turnsWithoutShop)) {
             turnsWithoutShop = 0;
             // shop entered
+            // generate one item of each equipment class
             Equipment[] equipmentsForSale = {
                 ArmorDatabase.getArmorByIndex((int) (Math.random() * ArmorDatabase.getNumberOfArmorTypes())),
                 BootsDatabase.getBootsByIndex((int) (Math.random() * BootsDatabase.getNumberOfBootsTypes())),
@@ -126,7 +136,7 @@ public class Game {
             };
             
             try {
-                new Shop(player, equipmentsForSale).run();
+                new Shop(terminal,menuSystem, player, equipmentsForSale).run();
             } catch (RolladieException e) {
                 e.printStackTrace();
             }

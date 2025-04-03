@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import com.googlecode.lanterna.terminal.Terminal;
+
 import Exceptions.RolladieException;
 import Functionalities.Parser;
 import Functionalities.Storage;
@@ -19,35 +22,49 @@ import Game.Menu.TerminalUtils;
 
 public class Rolladie {
 
+    private static Terminal terminal = null;
+
     public static void main(String[] args) {
         assert false : "dummy assertion set to fail";
 
         try {
+            terminal = new DefaultTerminalFactory().createTerminal();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        try {
             TerminalUtils.saveTerminalState(); // Before launching Lanterna
-            MenuSystem menuSystem = new MenuSystem();
+            MenuSystem menuSystem = new MenuSystem(terminal);
             menuSystem.enterPrivateMode();
             
             Map<String, MenuAction> mainMenu = new LinkedHashMap<>();
 
             mainMenu.put("Start Game", () -> { 
-                Game game = new Game();
+                Game game = new Game(terminal, menuSystem);
                 gameStart(game, menuSystem);
                 return false; });
             mainMenu.put("Load Game", () -> { 
                 try {
-                    Game game = Storage.loadGame(); // May throw RolladieException
+                    Game game = Storage.loadGame(terminal); // May throw RolladieException
                     gameStart(game, menuSystem);
                 } catch (RolladieException e) {
-                    UI.printErrorMessage("Failed to load game: " + e.getMessage());
+                    e.printStackTrace();
                     return true;
                 }
                 return false; });
-            mainMenu.put("Exit", () -> { UI.printExitMessage(); System.exit(0); return true; });
+            mainMenu.put("Exit", () -> { 
+                try {
+                    UI.printExitMessage(terminal, 0, 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } System.exit(0); return true; });
 
             menuSystem.displayMenu("Main Menu", mainMenu);
 
         } catch (IOException | InterruptedException e) {
-            UI.printErrorMessage(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -68,7 +85,7 @@ public class Rolladie {
             menuSystem.enterPrivateMode();
 
         } catch (IOException | InterruptedException e) {
-            UI.printErrorMessage(e.getMessage());
+            e.printStackTrace();
             try {
                 TerminalUtils.resetTerminalOverkill();
             } catch (Exception ignored) {}

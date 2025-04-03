@@ -18,6 +18,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
+import com.googlecode.lanterna.terminal.Terminal;
+
 /**
  * Translates the game data from and into text save file
  * savefile.txt is structured as such:
@@ -131,7 +133,7 @@ public class Storage {
      * Returns Game object after decoding text from savefile into game parameters
      * @return Game
      */
-    public static Game loadGame() throws RolladieException {
+    public static Game loadGame(Terminal terminal) throws RolladieException {
         File f = new File(FILE_DIRECTORY + FILE_NAME);
         Scanner s;
         try {
@@ -156,8 +158,8 @@ public class Storage {
         } catch (FileNotFoundException e) {
             throw new RolladieException("savefile.txt not found!");
         } catch (RolladieException e) {
-            UI.printErrorMessage("savefile.txt corrupted\nStarting new game");
+            // UI.printErrorMessage("savefile.txt corrupted\nStarting new game");
         }
-        return new Game();
+        return new Game(terminal);
     }
 }
