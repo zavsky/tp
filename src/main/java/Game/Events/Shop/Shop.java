@@ -40,7 +40,11 @@ public class Shop extends Event {
 
     @Override
     public String toText() {
-        return this.getEventIcon();
+        String shopText = this.getEventIcon();
+        for (Equipment equipment: equipments) {
+            shopText += SAVE_DELIMITER + equipment.toText();
+        }
+        return shopText;
     }
 
     private Action getCurrAction() {

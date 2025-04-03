@@ -1,5 +1,7 @@
 package Game.Equipment;
 
+import static Functionalities.Storage.SAVE_DELIMITER;
+
 public class Armor extends Equipment {
     /**
      * Constructor for an armor piece. Armor can have health, defense and agility stats.
@@ -20,5 +22,16 @@ public class Armor extends Equipment {
     @Override
     public String getEquipmentType() {
         return "armor";
+    }
+
+
+    /**
+     * Returns the encoded string of armor attributes to be saved
+     * @return encoded string
+     */
+    @Override
+    public String toText() {
+        return this.getEquipmentType() + SAVE_DELIMITER +
+                this.name;
     }
 }

@@ -9,6 +9,7 @@ import Game.Equipment.BootsDatabase;
 import Game.Equipment.Equipment;
 import Game.Equipment.WeaponDatabase;
 import Game.Events.Battle.Battle;
+import Game.Events.Loot.Loot;
 import Game.Events.Shop.Shop;
 import Game.Events.Event;
 
@@ -23,7 +24,7 @@ import java.util.Map;
  * Manages all game logic specifically: Event Generation and Sequence
  */
 public class Game {
-    private static final int MAX_NUMBER_OF_EVENTS = 5;
+    private static final int MAX_NUMBER_OF_EVENTS = 4;
     private Queue<Event> eventsQueue = new LinkedList<>();
     private Player player;
     private Event currentEvent;
@@ -90,7 +91,7 @@ public class Game {
     private Queue<Event> generateEventQueue() {
         Queue<Event> eventsQueue = new LinkedList<>();
         for (int i = 0; i < MAX_NUMBER_OF_EVENTS; i++) {
-            eventsQueue.add(generateEvent(i));
+            eventsQueue = generateEvent(eventsQueue, i);
         }
         return eventsQueue;
     }
@@ -102,8 +103,12 @@ public class Game {
      * Idea: Interleaving the event queue with Battle and Non-Battle events
      * @return Event
      */
-    private Event generateEvent(int turn) {
-        return new Battle(this.player, turn);
+    private Queue<Event> generateEvent(Queue<Event> eventsQueue, int turn) {
+        eventsQueue.add(new Battle(this.player, turn));
+        eventsQueue.add(new Loot(this.player));
+        Equipment[] equipments = new Equipment[]{ArmorDatabase.getArmorByIndex(turn), BootsDatabase.getBootsByIndex(turn), WeaponDatabase.getWeaponByIndex(turn)};
+        eventsQueue.add(new Shop(this.player, equipments));
+        return eventsQueue;
     }
 
     /**

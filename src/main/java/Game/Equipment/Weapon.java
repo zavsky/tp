@@ -1,5 +1,7 @@
 package Game.Equipment;
 
+import static Functionalities.Storage.SAVE_DELIMITER;
+
 public class Weapon extends Equipment {
 
     /**
@@ -20,5 +22,15 @@ public class Weapon extends Equipment {
 
     public String getEquipmentType() {
         return "weapon";
+    }
+
+    /**
+     * Returns the encoded string of weapon attributes to be saved
+     * @return encoded string
+     */
+    @Override
+    public String toText() {
+        return this.getEquipmentType() + SAVE_DELIMITER +
+                this.name;
     }
 }

@@ -1,5 +1,7 @@
 package Game.Equipment;
 
+import static Functionalities.Storage.SAVE_DELIMITER;
+
 public class Boots extends Equipment{
 
     /**
@@ -14,10 +16,21 @@ public class Boots extends Equipment{
         this.agility = agility;
         this.attack = 0;
         this.health = 0;
+        this.value = value;
     }
 
     @Override
     public String getEquipmentType() {
         return "boots";
+    }
+
+    /**
+     * Returns the encoded string of boots attributes to be saved
+     * @return encoded string
+     */
+    @Override
+    public String toText() {
+        return this.getEquipmentType() + SAVE_DELIMITER +
+                this.name;
     }
 }

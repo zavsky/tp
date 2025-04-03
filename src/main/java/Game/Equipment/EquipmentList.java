@@ -15,6 +15,8 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static Functionalities.Storage.SAVE_DELIMITER;
+
 /**
  * EquipmentList class to store information on the equipment that the player is using
  */
@@ -27,7 +29,7 @@ public class EquipmentList {
     private static final int WEAPON_SLOT = 2;
 
     public EquipmentList() {
-        equipmentSlot =  List.of(Optional.empty(), Optional.empty(), Optional.empty());
+        equipmentSlot = List.of(Optional.empty(), Optional.empty(), Optional.empty());
     }
 
     public EquipmentList(List<Optional<Equipment>> equipmentSlot) {
@@ -35,8 +37,8 @@ public class EquipmentList {
     }
 
     public EquipmentList addEquipment(Equipment equipment) throws RolladieException {
-        switch(equipment.getEquipmentType()) {
-        case "armour":
+        switch (equipment.getEquipmentType()) {
+        case "armor":
             return new EquipmentList(addToEquipmentList(equipment, ARMOUR_SLOT));
         case "boots":
             return new EquipmentList(addToEquipmentList(equipment, BOOTS_SLOT));
@@ -67,8 +69,8 @@ public class EquipmentList {
 
     public Equipment getEquipment(String equipmentType) throws RolladieException {
         int curr_index;
-        switch(equipmentType) {
-        case "armour":
+        switch (equipmentType) {
+        case "armor":
             curr_index = ARMOUR_SLOT;
             break;
         case "boots":
@@ -114,5 +116,21 @@ public class EquipmentList {
         return equipmentSlot.stream().filter(Optional::isPresent)
                 .map(x -> x.get().toString())
                 .reduce("", (x, y) -> x + "\n" + UI.LINE_SEPARATOR + "\n" + y);
+    }
+
+    /**
+     * Returns the encoded string of equipmentSlot attributes to be saved
+     *
+     * @return encoded string
+     */
+    public String toText() {
+        String equipmentsText = "";
+        Optional<Equipment> armor = this.equipmentSlot.get(ARMOUR_SLOT);
+        equipmentsText += armor.map(x -> x.toText() + SAVE_DELIMITER).orElse("armor" + SAVE_DELIMITER + "empty" + SAVE_DELIMITER);
+        Optional<Equipment> boots = this.equipmentSlot.get(BOOTS_SLOT);
+        equipmentsText += boots.map(x -> x.toText() + SAVE_DELIMITER).orElse("boots" + SAVE_DELIMITER + "empty" + SAVE_DELIMITER);
+        Optional<Equipment> weapon = this.equipmentSlot.get(WEAPON_SLOT);
+        equipmentsText += weapon.map(x -> x.toText()).orElse("weapon" + SAVE_DELIMITER + "empty");
+        return equipmentsText;
     }
 }

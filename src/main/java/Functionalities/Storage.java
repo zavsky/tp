@@ -5,6 +5,8 @@ import Functionalities.UI.UI;
 import Game.Characters.Character;
 import Game.Characters.Enemy;
 import Game.Characters.Player;
+import Game.Equipment.Equipment;
+import Game.Equipment.EquipmentList;
 import Game.Events.Battle.Battle;
 import Game.Events.Event;
 import Game.Game;
@@ -15,6 +17,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -34,6 +38,7 @@ public class Storage {
     /**
      * Saves the attributes of the game into a text file
      * defined by FILE_NAME in FILE_DIRECTORY
+     *
      * @param player
      * @param currentEvent
      * @param eventsQueue
@@ -69,10 +74,14 @@ public class Storage {
             throw new RolladieException("savefile.txt failed to save");
         }
     }
+    private static EquipmentList parseEquipmentListFromText(String[] parameters) {
+        return null;
+    }
 
     /**
      * Returns subclass of Character defined by characterType
      * Decodes Character from text within savefile
+     *
      * @param characterType
      * @param parameters
      * @return subclass of Character
@@ -95,7 +104,10 @@ public class Storage {
         String characterName = parameters[3];
         int maxHealth = Integer.parseInt(parameters[4]);
         if (characterType.equals("Player")) {
-            return new Player(healthBars, attackValue, defenseValue, characterName, maxHealth);
+            int amount = Integer.parseInt(parameters[5]);
+            String[] equipmentParameters = Arrays.copyOfRange(parameters, 6, parameters.length + 1);
+            EquipmentList equipments = parseEquipmentListFromText(equipmentParameters);
+            return new Player(healthBars, attackValue, defenseValue, characterName, maxHealth, amount, equipments);
         } else if (characterType.equals("Enemy")) {
             return new Enemy(healthBars, attackValue, defenseValue, characterName, maxHealth);
         } else {
@@ -106,6 +118,7 @@ public class Storage {
     /**
      * Returns subclass of Event defined by eventType
      * Decodes Event from text within savefile
+     *
      * @param player
      * @param parameters
      * @return subclass of Event
@@ -118,10 +131,9 @@ public class Storage {
             try {
                 Enemy enemy = (Enemy) parseCharacterFromText("Enemy", Arrays.copyOfRange(parameters, 1, parameters.length + 1));
                 return new Battle(player, enemy);
-            }
-            catch (RolladieException e){
+            } catch (RolladieException e) {
                 System.out.println(e.getMessage());
-        }
+            }
         default:
             throw new RolladieException("Invalid Event Type");
         }
@@ -129,6 +141,7 @@ public class Storage {
 
     /**
      * Returns Game object after decoding text from savefile into game parameters
+     *
      * @return Game
      */
     public static Game loadGame() throws RolladieException {
@@ -137,12 +150,12 @@ public class Storage {
         try {
             s = new Scanner(f);
             // 1st line is player data
-            String[] firstLine = s.nextLine().split(LOAD_DELIMITER);
-            Player player = (Player) parseCharacterFromText("Player", firstLine);
+            String[] playerData = s.nextLine().split(LOAD_DELIMITER);
+            Player player = (Player) parseCharacterFromText("Player", playerData);
 
             // 2nd line is currentEvent data
-            String[] secondLine = s.nextLine().split(LOAD_DELIMITER);
-            Event currentEvent = parseEventFromText(player, secondLine);
+            String[] currentEventData = s.nextLine().split(LOAD_DELIMITER);
+            Event currentEvent = parseEventFromText(player, currentEventData);
 
             // 3rd line onwards is eventsQueue data
             Queue<Event> eventsQueue = new LinkedList<>();
