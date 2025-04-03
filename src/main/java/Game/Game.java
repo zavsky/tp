@@ -8,7 +8,10 @@ import Game.Events.Battle.Battle;
 import Game.Events.Event;
 
 import java.util.Queue;
+import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * Manages all game logic specifically: Event Generation and Sequence
@@ -73,7 +76,7 @@ public class Game {
     private Queue<Event> generateEventQueue() {
         Queue<Event> eventsQueue = new LinkedList<>();
         for (int i = 0; i < MAX_NUMBER_OF_EVENTS; i++) {
-            eventsQueue.add(generateEvent());
+            eventsQueue.add(generateEvent(i));
         }
         return eventsQueue;
     }
@@ -85,8 +88,8 @@ public class Game {
      * Idea: Interleaving the event queue with Battle and Non-Battle events
      * @return Event
      */
-    private Event generateEvent() {
-        return new Battle(this.player);
+    private Event generateEvent(int turn) {
+        return new Battle(this.player, turn);
     }
 
     /**

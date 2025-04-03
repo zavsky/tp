@@ -13,6 +13,8 @@ import Game.Actions.ShopAction.SellAction;
 
 import java.util.Scanner;
 
+import Functionalities.UI.UI;
+
 /**
  * Parser class to handle user inputs.
  * Parser object is created to take in user inputs and handle them.
@@ -24,10 +26,14 @@ public class Parser {
     private static final String ACTION_EXIT = "exit";
     private static final String ACTION_FLEE = "flee";
     private static final String ACTION_DEFEND = "defend";
+    private static final String ACTION_DEFEND_SHORT = "d";
     private static final String ACTION_ATTACK = "attack";
+    private static final String ACTION_ATTACK_SHORT = "a";
     private static final String ACTION_BUY = "buy";
     private static final String ACTION_SELL = "sell";
     private static final String ACTION_LEAVE = "leave";
+
+    private static final Scanner scanner = new Scanner(System.in);
 
 
     protected static String[] splitActionWordAndArgs(String rawUserInput) {
@@ -50,12 +56,13 @@ public class Parser {
             return new ExitAction();
         case ACTION_FLEE:
             return new FleeAction();
-        case ACTION_DEFEND:
+        case ACTION_DEFEND, ACTION_DEFEND_SHORT:
             return new DefendAction();
-        case ACTION_ATTACK:
+        case ACTION_ATTACK, ACTION_ATTACK_SHORT:
             return new AttackAction();
         default:
-            return new DefaultAction();
+            UI.printMessage("Invalid action");
+            return getAction(readInput());
         }
     }
 
@@ -75,12 +82,13 @@ public class Parser {
         case ACTION_LEAVE:
             return new LeaveAction();
         default:
-            return new DefaultAction();
+            UI.printMessage("Invalid action");
+            return getAction(readInput());
         }
     }
 
     public static String readInput() {
-        String inputLine = new Scanner(System.in).nextLine().toLowerCase();
+        String inputLine = scanner.nextLine().toLowerCase();
         return inputLine;
     }
 
