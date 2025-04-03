@@ -74,12 +74,16 @@ public class Player extends Character {
      * @param spentGold An integer to represent the amount spent.
      */
 
-    public void spendGold(Gold spentGold) {
+    public void spendGold(Gold spentGold) throws RolladieException {
         this.gold = this.gold.spendGold(spentGold);
     }
 
     public Gold getGold() {
         return gold;
+    }
+
+    public boolean hasEnoughGold(int amount) {
+        return getGold().getAmount() >= amount;
     }
 
     public void buyEquipment(Equipment equipment) throws RolladieException {
