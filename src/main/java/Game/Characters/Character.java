@@ -1,10 +1,11 @@
 package Game.Characters;
 
-import Functionalities.UI;
+import Functionalities.UI.BattleUI;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static Functionalities.Storage.SAVE_DELIMITER;
-import static Functionalities.Storage.saveGame;
 
 /**
  * A class to represent characters in the game.
@@ -40,12 +41,22 @@ public class Character {
         maxHealth = healthBars[0];
     }
 
+    /**
+     * Overloaded constructor to construct character object with defined parameters
+     * Usage within Storage class for loading game
+     * @param health
+     * @param attack
+     * @param defense
+     * @param name
+     * @param maxHealth
+     */
+
     public Character(int[] health, int attack, int defense, String name, int maxHealth) {
         this.healthBars = health;
         this.attackValue = attack;
         this.defenseValue = defense;
         this.characterName = name;
-        this.isAlive = true;
+        this.isAlive = health[0] <= 0;
         this.maxHealth = maxHealth;
     }
 
@@ -76,7 +87,20 @@ public class Character {
      * @return integer array representing the character's health.
      */
     public int[] getHealthBars() {
-        return healthBars;
+        return getNonZeroElements(healthBars);
+    }
+
+    public static int[] getNonZeroElements(int[] arr) {
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        for (int num : arr) {
+            if (num > 0) {
+                result.add(num);
+            }
+        }
+        
+        // Convert ArrayList to int array
+        return result.stream().mapToInt(Integer::intValue).toArray();
     }
 
     /**
@@ -123,6 +147,7 @@ public class Character {
         return isDefending;
     }
 
+
     /**
      * Performs an attack on the defender.
      *
@@ -136,11 +161,12 @@ public class Character {
         defender.takeDamage(damage);
 
         if (this instanceof Player) {
-            UI.printPlayerAttack(this, defender, damage);
+            BattleUI.printPlayerAttack(this, defender, damage);
         }
         else {
-            UI.printEnemyAttack(defender, this, damage);
+            BattleUI.printEnemyAttack(defender, this, damage);
         }
+
     }
 
     /**
@@ -153,8 +179,9 @@ public class Character {
     public int calculateDamage(Character defender){
         assert defender != null: "Defender must not be null";
         assert defender.isAlive : "Defender must be alive";
+
         double damageReduction = (double) 100 / (100 + defender.getDefenseValue());
-        return (int) (this.attackValue * damageReduction);
+        return (int) (this.getAttackValue() * damageReduction);
     }
 
     /**
@@ -169,20 +196,18 @@ public class Character {
 
         int remainingDamage = damage;
         while (remainingDamage > 0) {
-
             /* Case 1 */
-            if (currentHealthIndex >= healthBars.length) {
-                isAlive = false;
-                break;
-            }
-            /* Case 2 */
             if (healthBars[currentHealthIndex] - remainingDamage <= 0) {
                 remainingDamage -= healthBars[currentHealthIndex];
                 healthBars[currentHealthIndex] = 0;
                 currentHealthIndex++;
-            }
-            else {
+            }else {
                 healthBars[currentHealthIndex] -= remainingDamage;
+                break;
+            }
+            /* Case 2 */
+            if (currentHealthIndex >= healthBars.length) {
+                isAlive = false;
                 break;
             }
         }
@@ -193,25 +218,25 @@ public class Character {
         String animatedHealthBars = "";
         for (int health : healthBars) {
             animatedHealthBars += "[";
-            for (int i = 0; i < health; i++) {
-                animatedHealthBars += "#";
-            }
-            for (int i = health; i < maxHealth; i++) {
-                animatedHealthBars += "_";
-            }
+            animatedHealthBars += "#".repeat(health);
+            animatedHealthBars += "_".repeat(maxHealth - health);
             animatedHealthBars += "]";
         }
 
         return this.characterName + "'s stats:" +
                 "\nHP: \t" + animatedHealthBars +
-                "\nATK:\t" + this.attackValue +
-                "\nDEF:\t" + this.defenseValue;
+                "\nATK:\t" + this.getAttackValue() +
+                "\nDEF:\t" + this.getDefenseValue();
     }
 
+    /**
+     * Returns the encoded string of player attributes to be saved
+     * @return encoded string
+     */
     public String toText() {
         return Arrays.toString(this.healthBars) + SAVE_DELIMITER +
-                this.attackValue + SAVE_DELIMITER +
-                this.defenseValue + SAVE_DELIMITER +
+                this.getAttackValue() + SAVE_DELIMITER +
+                this.getDefenseValue() + SAVE_DELIMITER +
                 this.characterName + SAVE_DELIMITER +
                 this.maxHealth;
     }

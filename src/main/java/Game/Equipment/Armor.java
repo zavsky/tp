@@ -1,25 +1,24 @@
 package Game.Equipment;
 
 public class Armor extends Equipment {
-    private String armorName;
     /**
-     * Constructor for an armor piece
-     * @param armorName Name of the armor
-     * @param defense Defense Value associated with armor
+     * Constructor for an armor piece. Armor can have health, defense and agility stats.
+     * @param name Name of the armor
+     * @param defense Defense Value associated with armor.
+     * @param health Health Value associated with armor.
+     * @param agility Agility Value associated with armor.
      */
-    public Armor(String armorName, int defense, int health, int agility) {
-        this.armorName = armorName;
+    public Armor(String name, int defense, int health, int agility, int value) {
+        this.name = name;
         this.health = health;
         this.defense = defense;
         this.agility = agility;
         this.attack = 0;
+        this.value = value;
     }
 
-
-    public String getArmorName() {
-        return armorName;
-    }
-    public int getDefense() {
-        return defense;
+    @Override
+    public String getEquipmentType() {
+        return "armor";
     }
 }

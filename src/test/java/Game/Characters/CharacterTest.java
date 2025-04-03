@@ -11,7 +11,7 @@ public class CharacterTest {
 
 
     @Test
-    void calculateDamage_enemyHasDefense_damageReduced() {
+    public void calculateDamage_EnemyHasDefense_DamageReduced() {
         int[] playerHealth = {100};
         int[] enemyHealth = {50};
         player = new Character(playerHealth,20, 10, "Hero");
@@ -21,11 +21,23 @@ public class CharacterTest {
         int actualDamage = player.calculateDamage(enemy);
 
         assertEquals(expectedDamage, actualDamage);
-
     }
 
     @Test
-    void takeDamage_playerHasHighAttack_enemyNotAlive(){
+    public void calculateDamage_EnemyIsNull_AssertionThrown(){
+        int[] playerHealth = {100};
+        player = new Character(playerHealth,20, 10, "Hero");
+
+        try {
+            player.calculateDamage(null);
+
+        } catch (AssertionError e) {
+            assertEquals("Defender must not be null", e.getMessage());
+        }
+    }
+
+    @Test
+    public void takeDamage_PlayerHasHighAttack_EnemyNotAlive(){
         int[] playerHealth = {100};
         int[] enemyHealth = {20, 30};
         player = new Character(playerHealth,2000, 10, "Hero");
@@ -37,9 +49,36 @@ public class CharacterTest {
         assertEquals(expectedEnemyStatus, enemy.getCurrentStatus());
     }
 
+    @Test
+    public void takeDamage_NegativeDamage_AssertionThrown(){
+        int[] playerHealth = {100};
+        player = new Character(playerHealth,2000, 10, "Hero");
 
+        try {
+            int invalidDamage = -100;
+            player.takeDamage(invalidDamage);
 
+        } catch (AssertionError e) {
+            assertEquals("Damage must be non-negative", e.getMessage());
+        }
 
+    }
+
+    @Test
+    public void attack_DefenderNotAlive_AssertionThrown(){
+        int[] playerHealth = {100};
+        int[] enemyHealth = {20, 30};
+        player = new Character(playerHealth,2000, 10, "Hero");
+        enemy = new Character(enemyHealth, 10, 5, "Goblin");
+
+        try {
+            player.isAlive = false;
+            enemy.attack(player);
+
+        } catch (AssertionError e) {
+            assertEquals("Damage must be alive", e.getMessage());
+        }
+    }
 
 
 }

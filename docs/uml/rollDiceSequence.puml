@@ -1,0 +1,36 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor Player
+participant "RollDice" as RD
+participant "Random Generator" as RNG
+participant "UI"
+
+Player -> RD : rollDice()
+activate RD
+RD -> RNG : generate first_dice
+RNG --> RD : return random value
+RD -> RNG : generate second_dice
+RNG --> RD : return random value
+RD -> UI : printDiceImage(first_dice)
+RD -> UI : printDiceImage(second_dice)
+RD --> Player : return first_dice + second_dice
+deactivate RD
+
+Player -> RD : diceOutcome(diceValue)
+activate RD
+alt Invalid Dice Value (<2 or >12)
+    RD -> Player : throw RolladieException
+else 2 ≤ diceValue < 5
+    RD -> UI : print "Oops, 0 bonus points"
+    RD --> Player : return MISS
+else 5 ≤ diceValue < 10
+    RD -> UI : print "10 bonus points!"
+    RD --> Player : return HIT
+else 10 ≤ diceValue ≤ 12
+    RD -> UI : print "20 bonus points!"
+    RD --> Player : return CRUCIAL_HIT
+end
+deactivate RD
+
+@enduml

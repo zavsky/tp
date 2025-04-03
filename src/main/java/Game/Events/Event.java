@@ -1,7 +1,6 @@
 package Game.Events;
 
-import Functionalities.Parser;
-import Functionalities.UI;
+import Exceptions.RolladieException;
 import Game.Characters.Player;
 
 public abstract class Event {
@@ -11,7 +10,12 @@ public abstract class Event {
         this.player = player;
     }
 
-    public abstract void run();
+    public abstract void run() throws RolladieException;
     public abstract String getEventIcon();
+
+    /**
+     * returns encoded string of the Event attributes to be saved
+     * @return Encoded String
+     */
     public abstract String toText();
 }

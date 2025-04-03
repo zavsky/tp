@@ -1,6 +1,9 @@
 package Game.Events.Battle;
 
-import Functionalities.UI;
+
+import Exceptions.RolladieException;
+import Functionalities.UI.UI;
+
 import Game.Characters.Character;
 
 /**
@@ -11,10 +14,10 @@ public class BattleLogic {
 
     private Character player;
     private Character enemy;
-    private int turnNumber = START_OF_TURN;
-    private boolean playerTurn = true;
-    private boolean hasWon = false;
-    private boolean hasBattleEnded = false;
+    private int turnNumber;
+    private boolean playerTurn;
+    private boolean hasWon;
+    private boolean hasBattleEnded;
 
     /**
      * Constructs a Battle Logic object.
@@ -25,6 +28,18 @@ public class BattleLogic {
     public BattleLogic(Character player, Character enemy) {
         this.player = player;
         this.enemy = enemy;
+        this.turnNumber = START_OF_TURN;
+        this.playerTurn = true;
+        this.hasWon = false;
+        this.hasBattleEnded = false;
+    }
+
+    public boolean getHasWon() {
+        return hasWon;
+    }
+
+    public boolean getHasBattleEnded() {
+        return hasBattleEnded;
     }
 
     /**
@@ -32,7 +47,7 @@ public class BattleLogic {
      *
      * @param turn current player/enemy's turn.
      */
-    private void checkBattleEnd(Turn turn) {
+    public void checkBattleEnd(Turn turn) {
         if (turn.hasSurrendered) {
             hasWon = false;
             hasBattleEnded = true;
@@ -48,10 +63,10 @@ public class BattleLogic {
     }
 
     /**
-     * Handles the player and enemy turns. Calls UI to print player and enemy info after enemy turn.
-     *
+     * Handles the player and enemy turns.
+     * Calls UI to print player and enemy info after enemy turn.
      */
-    private void handleTurnOrder() {
+    private void handleTurnOrder() throws RolladieException {
         if (playerTurn) {
             turnNumber++;
             PlayerTurn turn = new PlayerTurn(player, enemy);
@@ -73,7 +88,7 @@ public class BattleLogic {
      *
      * @return a boolean on whether the player has won the battle.
      */
-    public boolean BattleSequence() {
+    public boolean BattleSequence() throws RolladieException{
         while (!hasBattleEnded) {
             handleTurnOrder();
         }
