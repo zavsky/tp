@@ -1,6 +1,5 @@
 # RollaDie Developer Guide  
 
-
 ## Acknowledgement
 This project was made possible with the help of the listed tools below:
 - Junit (Provides a robust testing framework)
@@ -34,7 +33,13 @@ git clone https://github.com/AY2425S2-CS2113-T13-4/tp.git
 
 ## Design
 
-## Architecture   
+## Architecture 
+diagram          
+
+The Architecture diagram given above explain the high-level design of the application.      
+
+
+
 ### Class Structure
 ```
 +---main
@@ -82,17 +87,29 @@ git clone https://github.com/AY2425S2-CS2113-T13-4/tp.git
 {To be updated}
 
 ## Component Details {To be Updated}
+
 ### 1. Main component
+Main (consisting of classes `RollaDie` and `MainMenu`) is in charge of the app launch and shut down.     
+- At app launch, it initializes the other components in the proper sequence and establishes their connections.       
+- At shut down, it deactivates the other components and invokes cleanup methods as needed.  
+
+The bulk of the app’s work is done by the following components:
+- `UI`: Designed for enhancing user interactions such as printing messages to the terminal.
+- `Parser`: Parse and process user input from the terminal.
+- `Game`: Manipulate major gameplay mechanics.
+- `Storage`: Manages saving and loading data to and from the hard disk.        
+- `Exception`: Handle exceptions.
+
 ### 2. UI Component
-### 3. Logic Component
-### 4. Model Component
+### 3. Parser Component
+### 4. Game Component
+
 ### 5. Storage Component
 The Storage Component is responsible for saving and loading game progress.
 It reads and writes game data to a text file (savefile.txt),
 ensuring that players can resume their game after closing the application.         
 
 The Storage class includes the following functionalities:
-
 1. Save the game:
 
 - The `saveGame(Player, Event, Queue<Event>)` method writes player stats, the current event,
@@ -111,7 +128,7 @@ and upcoming events to a file.
 - `parseEventFromText()` reconstructs different game events, such as battles, from saved data.
 
 
-### 6. Utility Component
+### 6. Exception Component
 - Includes helper classes that support other components.
 - Exceptions: Contains `RolladieException.java` for handling custom errors.
 - Parsers & Helpers: Includes Parser.java for reading user input.
@@ -152,9 +169,6 @@ which calculates the damage and applies it to the enemy.
 7. The damage is calculated and applied to the player, followed by displaying the attack message and updating character info via UI.
 The turn ends with BattleLogic checking if the battle should continue.
 8. This loop repeats until the battle ends.
-
-
-
 
 **Sequence Diagram**         
      
@@ -282,6 +296,7 @@ rolling dice, battling enemies, and making crucial choices.
 
 ## Testing        
 {To be Updated}
+{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
 ### Structure
 Tests are organized according to the package structure:
 
@@ -309,7 +324,6 @@ Tests are organized according to the package structure:
 \---duke
 
 ```
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
 
 
 ## Glossary

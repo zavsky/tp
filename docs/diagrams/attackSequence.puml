@@ -20,10 +20,12 @@ loop Until Battle Ends
 
     alt playerTurn is true
 
+        activate PlayerTurn
+        PlayerTurn -> PlayerTurn: getCurrAction(inputString)
+        PlayerTurn -> Parser: readInput()
         User -> Parser: enter command
-        Parser -> Parser: readInput()
         Parser --> PlayerTurn: return inputString
-        PlayerTurn -> PlayerTurn: getAction(inputString)
+
 
 
         PlayerTurn -> RollDice: rollDice()
