@@ -3,10 +3,10 @@ Volume serial number is A43C-0BC4
 C:.
 |   class_structure.txt
 |   
-+---Exceptions
++---exceptions
 |       RolladieException.java
 |       
-+---Functionalities
++---functionalities
 |   |   Parser.java
 |   |   Storage.java
 |   |   
@@ -16,8 +16,8 @@ C:.
 |           ShopUI.java
 |           UI.java
 |           
-+---Game
-|   |   Game.java
++---game
+|   |   game.java
 |   |   Rolladie.java
 |   |   RollDice.java
 |   |   

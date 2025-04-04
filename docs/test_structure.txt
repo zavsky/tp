@@ -8,7 +8,7 @@ C:.
 |           ValidData.txt
 |           
 \---java
-    +---Game
+    +---game
     |   |   GameTest.java
     |   |   RolladieTest.java
     |   |   RollDiceTest.java
@@ -19,7 +19,7 @@ C:.
     |   +---Characters
     |   |       CharacterTest.java
     |   |       
-    |   \---Functionalities
+    |   \---functionalities
     |           UITest.java
     |           
     \---seedu
