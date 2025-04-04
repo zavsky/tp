@@ -34,7 +34,7 @@ git clone https://github.com/AY2425S2-CS2113-T13-4/tp.git
 ## Design
 
 ## Architecture 
-diagram          
+![Architecture diagram](uml_image/RollaDieArchitecture_Diagram.png)        
 
 The Architecture diagram given above explain the high-level design of the application.      
 
@@ -43,24 +43,24 @@ The Architecture diagram given above explain the high-level design of the applic
 ### Class Structure
 ```
 +---main
-|   \---java
-+---Exceptions  
+|   └── java
++---exceptions  
 |   └── RolladieException.java  
 |  
-+---Functionalities  
++---functionalities  
 |   ├── Parser.java  
 |   ├── Storage.java  
-|   └── UI  
+|   └── ui  
 |       ├── UI.java  
 |       ├── BattleUI.java  
 |       ├── LootUI.java  
 |       └── ShopUI.java  
 |  
-+---Game  
++---game  
 |   ├── Game.java  
 |   ├── Rolladie.java  
 |   ├── RollDice.java  
-|   ├── Actions  
+|   ├── actions  
 |   │   ├── Action.java  
 |   │   ├── DefaultAction.java  
 |   │   ├── ExitAction.java  
@@ -68,43 +68,38 @@ The Architecture diagram given above explain the high-level design of the applic
 |   │   ├── StartAction.java  
 |   │   ├── BattleAction (Attack, Defend, Flee)  
 |   │   └── ShopAction (Buy, Sell, Leave)  
-|   │  
-|   ├── Characters (Player, Enemy, EnemyDatabase)  
-|   ├── Currency (Gold)  
-|   ├── Equipment (Armor, Boots, Weapons, Databases)  
-|   ├── Events  
+|   ├── characters (Player, Enemy, EnemyDatabase)  
+|   ├── currency (Gold)  
+|   ├── equipment (Armor, Boots, Weapons, Databases)  
+|   ├── events  
 |   │   ├── Event.java  
 |   │   ├── Battle (Battle, BattleLogic, Turns)  
 |   │   ├── Loot (Loot)  
 |   │   └── Shop (Shop)  
-|   └── Menu (Menu, MenuSystem, TerminalUtils)  
+|   └── menu (Menu, MenuSystem, TerminalUtils)  
 └── seedu
 
 ```
 
-### Class Diagram
-
-{To be updated}
-
 ## Component Details {To be Updated}
 
 ### 1. Main component
-Main (consisting of classes `RollaDie` and `MainMenu`) is in charge of the app launch and shut down.     
+Main (consisting of classes `RollaDie`) is in charge of the app launch and shut down.     
 - At app launch, it initializes the other components in the proper sequence and establishes their connections.       
 - At shut down, it deactivates the other components and invokes cleanup methods as needed.  
 
 The bulk of the app’s work is done by the following components:
-- `UI`: Designed for enhancing user interactions such as printing messages to the terminal.
-- `Parser`: Parse and process user input from the terminal.
-- `Game`: Manipulate major gameplay mechanics.
+- `functionalities`: Designed for enhancing user interactions such as reading and printing messages to and from terminal.
+- `game`: Manipulate major gameplay mechanics.
 - `Storage`: Manages saving and loading data to and from the hard disk.        
 - `Exception`: Handle exceptions.
 
-### 2. UI Component
-### 3. Parser Component
-### 4. Game Component
+### 2. Functionalities component     
+{To be updated}       
+### 3. Game component       
+{To be updated}       
 
-### 5. Storage Component
+### 4. Storage component
 The Storage Component is responsible for saving and loading game progress.
 It reads and writes game data to a text file (savefile.txt),
 ensuring that players can resume their game after closing the application.         
@@ -128,9 +123,9 @@ and upcoming events to a file.
 - `parseEventFromText()` reconstructs different game events, such as battles, from saved data.
 
 
-### 6. Exception Component
+### 5. Exception component
 - Includes helper classes that support other components.
-- Exceptions: Contains `RolladieException.java` for handling custom errors.
+- exceptions: Contains `RolladieException.java` for handling custom errors.
 - Parsers & Helpers: Includes Parser.java for reading user input.
 
 ![Class Diagram](uml_image/exceptionClassDiagram.png)
@@ -243,8 +238,25 @@ The sequence diagram below illustrates the process that occurs when the player i
 
 **Sequence Diagram**
 
-### 6. Exit         
+### 6. Save       
 {To be Updated}            
+**Overview**
+
+**Implementation Details**
+
+**Sequence Diagram**
+
+
+### 7. Shop
+{To be Updated}       
+**Overview**
+
+**Implementation Details**
+
+**Sequence Diagram**
+
+### 8. Loot
+{To be Updated}       
 **Overview**
 
 **Implementation Details**
@@ -296,7 +308,7 @@ rolling dice, battling enemies, and making crucial choices.
 
 ## Testing        
 {To be Updated}
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
+
 ### Structure
 Tests are organized according to the package structure:
 
@@ -306,7 +318,7 @@ Tests are organized according to the package structure:
 |           ValidData.txt
 |           
 \---java
-+---Game
++---game
 |   |   GameTest.java
 |   |   RolladieTest.java
 |   |   RollDiceTest.java
@@ -317,7 +329,7 @@ Tests are organized according to the package structure:
 |   +---Characters
 |   |       CharacterTest.java
 |   |       
-|   \---Functionalities
+|   \---functionalities
 |           UITest.java
 |           
 \---seedu
