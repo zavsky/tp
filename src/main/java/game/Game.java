@@ -20,7 +20,7 @@ import java.util.LinkedList;
  * Manages all game logic specifically: Event Generation and Sequence
  */
 public class Game {
-    private static final int MAX_NUMBER_OF_EVENTS = 5;
+    private static final int MAX_NUMBER_OF_EVENTS = 4;
     private Queue<Event> eventsQueue = new LinkedList<>();
     private Player player;
     private Event currentEvent;

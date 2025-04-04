@@ -10,6 +10,7 @@ import game.equipment.Equipment;
 import game.events.Event;
 
 import static functionalities.Parser.getShopAction;
+import static storage.Storage.SAVE_DELIMITER;
 
 public class Shop extends Event {
     private Equipment[] equipments;
@@ -35,7 +36,11 @@ public class Shop extends Event {
 
     @Override
     public String toText() {
-        return this.getEventIcon();
+        String shopText = this.getEventIcon();
+        for (Equipment equipment: equipments) {
+            shopText += SAVE_DELIMITER + equipment.toText();
+        }
+        return shopText;
     }
 
     private Action getCurrAction() {
