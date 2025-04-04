@@ -1,12 +1,8 @@
-package game.events.battle;
+package Game.Events.Battle;
 
-import game.actions.Action;
+import Game.Actions.Action;
 
 public abstract class Turn {
-    //protected enum Action {
-    //  ATTACK, DEFEND, SURRENDER
-    //}
-    public boolean hasSurrendered = false;
     protected Action currentAction;
-
+    public boolean hasSurrendered = false;
 }
