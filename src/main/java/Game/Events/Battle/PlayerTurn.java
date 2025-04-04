@@ -73,19 +73,5 @@ public class PlayerTurn extends Turn {
             throw new RolladieException("You can only use \"defend\", \"attack\" or \"flee\" bro");
         }
 
-        /*
-        if (currentAction instanceof AttackAction) {
-            ((Player) player).setAttackBonus(diceOutcome);
-            player.attack(enemy);
-        }
-        else if (currentAction instanceof DefendAction) {
-            ((Player) player).setDefenseBonus(diceOutcome);
-            player.setDefending(true);
-            //System.out.println("defense, defenseBonus" +((Player) player).getDefenseValue()+" "+((Player) player).defenseBonus );
-        }
-        else if (currentAction instanceof FleeAction) {
-            hasSurrendered = true;
-        }
-        */
     }
 }
