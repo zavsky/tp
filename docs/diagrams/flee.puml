@@ -1,0 +1,14 @@
+@startuml
+participant Battle order 4
+participant BattleLogic order 5
+participant Playerturn order 6
+participant Turn order 7
+Battle -> BattleLogic : startBattle()
+Playerturn -> Playerturn : getCurrAction(inputString)
+Playerturn -> Turn : setHasSurrenderred(true)
+BattleLogic -> Turn : checkBattleEnd(turn)
+Turn -> BattleLogic
+BattleLogic -> BattleLogic : hasWon = false
+BattleLogic -> BattleLogic : hasBattleEnded = true
+BattleLogic -> Battle : hasWon = false
+@enduml

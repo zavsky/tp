@@ -30,7 +30,7 @@ This program is meant for CS2113 students as a stress reliever, and it aims to p
 3. Run the jar file as follows:    
     - Put the jar file in a separate empty folder
     - Navigate to the jar file folder in a terminal
-    - Run the jar file with the command: `java -jar "{file_name}"`
+    - Run the jar file with the command: `javaw -jar "{file_name}"`
 
 ## Features   
 > [!NOTE]            
