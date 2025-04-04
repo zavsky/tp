@@ -1,6 +1,6 @@
-package Game.Events.Battle;
+package game.events.battle;
 
-import Game.Actions.Action;
+import game.actions.Action;
 
 public abstract class Turn {
     protected Action currentAction;
