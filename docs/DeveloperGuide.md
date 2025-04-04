@@ -212,13 +212,19 @@ The sequence diagram below illustrates the process that occurs when the player i
 
 
 ### 3. Flee        
-{To be Updated}       
 **Overview**      
+The flee feature in Rolladie is to allow the player to escape from nasty situations.
+This feature allows players to make a strategic retreat to re gear up before fighting strong enemies.
+When the player chooses to flee, the battle ends immediately and the player goes onto the next event.
 
 **Implementation Details**          
+1. During the player's turn, **PlayerTurn** class gets the current action of player.
+2. If player chooses to flee, **PlayerTurn** sets hasSurrendered in **Turn** to true.
+3. **BattleLogic** checks if hasSurrendered in **Turn** is true and sets hasWon to false and hasBattleEnded to true.
+4. **BattleLogic** returns hasWon = false to **Battle** class to end the battle.
 
 **Sequence Diagram**          
-
+![Sequence Diagram](uml_image/fleeSequence.png)
 
 ### 4. Start      
 {To be Updated}         
