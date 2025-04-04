@@ -4,12 +4,14 @@ hide footbox
 actor User
 participant "Parser" as Parser
 participant "UI" as UI
+participant "Battle" as Battle
 participant "BattleLogic" as BattleLogic
 participant "PlayerTurn" as PlayerTurn
 participant "EnemyTurn" as EnemyTurn
 participant "RollDice" as RollDice
 participant "Enemy" as Enemy
 participant "Player" as Player
+participant "BattleUI" as BattleUI
 participant "Character" as Character
 
 
@@ -33,7 +35,8 @@ loop Until Battle Ends
         PlayerTurn -> Character: attack(enemy)
         Character -> Character: calculateDamage(enemy)
         Character --> Enemy: takeDamage(damage)
-        PlayerTurn -> UI: printPlayerAttack(player, enemy, damage)
+        PlayerTurn -> BattleUI: printPlayerAttack(player, enemy, damage)
+
         PlayerTurn -> BattleLogic: checkBattleEnd(turn)
         deactivate PlayerTurn
 
@@ -46,7 +49,7 @@ loop Until Battle Ends
         Character -> Character: calculateDamage(player)
         Character --> Player: takeDamage(damage)
 
-        EnemyTurn -> UI: printEnemyAttack(enemy, player, damage)
+        EnemyTurn -> BattleUI: printEnemyAttack(enemy, player, damage)
 
         EnemyTurn -> UI: printCharacterInfo(player)
         EnemyTurn -> UI: printCharacterInfo(enemy)
@@ -57,6 +60,7 @@ loop Until Battle Ends
     BattleLogic -> BattleLogic: checkBattleEnd()
 end
 deactivate BattleLogic
+Battle -> BattleUI: battleExit(player, enemy)
 
 @enduml
 

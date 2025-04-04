@@ -1,6 +1,8 @@
 package Game.Currency;
 
 
+import Exceptions.RolladieException;
+
 public class Gold {
     private final int amount;
 
@@ -16,7 +18,10 @@ public class Gold {
         return new Gold(amount + earned.getAmount());
     }
 
-    public Gold spendGold(Gold spent) {
+    public Gold spendGold(Gold spent) throws RolladieException {
+        if (amount < spent.getAmount()) {
+            throw new RolladieException("You do not have enough money!");
+        }
         return new Gold(amount - spent.getAmount());
     }
 

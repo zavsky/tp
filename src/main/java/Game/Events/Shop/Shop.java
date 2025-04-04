@@ -54,8 +54,13 @@ public class Shop extends Event {
         switch (currentAction.getName()) {
         case "buy":
             int equipmentIndex = Integer.parseInt(currentAction.getArgs()) - 1;
-            player.buyEquipment(equipments[equipmentIndex]);
-            ShopUI.printBuyEquipment(equipments[equipmentIndex]);
+            Equipment equipment = equipments[equipmentIndex];
+            if (player.hasEnoughGold(equipment.getValue())) {
+                player.buyEquipment(equipment);
+                ShopUI.printBuyEquipment(equipment);
+            } else {
+                UI.printErrorMessage("You don't have enough gold to buy this equipment!");
+            }
             break;
         case "sell":
             String equipmentType = currentAction.getArgs();

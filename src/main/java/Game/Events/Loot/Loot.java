@@ -41,8 +41,7 @@ public class Loot extends Event {
     @Override
     public void run() throws RolladieException {
         LootUI.printLootEntry();
-        Gold loot = null;
-        loot = generateRandomLoot();
+        Gold loot = generateRandomLoot();
         player.earnGold(loot);
         LootUI.printLootExit(CHEST, loot.getAmount(), player);
     }
