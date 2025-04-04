@@ -45,16 +45,9 @@ public class Storage {
     /**
      * Saves the attributes of the game into a text file
      * defined by FILE_NAME in FILE_DIRECTORY
-<<<<<<< HEAD:src/main/java/Functionalities/Storage.java
-     *
-     * @param player
-     * @param currentEvent
-     * @param eventsQueue
-=======
      * @param player The player involved in the event.
      * @param currentEvent Event that is currently being processed in the game.
      * @param eventsQueue Queue of upcoming events that need to be saved.
->>>>>>> master:src/main/java/storage/Storage.java
      */
     public static void saveGame(Player player, Event currentEvent, Queue<Event> eventsQueue) throws RolladieException {
         File dir = new File(FILE_DIRECTORY);
@@ -137,14 +130,8 @@ public class Storage {
     /**
      * Returns subclass of Character defined by characterType
      * Decodes Character from text within savefile
-<<<<<<< HEAD:src/main/java/Functionalities/Storage.java
-     *
-     * @param characterType
-     * @param parameters
-=======
      * @param characterType Type of the character to be parsed, such as "Player" or "Enemy".
      * @param parameters The parameters from the save file,
->>>>>>> master:src/main/java/storage/Storage.java
      * @return subclass of Character
      * @throws RolladieException If the characterType is invalid or error parsing the character's attributes.
      */
@@ -181,14 +168,8 @@ public class Storage {
     /**
      * Returns subclass of Event defined by eventType
      * Decodes Event from text within savefile
-<<<<<<< HEAD:src/main/java/Functionalities/Storage.java
-     *
-     * @param player
-     * @param parameters
-=======
      * @param player The player involved in the event.
      * @param parameters The parameters from the save file, where the first element specifies the event type.
->>>>>>> master:src/main/java/storage/Storage.java
      * @return subclass of Event
      * @throws RolladieException If the eventType is not recognized or if there is an issue parsing the event details.
      */
