@@ -38,4 +38,6 @@ public abstract class Equipment {
                 //+ "\n\tagility: " + getAgility()
                 + "\n\tvalue: " + getValue();
     }
+
+    public abstract String toText();
 }

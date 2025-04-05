@@ -47,7 +47,7 @@ public class BattleLogic {
      *
      * @param turn current player/enemy's turn.
      */
-    public void checkBattleEnd(Turn turn) {
+    public void checkBattleEnd( Turn turn) {
         if (turn.hasSurrendered) {
             hasWon = false;
             hasBattleEnded = true;

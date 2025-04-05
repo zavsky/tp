@@ -32,7 +32,7 @@ public class Loot extends Event {
                     "                    '-.||_/.-'";
 
 
-    Loot(Player player) {
+    public Loot(Player player) {
         super(player);
     }
 
