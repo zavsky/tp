@@ -12,7 +12,6 @@ repositories {
 dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
-    implementation 'com.googlecode.lanterna:lanterna:3.1.1' // Lanterna dependency
 }
 
 test {
@@ -30,7 +29,7 @@ test {
 }
 
 application {
-    mainClass.set("Game.Rolladie")
+    mainClass.set("Rolladie")
 }
 
 shadowJar {
