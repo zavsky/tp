@@ -1,5 +1,6 @@
 package game.characters;
 
+import static storage.Storage.SAVE_DELIMITER;
 import exceptions.RolladieException;
 import game.currency.Gold;
 import game.equipment.Equipment;
@@ -54,8 +55,10 @@ public class Player extends Character {
      * @param characterName
      * @param maxHealth
      */
-    public Player(int[] healthBars, int attackValue, int defenseValue, String characterName, int maxHealth) {
+    public Player(int[] healthBars, int attackValue, int defenseValue, String characterName, int maxHealth, int amount, EquipmentList equipments) {
         super(healthBars, attackValue, defenseValue, characterName, maxHealth);
+        this.gold = new Gold(amount);
+        this.equipments = equipments;
     }
 
     /**
@@ -147,5 +150,16 @@ public class Player extends Character {
     public String toString() {
         return super.toString() +  "\nEquipments: "
                 + equipments.toString();
+    }
+
+    /**
+     * Returns the encoded string of player attributes to be saved
+     * @return encoded string
+     */
+    @Override
+    public String toText() {
+        return super.toText() + SAVE_DELIMITER +
+                this.gold.getAmount() + SAVE_DELIMITER +
+                this.equipments.toText();
     }
 }

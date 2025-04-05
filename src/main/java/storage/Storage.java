@@ -5,16 +5,26 @@ import functionalities.ui.UI;
 import game.characters.Character;
 import game.characters.Enemy;
 import game.characters.Player;
+import game.equipment.ArmorDatabase;
+import game.equipment.BootsDatabase;
+import game.equipment.Equipment;
+import game.equipment.EquipmentList;
+import game.equipment.WeaponDatabase;
 import game.events.battle.Battle;
 import game.events.Event;
 import game.Game;
+import game.events.loot.Loot;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -71,6 +81,52 @@ public class Storage {
         }
     }
 
+    private static Equipment[] parseEquipmentArrayFromText(String[] parameters) throws RolladieException {
+        ArrayList<Equipment> equipments = new ArrayList<>();
+        for (int i = 0; i < parameters.length; i += 2) {
+            String equipmentType = parameters[i];
+            String equipmentName = parameters[i + 1];
+            switch (equipmentType) {
+            case "armor":
+                equipments.add(ArmorDatabase.getArmorByName(equipmentName));
+                break;
+            case "boots":
+                equipments.add(BootsDatabase.getBootsByName(equipmentName));
+                break;
+            case "weapon":
+                equipments.add(WeaponDatabase.getWeaponByName(equipmentName));
+                break;
+            default:
+                throw new RolladieException("Invalid equipment type");
+            }
+        }
+        return (Equipment[]) equipments.toArray();
+    }
+
+    private static EquipmentList parseEquipmentListFromText(String[] parameters) throws RolladieException {
+        Optional<Equipment> armor = Optional.empty();
+        Optional<Equipment> boots = Optional.empty();
+        Optional<Equipment> weapon = Optional.empty();
+        for (int i = 0; i < parameters.length; i += 2) {
+            String equipmentType = parameters[i];
+            String equipmentName = parameters[i + 1];
+            switch (equipmentType) {
+            case "armor":
+                armor = Optional.of(ArmorDatabase.getArmorByName(equipmentName));
+                break;
+            case "boots":
+                boots = Optional.of(BootsDatabase.getBootsByName(equipmentName));
+                break;
+            case "weapon":
+                weapon = Optional.of(WeaponDatabase.getWeaponByName(equipmentName));
+                break;
+            default:
+                throw new RolladieException("Invalid equipment type");
+            }
+        }
+        return new EquipmentList(List.of(armor, boots, weapon));
+    }
+
     /**
      * Returns subclass of Character defined by characterType
      * Decodes Character from text within savefile
@@ -98,7 +154,10 @@ public class Storage {
         String characterName = parameters[3];
         int maxHealth = Integer.parseInt(parameters[4]);
         if (characterType.equals("Player")) {
-            return new Player(healthBars, attackValue, defenseValue, characterName, maxHealth);
+            int amount = Integer.parseInt(parameters[5]);
+            String[] equipmentParameters = Arrays.copyOfRange(parameters, 6, parameters.length + 1);
+            EquipmentList equipments = parseEquipmentListFromText(equipmentParameters);
+            return new Player(healthBars, attackValue, defenseValue, characterName, maxHealth, amount, equipments);
         } else if (characterType.equals("Enemy")) {
             return new Enemy(healthBars, attackValue, defenseValue, characterName, maxHealth);
         } else {
@@ -122,13 +181,13 @@ public class Storage {
                 Enemy enemy = (Enemy) parseCharacterFromText("Enemy", Arrays.copyOfRange(parameters,
                         1, parameters.length + 1));
                 return new Battle(player, enemy);
-
-            } catch (RolladieException e){
+            } catch (RolladieException e) {
                 System.out.println(e.getMessage());
-                return null;
             }
-
-
+        case "Loot":
+            return new Loot(player);
+        case "Shop":
+            Equipment[] equipments = parseEquipmentArrayFromText(Arrays.copyOfRange(parameters, 1, parameters.length + 1));
         default:
             throw new RolladieException("Invalid Event Type");
         }
@@ -136,6 +195,7 @@ public class Storage {
 
     /**
      * Returns Game object after decoding text from savefile into game parameters
+     *
      * @return Game
      */
     public static Game loadGame() throws RolladieException {
@@ -144,12 +204,12 @@ public class Storage {
         try {
             s = new Scanner(f);
             // 1st line is player data
-            String[] firstLine = s.nextLine().split(LOAD_DELIMITER);
-            Player player = (Player) parseCharacterFromText("Player", firstLine);
+            String[] playerData = s.nextLine().split(LOAD_DELIMITER);
+            Player player = (Player) parseCharacterFromText("Player", playerData);
 
             // 2nd line is currentEvent data
-            String[] secondLine = s.nextLine().split(LOAD_DELIMITER);
-            Event currentEvent = parseEventFromText(player, secondLine);
+            String[] currentEventData = s.nextLine().split(LOAD_DELIMITER);
+            Event currentEvent = parseEventFromText(player, currentEventData);
 
             // 3rd line onwards is eventsQueue data
             Queue<Event> eventsQueue = new LinkedList<>();
