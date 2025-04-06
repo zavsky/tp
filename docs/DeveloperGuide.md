@@ -226,44 +226,7 @@ When the player chooses to flee, the battle ends immediately and the player goes
 **Sequence Diagram**          
 ![Sequence Diagram](uml_image/fleeSequence.png)
 
-### 4. Buy
-{To be Updated}         
-**Overview**
-
-**Implementation Details**
-
-**Sequence Diagram**
-
-The sequence diagram below illustrates the process that occurs when the player inputs a Buy command.
-
-![Sequence Diagram](uml_image/shopSequence.png)
-
-
-### 5. Sell
-{To be Updated}         
-**Overview**
-
-**Implementation Details**
-
-**Sequence Diagram**
-
-The sequence diagram below illustrates the process that occurs when the player inputs a Sell command.
-
-![Sequence Diagram](uml_image/shopSequence.png)
-
-### 6. Loot
-{To be Updated}       
-**Overview**
-
-**Implementation Details**
-
-**Sequence Diagram**
-
-The sequence diagram below illustrates the process that occurs when the player gains loot.
-
-![Sequence Diagram](uml_image/lootSequence.png)
-
-### 7. Start      
+### 4. Start      
 {To be Updated}         
 **Overview**
 
@@ -272,7 +235,7 @@ The sequence diagram below illustrates the process that occurs when the player g
 **Sequence Diagram**
 
 
-### 8. Load        
+### 5. Load        
 {To be Updated}          
 
 **Overview**
@@ -281,7 +244,7 @@ The sequence diagram below illustrates the process that occurs when the player g
 
 **Sequence Diagram**
 
-### 9. Save       
+### 6. Save       
 {To be Updated}            
 **Overview**
 
@@ -289,6 +252,22 @@ The sequence diagram below illustrates the process that occurs when the player g
 
 **Sequence Diagram**
 
+
+### 7. Shop
+{To be Updated}       
+**Overview**
+
+**Implementation Details**
+
+**Sequence Diagram**
+
+### 8. Loot
+{To be Updated}       
+**Overview**
+
+**Implementation Details**
+
+**Sequence Diagram**
 
 
 ## Appendix
