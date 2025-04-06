@@ -1,20 +1,16 @@
-package Game;
+package game;
 
-import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import exceptions.RolladieException;
+import functionalities.Parser;
 
-import Exceptions.RolladieException;
-import Functionalities.Parser;
-import Functionalities.Storage;
-import Functionalities.UI.UI;
+
 
 /**
  * Entry point of the Rolladie application
  * Initializes the main menu and starts interactions with the user
  */
 
-public class Rolladie {
+public class oldRolladie {
 
     // public static void main(String[] args) {
         // assert false : "dummy assertion set to fail";
