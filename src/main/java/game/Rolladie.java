@@ -43,6 +43,8 @@ public class Rolladie {
                     throw new RolladieException("Invalid option");
                 }
                 game.run();
+                UI.printWelcomeMessage();
+                UI.printOptions();
             } catch (RolladieException e) {
                 UI.printErrorMessage(e.getMessage());
             } finally {
