@@ -10,8 +10,11 @@ import java.util.stream.Collectors;
 
 import Characters.Abilities.*;
 import Equipment.Armor;
+import Equipment.DragonShield;
+import Equipment.FlamingSword;
 import Equipment.Weapon;
 import Functions.TypewriterEffect;
+import functionalities.ui.UI;
 
 /**
  * Represents player and non-player characters in the game
@@ -52,6 +55,24 @@ public class Player implements Serializable {
         this.weapon = weapon;
         this.armor = armor;
         this.isHuman = isHuman;
+    }
+
+    /**
+     * Creates a new human player when starting from new game
+     *
+     * @return Player character
+     */
+    public static Player createNewPlayer() {
+        UI.printMessage("Enter your hero's name: ");
+        String name = UI.readInput();
+
+        // todo: choose character class to vary these starting stats
+        Player player = new Player(name, 100, 5, 2, new FlamingSword(), new DragonShield(), true);
+        player.abilities.add(new BasicAttack());
+        player.abilities.add(new PowerStrike());
+        player.abilities.add(new Heal());
+
+        return player;
     }
 
     private void rollDice() {
@@ -163,7 +184,7 @@ public class Player implements Serializable {
         power = Math.max(0, power - chosenAbility.powerCost); // in case AI has no viable ability and has to revert to basic attack
 
         TypewriterEffect.print("[Narrator] " + name + " uses " + chosenAbility.name);
-        Thread.sleep(1000);
+        Thread.sleep(0);
         return chosenAbility;
     }
 
@@ -329,5 +350,9 @@ public class Player implements Serializable {
         for (Ability a : abilities) {
             a.resetCooldown();
         }
+    }
+
+    public String getGold() {
+        return "Gold";
     }
 }

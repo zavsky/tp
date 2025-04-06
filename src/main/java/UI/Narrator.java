@@ -5,22 +5,24 @@ import Functions.TypewriterEffect;
 
 public class Narrator {
 
+    public static final int END_DELAY = 0;
+
     public static void commentOnHealth(Player p) throws InterruptedException {
         double percent = p.hp / (double) p.maxHp;
 
         if (p.hp <= 0) {
-            TypewriterEffect.print("[Narrator] 💀 " + p.name + " has fallen in battle!", 1000);
+            TypewriterEffect.print("[Narrator] 💀 " + p.name + " has fallen in battle!", END_DELAY);
         } else if (percent <= 0.2) {
-            TypewriterEffect.print("[Narrator] ⚠️ " + p.name + " is barely clinging to life!", 1000);
+            TypewriterEffect.print("[Narrator] ⚠️ " + p.name + " is barely clinging to life!", END_DELAY);
         } else if (percent <= 0.4) {
-            TypewriterEffect.print("[Narrator] " + p.name + " is severely wounded!", 1000);
+            TypewriterEffect.print("[Narrator] " + p.name + " is severely wounded!", END_DELAY);
         } else if (percent >= 0.9) {
-            TypewriterEffect.print("[Narrator] " + p.name + " is looking nearly untouched.", 1000);
+            TypewriterEffect.print("[Narrator] " + p.name + " is looking nearly untouched.", END_DELAY);
         } else if (percent >= 0.7) {
-            TypewriterEffect.print("[Narrator] " + p.name + " is holding up well.", 1000);
+            TypewriterEffect.print("[Narrator] " + p.name + " is holding up well.", END_DELAY);
         } else {
             // Between 40% and 70%
-            TypewriterEffect.print("[Narrator] " + p.name + " is still standing strong.", 1000);
+            TypewriterEffect.print("[Narrator] " + p.name + " is still standing strong.", END_DELAY);
         }
     }
 
@@ -29,31 +31,31 @@ public class Narrator {
         double hpPercentAfter = defender.hp / (double) defender.maxHp;
     
         if (damageDealt >= 12) {
-            TypewriterEffect.print("[Narrator] 💥 Massive impact! " + attacker.name + " lands a crushing hit!", 1000);
+            TypewriterEffect.print("[Narrator] 💥 Massive impact! " + attacker.name + " lands a crushing hit!", END_DELAY);
         } else if (damageDealt >= 8) {
-            TypewriterEffect.print("[Narrator] 😲 " + attacker.name + " delivers a powerful strike!", 1000);
+            TypewriterEffect.print("[Narrator] 😲 " + attacker.name + " delivers a powerful strike!", END_DELAY);
         }
     
         // Comeback detection
         double attackerHp = attacker.hp / (double) attacker.maxHp;
         double defenderHp = defender.hp / (double) defender.maxHp;
         if (attackerHp < 0.3 && defenderHp > 0.7 && damageDealt > 8) {
-            TypewriterEffect.print("[Narrator] 🤯 Unbelievable! " + attacker.name + " fights back against the odds!", 1000);
+            TypewriterEffect.print("[Narrator] 🤯 Unbelievable! " + attacker.name + " fights back against the odds!", END_DELAY);
         }
     
         // Sudden swing (drop below critical)
         if (hpPercentBefore > 0.4 && hpPercentAfter <= 0.2) {
-            TypewriterEffect.print("[Narrator] ⚠️ " + defender.name + " is in critical condition after that blow!", 1000);
+            TypewriterEffect.print("[Narrator] ⚠️ " + defender.name + " is in critical condition after that blow!", END_DELAY);
         }
     
         // Domination
         if ((attacker.hp - defender.hp) > 20) {
-            TypewriterEffect.print("[Narrator] " + attacker.name + " is completely dominating the arena!", 1000);
+            TypewriterEffect.print("[Narrator] " + attacker.name + " is completely dominating the arena!", END_DELAY);
         }
     
         // Clutch survival
         if (defender.hp <= 3 && defender.hp > 0) {
-            TypewriterEffect.print("[Narrator] 😬 " + defender.name + " barely survives with a sliver of health!", 1000);
+            TypewriterEffect.print("[Narrator] 😬 " + defender.name + " barely survives with a sliver of health!", END_DELAY);
         }
     }
     
