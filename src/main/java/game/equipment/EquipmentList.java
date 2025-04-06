@@ -1,27 +1,33 @@
-package game.equipment;
+package Game.Equipment;
 
-import exceptions.RolladieException;
-import functionalities.ui.UI;
+import Exceptions.RolladieException;
+import Functionalities.UI.UI;
+import Game.Actions.BattleAction.AttackAction;
+import Game.Actions.BattleAction.DefendAction;
+import Game.Actions.BattleAction.FleeAction;
+import Game.Actions.DefaultAction;
+import Game.Actions.ExitAction;
+import Game.Actions.HelpAction;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static storage.Storage.SAVE_DELIMITER;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * EquipmentList class to store information on the equipment that the player is using
  */
 public class EquipmentList {
     private static final int MAX_EQUIPMENTS = 3;
+    private List<Optional<Equipment>> equipmentSlot;
     //player only allowed to equip one armour, one pair of boots and one weapon
     private static final int ARMOUR_SLOT = 0;
     private static final int BOOTS_SLOT = 1;
     private static final int WEAPON_SLOT = 2;
 
-    private List<Optional<Equipment>> equipmentSlot;
-
     public EquipmentList() {
-        equipmentSlot = List.of(Optional.empty(), Optional.empty(), Optional.empty());
+        equipmentSlot =  List.of(Optional.empty(), Optional.empty(), Optional.empty());
     }
 
     public EquipmentList(List<Optional<Equipment>> equipmentSlot) {
@@ -29,8 +35,8 @@ public class EquipmentList {
     }
 
     public EquipmentList addEquipment(Equipment equipment) throws RolladieException {
-        switch (equipment.getEquipmentType()) {
-        case "armor":
+        switch(equipment.getEquipmentType()) {
+        case "armour":
             return new EquipmentList(addToEquipmentList(equipment, ARMOUR_SLOT));
         case "boots":
             return new EquipmentList(addToEquipmentList(equipment, BOOTS_SLOT));
@@ -41,8 +47,7 @@ public class EquipmentList {
         }
     }
 
-    private List<Optional<Equipment>> addToEquipmentList(Equipment equipment, int equipmentType)
-            throws RolladieException {
+    private List<Optional<Equipment>> addToEquipmentList(Equipment equipment, int equipmentType) throws RolladieException {
         Optional<Equipment> currSlot = equipmentSlot.get(equipmentType);
         if (currSlot.isPresent()) {
             throw new RolladieException(currSlot.get().getEquipmentType() + " is already equipped!");
@@ -61,22 +66,22 @@ public class EquipmentList {
     }
 
     public Equipment getEquipment(String equipmentType) throws RolladieException {
-        int currIndex;
+        int curr_index;
         switch(equipmentType) {
         case "armor":
-            currIndex = ARMOUR_SLOT;
+            curr_index = ARMOUR_SLOT;
             break;
         case "boots":
-            currIndex = BOOTS_SLOT;
+            curr_index = BOOTS_SLOT;
             break;
         case "weapon":
-            currIndex = WEAPON_SLOT;
+            curr_index = WEAPON_SLOT;
             break;
         default:
             throw new RolladieException("Invalid Equipment type!");
         }
 
-        Optional<Equipment> currSlot = equipmentSlot.get(currIndex);
+        Optional<Equipment> currSlot = equipmentSlot.get(curr_index);
 
         return currSlot.orElseThrow(() -> new RolladieException(equipmentType + " is not equipped!"));
     }
@@ -109,21 +114,5 @@ public class EquipmentList {
         return equipmentSlot.stream().filter(Optional::isPresent)
                 .map(x -> x.get().toString())
                 .reduce("", (x, y) -> x + "\n" + UI.LINE_SEPARATOR + "\n" + y);
-    }
-
-    /**
-     * Returns the encoded string of equipmentSlot attributes to be saved
-     *
-     * @return encoded string
-     */
-    public String toText() {
-        String equipmentsText = "";
-        Optional<Equipment> armor = this.equipmentSlot.get(ARMOUR_SLOT);
-        equipmentsText += armor.map(x -> x.toText() + SAVE_DELIMITER).orElse("armor" + SAVE_DELIMITER + "empty" + SAVE_DELIMITER);
-        Optional<Equipment> boots = this.equipmentSlot.get(BOOTS_SLOT);
-        equipmentsText += boots.map(x -> x.toText() + SAVE_DELIMITER).orElse("boots" + SAVE_DELIMITER + "empty" + SAVE_DELIMITER);
-        Optional<Equipment> weapon = this.equipmentSlot.get(WEAPON_SLOT);
-        equipmentsText += weapon.map(x -> x.toText()).orElse("weapon" + SAVE_DELIMITER + "empty");
-        return equipmentsText;
     }
 }
