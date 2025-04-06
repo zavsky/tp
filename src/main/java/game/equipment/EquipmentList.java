@@ -1,19 +1,12 @@
-package Game.Equipment;
+package game.equipment;
 
-import Exceptions.RolladieException;
-import Functionalities.UI.UI;
-import Game.Actions.BattleAction.AttackAction;
-import Game.Actions.BattleAction.DefendAction;
-import Game.Actions.BattleAction.FleeAction;
-import Game.Actions.DefaultAction;
-import Game.Actions.ExitAction;
-import Game.Actions.HelpAction;
+import exceptions.RolladieException;
+import functionalities.ui.UI;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+
+import static storage.Storage.SAVE_DELIMITER;
 
 /**
  * EquipmentList class to store information on the equipment that the player is using
@@ -114,5 +107,21 @@ public class EquipmentList {
         return equipmentSlot.stream().filter(Optional::isPresent)
                 .map(x -> x.get().toString())
                 .reduce("", (x, y) -> x + "\n" + UI.LINE_SEPARATOR + "\n" + y);
+    }
+
+    /**
+     * Returns the encoded string of equipmentSlot attributes to be saved
+     *
+     * @return encoded string
+     */
+    public String toText() {
+        String equipmentsText = "";
+        Optional<Equipment> armor = this.equipmentSlot.get(ARMOUR_SLOT);
+        equipmentsText += armor.map(x -> x.toText() + SAVE_DELIMITER).orElse("armor" + SAVE_DELIMITER + "empty" + SAVE_DELIMITER);
+        Optional<Equipment> boots = this.equipmentSlot.get(BOOTS_SLOT);
+        equipmentsText += boots.map(x -> x.toText() + SAVE_DELIMITER).orElse("boots" + SAVE_DELIMITER + "empty" + SAVE_DELIMITER);
+        Optional<Equipment> weapon = this.equipmentSlot.get(WEAPON_SLOT);
+        equipmentsText += weapon.map(x -> x.toText()).orElse("weapon" + SAVE_DELIMITER + "empty");
+        return equipmentsText;
     }
 }

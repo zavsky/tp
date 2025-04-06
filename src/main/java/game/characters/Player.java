@@ -1,6 +1,7 @@
 package game.characters;
 
 import static storage.Storage.SAVE_DELIMITER;
+
 import exceptions.RolladieException;
 import game.currency.Gold;
 import game.equipment.Equipment;
@@ -35,10 +36,10 @@ public class Player extends Character {
     /**
      * Constructor to construct a player object.
      *
-     * @param health an integer array to represent the health bar of player.
-     * @param attack an integer to represent the damage value in an attack.
+     * @param health  an integer array to represent the health bar of player.
+     * @param attack  an integer to represent the damage value in an attack.
      * @param defense an integer to represent the defense value.
-     * @param name a string to represent the name of the player.
+     * @param name    a string to represent the name of the player.
      */
     public Player(int[] health, int attack, int defense, String name) {
         super(health, attack, defense, name);
@@ -49,6 +50,7 @@ public class Player extends Character {
     /**
      * Overloaded Constructor to construct a player object with defined parameters
      * Usage within Storage Class for loading game
+     *
      * @param healthBars
      * @param attackValue
      * @param defenseValue
@@ -63,6 +65,7 @@ public class Player extends Character {
 
     /**
      * Gold amount earned by player
+     *
      * @param earnedGold An integer to represent the amount earned.
      */
     public void earnGold(Gold earnedGold) {
@@ -71,6 +74,7 @@ public class Player extends Character {
 
     /**
      * Gold amount spent by player.
+     *
      * @param spentGold An integer to represent the amount spent.
      */
 
@@ -127,7 +131,7 @@ public class Player extends Character {
      *
      * @param bonus dice outcome for attack action.
      */
-    public void setAttackBonus(int bonus){
+    public void setAttackBonus(int bonus) {
         attackBonus = bonus;
     }
 
@@ -136,7 +140,7 @@ public class Player extends Character {
      *
      * @param bonus dice outcome for defend action.
      */
-    public void setDefenseBonus(int bonus){
+    public void setDefenseBonus(int bonus) {
         defenseBonus = bonus;
     }
 
@@ -148,12 +152,13 @@ public class Player extends Character {
      */
     @Override
     public String toString() {
-        return super.toString() +  "\nEquipments: "
+        return super.toString() + "\nEquipments: "
                 + equipments.toString();
     }
 
     /**
      * Returns the encoded string of player attributes to be saved
+     *
      * @return encoded string
      */
     @Override
