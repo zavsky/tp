@@ -14,7 +14,7 @@ import Equipment.DragonShield;
 import Equipment.FlamingSword;
 import Equipment.Weapon;
 import Functions.TypewriterEffect;
-import functionalities.ui.UI;
+import Functions.UI;
 
 /**
  * Represents player and non-player characters in the game

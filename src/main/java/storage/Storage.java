@@ -218,8 +218,8 @@ public class Storage {
                 Event event = parseEventFromText(player, remainingLine);
                 eventsQueue.add(event);
             }
-            return new Game(player, currentEvent, eventsQueue);
-
+//            return new Game(player, currentEvent, eventsQueue);
+            return null;
         } catch (FileNotFoundException e) {
             throw new RolladieException("savefile.txt not found!");
         } catch (RolladieException e) {
