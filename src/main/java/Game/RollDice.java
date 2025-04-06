@@ -4,8 +4,6 @@ import Exceptions.RolladieException;
 import Functionalities.UI.UI;
 import java.util.Random;
 
-import com.googlecode.lanterna.terminal.Terminal;
-
 /**
  * A class to represent the dice.
  */
@@ -52,28 +50,28 @@ public class RollDice {
      *
      * @param diceValue An integer to represent the current outcome of rolling dice.
      */
-    public static void printDiceImage(Terminal terminal, int diceValue){
-        switch (diceValue){
-        case 1:
-            UI.printDieFace(terminal, 1, 0, 0);
-            break;
-        case 2:
-            UI.printDieFace(terminal, 2, 0, 0);
-            break;
-        case 3:
-            UI.printDieFace(terminal, 3, 0, 0);
-            break;
-        case 4:
-            UI.printDieFace(terminal, 4, 0, 0);
-            break;
-        case 5:
-            UI.printDieFace(terminal, 5, 0, 0);
-            break;
-        case 6:
-            UI.printDieFace(terminal, 6, 0, 0);
-            break;
-        }
-    }
+    // public static void printDiceImage(Terminal terminal, int diceValue){
+    //     switch (diceValue){
+    //     case 1:
+    //         UI.printDieFace(terminal, 1, 0, 0);
+    //         break;
+    //     case 2:
+    //         UI.printDieFace(terminal, 2, 0, 0);
+    //         break;
+    //     case 3:
+    //         UI.printDieFace(terminal, 3, 0, 0);
+    //         break;
+    //     case 4:
+    //         UI.printDieFace(terminal, 4, 0, 0);
+    //         break;
+    //     case 5:
+    //         UI.printDieFace(terminal, 5, 0, 0);
+    //         break;
+    //     case 6:
+    //         UI.printDieFace(terminal, 6, 0, 0);
+    //         break;
+    //     }
+    // }
 
     /**
      * Prints a list of dices side-by-side
