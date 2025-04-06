@@ -1,7 +1,7 @@
-package game;
+package Game;
 
-import exceptions.RolladieException;
-import functionalities.ui.UI;
+import Exceptions.RolladieException;
+import Functionalities.UI.UI;
 import java.util.Random;
 
 /**
@@ -28,8 +28,8 @@ public class RollDice {
      * 20 bonus point given for CRUCIAL_HIT case.
      */
     public static final int CRUCIAL_HIT = 20;
-    private static int firstDice;
-    private static int secondDice;
+    private static int first_dice;
+    private static int second_dice;
 
     /**
      * Return the outcome of rolling 2 dice.
@@ -37,12 +37,12 @@ public class RollDice {
      */
     public static int rollDice(){
         Random rand = new Random();
-        firstDice = rand.nextInt(MAX - MIN + 1) + MIN;
-        secondDice = rand.nextInt(MAX - MIN + 1) + MIN;
+        first_dice = rand.nextInt(MAX - MIN + 1) + MIN;
+        second_dice = rand.nextInt(MAX - MIN + 1) + MIN;
 
-        printDiceImages(firstDice, secondDice);
+        printDiceImages(first_dice, second_dice);
 
-        return firstDice + secondDice;
+        return first_dice + second_dice;
     }
 
     /**
@@ -50,29 +50,28 @@ public class RollDice {
      *
      * @param diceValue An integer to represent the current outcome of rolling dice.
      */
-    public static void printDiceImage(int diceValue){
-        switch (diceValue){
-        case 1:
-            System.out.println(UI.DIE_FACE_1);
-            break;
-        case 2:
-            System.out.println(UI.DIE_FACE_2);
-            break;
-        case 3:
-            System.out.println(UI.DIE_FACE_3);
-            break;
-        case 4:
-            System.out.println(UI.DIE_FACE_4);
-            break;
-        case 5:
-            System.out.println(UI.DIE_FACE_5);
-            break;
-        case 6:
-            System.out.println(UI.DIE_FACE_6);
-            break;
-        default:
-        }
-    }
+    // public static void printDiceImage(Terminal terminal, int diceValue){
+    //     switch (diceValue){
+    //     case 1:
+    //         UI.printDieFace(terminal, 1, 0, 0);
+    //         break;
+    //     case 2:
+    //         UI.printDieFace(terminal, 2, 0, 0);
+    //         break;
+    //     case 3:
+    //         UI.printDieFace(terminal, 3, 0, 0);
+    //         break;
+    //     case 4:
+    //         UI.printDieFace(terminal, 4, 0, 0);
+    //         break;
+    //     case 5:
+    //         UI.printDieFace(terminal, 5, 0, 0);
+    //         break;
+    //     case 6:
+    //         UI.printDieFace(terminal, 6, 0, 0);
+    //         break;
+    //     }
+    // }
 
     /**
      * Prints a list of dices side-by-side
@@ -80,15 +79,11 @@ public class RollDice {
      * @param diceValues list of integer values representing rolled dice value
      */
     public static void printDiceImages(int... diceValues) {
-        // Store dice faces as 2D string arrays (each die is 5x7 or similar)
-        String[][] diceFaces = {
-            UI.DIE_FACE_1.split("\n"),
-            UI.DIE_FACE_2.split("\n"),
-            UI.DIE_FACE_3.split("\n"),
-            UI.DIE_FACE_4.split("\n"),
-            UI.DIE_FACE_5.split("\n"),
-            UI.DIE_FACE_6.split("\n")
-        };
+        String[][] diceFaces = new String[UI.DIE_FACES.length][];
+
+        for (int i = 0; i < UI.DIE_FACES.length; i++) {
+            diceFaces[i] = UI.DIE_FACES[i].split("\n");
+        }
     
         // Get the height of the dice face
         int faceHeight = diceFaces[0].length; 
