@@ -148,7 +148,7 @@ public class Player implements Serializable {
         String name = UI.readInput();
 
         // todo: choose character class to vary these starting stats
-        List<Equipment> equipmentList = new ArrayList<>(List.of(new DragonShield(), null, new FlamingSword()));
+        List<Equipment> equipmentList = new ArrayList<Equipment>(List.of(new DragonShield(), new EmptySlot(), new FlamingSword()));
         Player player = new Player(name, 100, 5, 2, equipmentList, true);
         player.abilities.add(new BasicAttack());
         player.abilities.add(new PowerStrike());
