@@ -4,10 +4,11 @@ import Characters.Players.Player;
 
 public class Heal extends Ability {
     public Heal() {
-        super(AbilityType.HEAL, "Heal", "+5 HP", "🛡️", 2, 1, 10);
+        super(AbilityType.HEAL, "Heal", "+20 HP", "🛡️", 2, 0, 0);
     }
 
     public void additionalFeatures(Player player) {
-        player.updatePower(20);
+        player.heal(20);
+        player.updatePower(10);
     }
 }

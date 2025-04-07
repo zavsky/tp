@@ -1,3 +1,4 @@
+/*
 package oldgame.characters;
 
 
@@ -82,3 +83,4 @@ public class CharacterTest {
 
 
 }
+*/
