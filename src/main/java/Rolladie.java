@@ -14,20 +14,31 @@ import Functions.TypewriterEffect;
 import UI.BattleDisplay;
 import UI.HpBar;
 import UI.Narrator;
+import exceptions.RolladieException;
+
+import static UI.BattleDisplay.showPlayerStatus;
 
 public class Rolladie {
     public String getGreeting() {
         return "Hello World!";
     }
     
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, RolladieException {
         mainMenu();
+
+        /*
+        Player player =  new Player("player", 100, 5);
+        player.obtainEquipment(new FlamingSword());
+        player.getEquipment("weapon");
+        showPlayerStatus(player);
+
+         */
     }
 
     /**
      * Starts the game menu and shows options for new game or loading from save
      */
-    public static void mainMenu() throws InterruptedException {
+    public static void mainMenu() throws InterruptedException, RolladieException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("=== WELCOME TO ROLLaDIE ===");
         System.out.println("1. Start New Game");
@@ -75,11 +86,11 @@ public class Rolladie {
         String name = scanner.nextLine();
     
         // todo: choose character class to vary these starting stats
-        Player player = new Player(name, 100, 5, 2, new FlamingSword(), new DragonShield(), true);
+        EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+        Player player = new Player(name, 100, 5, 2, equipmentList, true);
         player.abilities.add(new BasicAttack());
         player.abilities.add(new PowerStrike());
         player.abilities.add(new Heal());
-    
         return player;
     }
     
@@ -91,8 +102,11 @@ public class Rolladie {
      * @param scanner
      * @throws InterruptedException
      */
-    public static void startGameLoop(Player player1, int wave, Scanner scanner) throws InterruptedException {
-        Player player2 = new Player("AI Bot", 60, 3, 3, new Weapon("Axe", 1), new Armor("Mail", 2), false);
+    public static void startGameLoop(Player player1, int wave, Scanner scanner) throws InterruptedException, RolladieException {
+        Weapon claws = new Weapon("Claws", 2);
+        Armor hide = new Armor("Hide", 1);
+        EquipmentList equipmentList = new EquipmentList(hide, null, claws);
+        Player player2 = new Player("AI Bot", 60, 3, 2, equipmentList, false);
 
         while (player1.isAlive()) {
             System.out.println("🌊 Encounter " + wave + " begins!");
@@ -121,7 +135,7 @@ public class Rolladie {
             }
 
             if (wave == 5) {
-                player1.weapon = new Weapon("Flame Blade", 5);
+                player1.obtainEquipment(new Weapon("Flame Blade", 5));
                 TypewriterEffect.print("🗡️ You obtained the Flame Blade!", 1000);
             }
 
@@ -139,7 +153,8 @@ public class Rolladie {
     public static Player generateNewEnemy(int wave) {
         Weapon claws = new Weapon("Claws", 2 + wave);
         Armor hide = new Armor("Hide", 1 + wave / 2);
-        Player enemy = new Player("Enemy " + wave, 20 + wave * 30, (3 + wave) / 2, 3, claws, hide, false);
+        EquipmentList equipmentList = new EquipmentList(hide, null, claws);
+        Player enemy = new Player("Enemy " + wave, 20 + wave * 30, (3 + wave) / 2, 3, equipmentList, false);
     
         enemy.abilities.add(new PowerStrike());
         if (wave >= 2) enemy.abilities.add(new Heal());
@@ -155,14 +170,14 @@ public class Rolladie {
      * @param player2
      * @throws InterruptedException
      */
-    private static void startBattle(Player player1, Player player2) throws InterruptedException {
+    private static void startBattle(Player player1, Player player2) throws InterruptedException, RolladieException {
         int round = 1;
 
         while (player1.isAlive() && player2.isAlive()) {
             System.out.println("\n================ ROUND " + round + " ================\n");
 
-            BattleDisplay.showPlayerStatus(player1);
-            BattleDisplay.showPlayerStatus(player2);
+            showPlayerStatus(player1);
+            showPlayerStatus(player2);
 
             // Choose Abilities
             Ability p1Ability = player1.chooseAbility();

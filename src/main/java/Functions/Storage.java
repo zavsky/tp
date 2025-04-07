@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import Characters.Abilities.Ability;
 import Characters.Players.Player;
+import exceptions.RolladieException;
 
 /**
  * Saving and loading games
@@ -39,19 +40,19 @@ public class Storage {
             System.out.println("✅ Game loaded from slot " + slot);
             showContinueScreen(player, wave, scanner);
             return new Pair<>(player, wave);
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException | RolladieException e) {
             System.out.println("❌ Load failed: " + e.getMessage());
             return null;
         }
     }    
 
-    public static void showContinueScreen(Player player, int wave, Scanner scanner) {
+    public static void showContinueScreen(Player player, int wave, Scanner scanner) throws RolladieException {
         System.out.println("\n===== CONTINUE SCREEN =====");
         System.out.println("👤 Name: " + player.name);
         System.out.println("❤️ HP: " + player.hp + " / " + player.maxHp);
         System.out.println("⚡ Power: " + player.power + " / " + player.maxPower);
-        System.out.println("🗡️ Weapon: " + player.weapon.name + " (+" + player.weapon.bonusPerDie + " dmg)");
-        System.out.println("🛡️ Armor: " + player.armor.name + " (+" + player.armor.defense + " def)");
+        System.out.println("🗡️ Weapon: " + player.getEquipment("weapon").getName() + " (+" + player.getEquipment("weapon").getAttack() + " dmg)");
+        System.out.println("🛡️ Armor: " + player.getEquipment("armor").getName() + " (+" + player.getEquipment("armor").getDefense() + " def)");
 
         System.out.println("🧪 Abilities:");
         for (Ability a : player.abilities) {
