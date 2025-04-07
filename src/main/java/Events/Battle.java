@@ -96,10 +96,9 @@ public class Battle extends Event {
         Weapon claws = new Weapon("Claws", 2 + wave);
         Armor hide = new Armor("Hide", 1 + wave / 2);
         List<Equipment> equipmentList = new ArrayList<Equipment>(List.of(hide, new EmptySlot(), claws));
-        Player enemy = new Player("Enemy " + wave, 20 + wave * 30, (3 + wave) / 2, 2, equipmentList, false);
+        Player enemy = new Player("Enemy " + wave, 30 + wave * 20, (3 + wave) / 2, 2, equipmentList, false);
 
         enemy.abilities.add(new PowerStrike());
-        if (wave >= 2) enemy.abilities.add(new Heal());
         if (wave >= 3) enemy.abilities.add(new Crush());
 
         return enemy;
