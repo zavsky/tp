@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -23,7 +22,7 @@ import game.Game;
 import players.Player;
 
 /**
- * Saving and loading games
+ * Translates the game data from and into text save file
  */
 public class Storage {
     public static final String SAVE_DELIMITER = " | ";
@@ -61,6 +60,7 @@ public class Storage {
             fw.write(playerText + System.lineSeparator());
 
             fw.close();
+            UI.printMessage("✅ Game saved to save slot " + saveSlot);
         } catch (IOException e) {
             throw new RolladieException("❌ Save failed: " + e.getMessage());
         }
@@ -83,16 +83,26 @@ public class Storage {
             String[] playerData = s.nextLine().split(LOAD_DELIMITER);
             Player player = parsePlayerFromText(wave, playerData);
 
+            UI.printMessage("✅ Game loaded from save slot " + saveSlot);
             return new Game(player, wave);
 
         } catch (FileNotFoundException e) {
             throw new RolladieException("savefile.txt not found!");
         } catch (RolladieException e) {
-            UI.printErrorMessage("savefile.txt corrupted\nStarting new game");
+            UI.printErrorMessage("❌ Load failed: " + e.getMessage() + "\nStarting new game instead");
         }
         return new Game();
     }
 
+    /**
+     * Returns player object defined by playerData
+     * Decodes player from text within savefile
+     *
+     * @param wave
+     * @param playerData
+     * @return
+     * @throws RolladieException
+     */
     private static Player parsePlayerFromText(int wave, String[] playerData) throws RolladieException {
         String name = playerData[0];
         int hp = Integer.parseInt(playerData[1]);
@@ -107,14 +117,23 @@ public class Storage {
         return new Player(wave, name, hp, maxHp, baseAttack, numDice, equipmentList, gold, power, maxPower);
     }
 
-    private static List<Equipment> parseEquipmentListFromText(String[] parameters) throws RolladieException {
+
+    /**
+     * Returns list of equipment defined by equipmentsData
+     * Intermediate operation for parsing player
+     *
+     * @param equipmentsData
+     * @return
+     * @throws RolladieException
+     */
+    private static List<Equipment> parseEquipmentListFromText(String[] equipmentsData) throws RolladieException {
         int defaultIndex = -1;
         Equipment armor = ArmorDatabase.getArmorByIndex(defaultIndex);
         Equipment boots = BootsDatabase.getBootsByIndex(defaultIndex);
         Equipment weapon = WeaponDatabase.getWeaponByIndex(defaultIndex);
 
-        for (int i = 0; i < parameters.length; i++) {
-            String[] equipmentText = parameters[i].split(" ");
+        for (int i = 0; i < equipmentsData.length; i++) {
+            String[] equipmentText = equipmentsData[i].split(" ");
             String equipmentType = equipmentText[0];
             int equipmentIndex = Integer.parseInt(equipmentText[1]);
             switch (equipmentType) {
@@ -133,24 +152,4 @@ public class Storage {
         }
         return List.of(armor, boots, weapon);
     }
-/*
-    public static void saveGame(int saveSlot, Game game) {
-        String filename = "save_slot_" + saveSlot + ".dat";
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
-            out.writeObject(game);
-            System.out.println("✅ Game saved to save slot " + saveSlot);
-        } catch (IOException e) {
-            System.out.println("❌ Save failed: " + e.getMessage());
-        }
-    }
-
-    public static Game loadGame(int saveSlot) throws RolladieException {
-        String filename = "save_slot_" + saveSlot + ".dat";
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
-            Game game = (Game) in.readObject();
-            return game;
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RolladieException("❌ Load failed: " + e.getMessage());
-        }
-    }*/
 }

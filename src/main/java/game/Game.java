@@ -13,15 +13,13 @@ import equipments.weapons.WeaponDatabase;
 import events.Battle;
 import events.Event;
 
-import java.io.Serializable;
 import java.util.Queue;
 import java.util.LinkedList;
 
 /**
  * Manages all game logic specifically: Event Generation and Sequence
  */
-public class Game implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Game {
     private static final int MAX_NUMBER_OF_WAVES = 8;
     private Queue<Event> eventsQueue = new LinkedList<>();
     private Player player;
@@ -75,7 +73,7 @@ public class Game implements Serializable {
                 //If current battle is won, sets loot event to give rewards
                 currentEvent.setHasWon(hasWonCurrBattle);
                 //Saves game on loot or shop screen after a battle.
-                if (this.currentEvent instanceof Loot) {
+                if (this.currentEvent instanceof Battle) {
                     saveGame();
                 }
                 this.currentEvent.run();
@@ -108,6 +106,7 @@ public class Game implements Serializable {
      * Returns a filled queue of events
      * Used during the construction of a new game
      *
+     * @param start
      * @return eventsQueue
      */
     private Queue<Event> generateEventQueue(int start) {
@@ -163,7 +162,7 @@ public class Game implements Serializable {
         UI.printMessage("💾 Save game? (y/n): ");
         String saveInput = UI.readInput();
         if (saveInput.equalsIgnoreCase("y")) {
-            int saveSlot = Integer.parseInt(UI.promptSaveFile());
+            int saveSlot = UI.promptSaveFile();
             Storage.saveGame(saveSlot, wave, this.player);
         }
     }

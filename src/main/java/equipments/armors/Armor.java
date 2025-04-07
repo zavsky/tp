@@ -1,9 +1,6 @@
 package equipments.armors;
 
 import equipments.Equipment;
-import equipments.boots.BootsDatabase;
-
-import java.io.Serializable;
 
 /**
  * Represents Armor that Player can augment

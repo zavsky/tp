@@ -1,5 +1,7 @@
 package equipments.boots;
 
+import equipments.EmptySlot;
+import equipments.Equipment;
 import exceptions.RolladieException;
 
 import java.util.ArrayList;
@@ -50,7 +52,7 @@ public class BootsDatabase {
 
     public static Boots getBootsByIndex(int index) {
         if (index < 0) {
-            return new EmptySlot();
+            return new Slippers();
         }
         return bootsList.get(index);
     }

@@ -3,8 +3,6 @@ package events;
 import exceptions.RolladieException;
 import players.Player;
 
-import java.io.Serializable;
-
 public abstract class Event {
     protected Player player;
     protected boolean hasWon = false;

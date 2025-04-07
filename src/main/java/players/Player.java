@@ -1,15 +1,15 @@
 package players;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import equipments.boots.Slippers;
 import equipments.weapons.Stick;
 import players.abilities.*;
 import equipments.Equipment;
 import equipments.armors.Tshirt;
-import equipments.boots.EmptySlot;
+import equipments.EmptySlot;
 import functions.TypewriterEffect;
 import functions.UI.UI;
 import exceptions.RolladieException;
@@ -21,8 +21,7 @@ import static functions.UI.BattleDisplay.drawPowerBar;
 /**
  * Represents player and non-player characters in the game
  */
-public class Player implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Player {
     public String name;
     public int hp, maxHp, baseAttack;
     public int[] diceRolls;
@@ -145,10 +144,10 @@ public class Player implements Serializable {
      */
     public static Player createNewPlayer() {
         UI.printMessage("Enter your hero's name: ");
-        String name = UI.readInput();
+        String name = scanner.nextLine();
 
         // todo: choose character class to vary these starting stats
-        List<Equipment> equipmentList = new ArrayList<Equipment>(List.of(new Tshirt(), new EmptySlot(), new Stick()));
+        List<Equipment> equipmentList = new ArrayList<Equipment>(List.of(new Tshirt(), new Slippers(), new Stick()));
         Player player = new Player(name, 100, 5, 3, equipmentList, true);
         player.abilities.add(new Flee());
         player.abilities.add(new BasicAttack());
@@ -481,7 +480,7 @@ public class Player implements Serializable {
                 sb.append("Empty slot\n");
             }
         }
-        sb.append("Gold: ").append(gold).append("\n");
+        if(isHuman) sb.append("Gold: ").append(gold).append("\n");
 
         // Add abilities
         sb.append("Abilities:\n");
