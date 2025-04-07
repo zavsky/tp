@@ -8,7 +8,7 @@ This project was made possible with the help of the listed tools below:
 
 ## Setting Up and Getting Started    
 
-Follow these steps to set up and run the game on your local machine.      
+Follow these steps to set up and run the Game on your local machine.      
 
 ### Prerequisites 
 Ensure you have the following installed:
@@ -44,10 +44,10 @@ The Architecture diagram given above explain the high-level design of the applic
 ```
 +---main
 |   └── java
-+---exceptions  
++---Exceptions  
 |   └── RolladieException.java  
 |  
-+---functionalities  
++---Functionalities  
 |   ├── Parser.java  
 |   ├── Storage.java  
 |   └── ui  
@@ -56,7 +56,7 @@ The Architecture diagram given above explain the high-level design of the applic
 |       ├── LootUI.java  
 |       └── ShopUI.java  
 |  
-+---game  
++---Game  
 |   ├── Game.java  
 |   ├── Rolladie.java  
 |   ├── RollDice.java  
@@ -89,10 +89,10 @@ Main (consisting of classes `RollaDie`) is in charge of the app launch and shut 
 - At shut down, it deactivates the other components and invokes cleanup methods as needed.  
 
 The bulk of the app’s work is done by the following components:
-- `functionalities`: Designed for enhancing user interactions such as reading and printing messages to and from terminal.
-- `game`: Manipulate major gameplay mechanics.
+- `Functionalities`: Designed for enhancing user interactions such as reading and printing messages to and from terminal.
+- `Game`: Manipulate major gameplay mechanics.
 - `Storage`: Manages saving and loading data to and from the hard disk.        
-- `Exception`: Handle exceptions.
+- `Exception`: Handle Exceptions.
 
 ### 2. Functionalities component     
 {To be updated}       
@@ -100,32 +100,32 @@ The bulk of the app’s work is done by the following components:
 {To be updated}       
 
 ### 4. Storage component
-The Storage Component is responsible for saving and loading game progress.
-It reads and writes game data to a text file (savefile.txt),
-ensuring that players can resume their game after closing the application.         
+The Storage Component is responsible for saving and loading Game progress.
+It reads and writes Game data to a text file (savefile.txt),
+ensuring that players can resume their Game after closing the application.         
 
-The Storage class includes the following functionalities:
-1. Save the game:
+The Storage class includes the following Functionalities:
+1. Save the Game:
 
 - The `saveGame(Player, Event, Queue<Event>)` method writes player stats, the current event,
 and upcoming events to a file.    
-- It converts game objects into a text format using their `toText()` methods.
+- It converts Game objects into a text format using their `toText()` methods.
 
-2. Load the game:
+2. Load the Game:
 
-- The `loadGame()` method reads the save file and reconstructs the game state.
+- The `loadGame()` method reads the save file and reconstructs the Game state.
 - It calls helper methods `parseCharacterFromText()` and `parseEventFromText()` to convert text data back into objects.
-- If the save file is missing or corrupted, it creates a new game instance.
+- If the save file is missing or corrupted, it creates a new Game instance.
 
 3. Data Parsing:
 
 - `parseCharacterFromText()` deciphers character stats (health, attack, defense, etc.) from text.
-- `parseEventFromText()` reconstructs different game events, such as battles, from saved data.
+- `parseEventFromText()` reconstructs different Game events, such as battles, from saved data.
 
 
 ### 5. Exception component
 - Includes helper classes that support other components.
-- exceptions: Contains `RolladieException.java` for handling custom errors.
+- Exceptions: Contains `RolladieException.java` for handling custom errors.
 - Parsers & Helpers: Includes Parser.java for reading user input.
 
 ![Class Diagram](uml_image/exceptionClassDiagram.png)
@@ -137,15 +137,15 @@ and upcoming events to a file.
 ### 1. Attack       
 **Overview**    
         
-The Attack Feature in RollaDie is a core component of the game's battle system, 
+The Attack Feature in RollaDie is a core component of the Game's battle system, 
 allowing the player and enemy to take turns attacking each other. The feature manages input handling, 
 attack calculations, and battle progression.      
-- During the player's turn, the game reads the player's command, 
+- During the player's turn, the Game reads the player's command, 
 determines the action, and roll dice to calculate attack bonuses. If the player chooses to attack, 
-the attack is executed, and damage is applied to the enemy. The game then prints the attack message 
+the attack is executed, and damage is applied to the enemy. The Game then prints the attack message 
 and checks if the battle has ended.      
 - During the enemy's turn, the enemy follows a similar process—attacking the player, applying damage, 
-and displaying attack messages. The game continues alternating between player and 
+and displaying attack messages. The Game continues alternating between player and 
 enemy turns until either the player or the enemy is defeated. This feature ensures smooth battle flow,
 handles attack mechanics, and updates battle status dynamically, keeping the combat engaging and strategic.
 
@@ -190,7 +190,7 @@ to determine the action and returns it to **PlayerTurn**.
 in the **RollDice** class to determine the defense bonus. 
 4. **PlayerTurn** sets the player's defending state by calling setDefending(true) in the **Character** class and applies
    the defense bonus using setDefenseBonus(diceOutcome) in the **Player** class.
-5. The game then checks if the battle has ended by calling checkBattleEnd(turn) in **BattleLogic**.
+5. The Game then checks if the battle has ended by calling checkBattleEnd(turn) in **BattleLogic**.
 
 During the enemy’s turn:
 1. **BattleLogic** creates a new **EnemyTurn** object.
@@ -277,9 +277,9 @@ When the player chooses to flee, the battle ends immediately and the player goes
 ### Target user profile:
 
 RollaDie is designed for CS2113 students who want a fun and simple way to relax, 
-and to enjoy the easy-to-use text-based interface and clear game rules.
-The game is also great for DnD fans who like turn-based battles, strategy, and storytelling,
-without the hassle of setting up a full game.
+and to enjoy the easy-to-use text-based interface and clear Game rules.
+The Game is also great for DnD fans who like turn-based battles, strategy, and storytelling,
+without the hassle of setting up a full Game.
 
 ### Value proposition:
 
@@ -299,7 +299,7 @@ rolling dice, battling enemies, and making crucial choices.
 | v1.0    | student player  | fight enemies                                         | collect points for a final score.   |
 | v1.0    | student player  | input simple commands ( attack, defend )              | get used to the controls.           |
 | v1.0    | student player  | see my health bar                                     | better decide my next move.         |
-| v2.0    | student player  | save game progress                                    | continue my game.                   |
+| v2.0    | student player  | save Game progress                                    | continue my Game.                   |
 | v2.0    | student player  | roll dice                                             | determine the outcome of an action. |
 | v2.0    | student player  | fight different enemies with different battle effects | make the journey more dynamic.      |
 | v2.0    | student player  | change my equipment                                   | determine the outcome of an action. |
@@ -307,8 +307,8 @@ rolling dice, battling enemies, and making crucial choices.
 
 ## Non-Functional Requirements
 1. Should work on any mainstream OS as long as it has Java 17 or above installed.
-2. This game is designed as a single-player experience.
-3. This game is optimized for users with an average typing speed.
+2. This Game is designed as a single-player experience.
+3. This Game is optimized for users with an average typing speed.
 
 
 
@@ -324,7 +324,7 @@ Tests are organized according to the package structure:
 |           ValidData.txt
 |           
 \---java
-+---game
++---Game
 |   |   GameTest.java
 |   |   RolladieTest.java
 |   |   RollDiceTest.java
@@ -335,7 +335,7 @@ Tests are organized according to the package structure:
 |   +---Characters
 |   |       CharacterTest.java
 |   |       
-|   \---functionalities
+|   \---Functionalities
 |           UITest.java
 |           
 \---seedu
@@ -345,5 +345,5 @@ Tests are organized according to the package structure:
 
 
 ## Glossary
-* *User* - A person who plays the game.
+* *User* - A person who plays the Game.
 * *Mainstream OS* -  Windows, Linux, Unix, MacOS

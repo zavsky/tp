@@ -119,6 +119,14 @@ public class Player implements Serializable {
     }
 
     /**
+     * Get hp value of the player
+     * @return An integer represent hp value of the player.
+     */
+    public int getHp(){
+        return hp;
+    }
+
+    /**
      * Reroll the dice and get results
      * @return Integer array of size equivalent to number of dice Player has
      */
@@ -139,6 +147,7 @@ public class Player implements Serializable {
         return sum;
     }
 
+
     // todo: print the compute damage process
     /**
      * Calculates the damage dealt to an opponent, computed as follows:
@@ -151,7 +160,9 @@ public class Player implements Serializable {
      * @throws InterruptedException
      */
     public int computeDamageTo(Player opponent) throws InterruptedException {
+        assert opponent.isAlive(): "Opponent must be alive to receive damage";
         int base = totalRoll() + (diceRolls.length * getPlayerAttack());
+
         // if (powerStrikeActive) base *= 1.5;
         double powerMultiplier = 1.0 + (power / (double) maxPower) * 0.5; // up to +50%
         int rawDamage = (int) (base * powerMultiplier * lastAbilityUsed.damageMult);
@@ -170,6 +181,8 @@ public class Player implements Serializable {
      * @throws InterruptedException
      */
     public String applyDamage(int damage, Player opponent, String text) throws InterruptedException {
+        assert damage > 0: "damage value must be non-negative";
+
         this.hp = Math.max(0, this.hp - damage);
 
         String textToPrint;
@@ -198,6 +211,8 @@ public class Player implements Serializable {
      * @param amount value of hitpoints to recover
      */
     public void heal(int amount) {
+        assert amount >= 0: "amount to heal must be non-negative";
+
         this.hp = Math.min(maxHp, this.hp + amount);
     }
 
@@ -286,12 +301,7 @@ public class Player implements Serializable {
     }   
 
     // todo: fix the ai
-    /**
-     * Generates Abilities for a computer-controlled player
-     * 
-     * @return an Ability object
-     */
-    public Ability chooseAIAction() {
+    private Ability chooseAIAction() {
         List<Ability> readyAbilities = abilities.stream()
             .filter(a -> a.isReady(power))
             .collect(Collectors.toList());
@@ -338,7 +348,7 @@ public class Player implements Serializable {
     /**
      * Decrements all Ability cooldowns by 1
      */
-    public void updateAbilityCooldown() {
+    private void updateAbilityCooldown() {
         for (Ability a : abilities) {
             a.tickCooldown();
         }
@@ -351,6 +361,8 @@ public class Player implements Serializable {
      * @return true if Ability present, false otherwise
      */
     public boolean hasAbility(String name) {
+        assert name != null: "ability to be searched cannot be null";
+
         for (Ability a : abilities)
             if (a.name.equalsIgnoreCase(name)) return true;
         return false;
@@ -376,6 +388,8 @@ public class Player implements Serializable {
      * Increment the Power value by a variable amount after each battle round
      */
     public void updatePower(int powerVal) {
+        assert powerVal >= 0: "power value must be non-negative";
+
         power = Math.min(maxPower, power + powerVal);
     }
 
@@ -406,7 +420,7 @@ public class Player implements Serializable {
         sb.append("Abilities:\n");
         for (int i = 0; i < abilities.size(); i++) {
             Ability a = abilities.get(i);
-            String status = a.isCDReady() ? "✅ ready" : "⏳ " + a.currentCooldown + " turn(s)";
+            String status = a.isCDReady() ? "✅ ready" : "⏳ " + a.currentCoolDown + " turn(s)";
             sb.append(String.format(" %d. %s %s %s\n", i + 1, a.icon, a.name, status));
         }
 
