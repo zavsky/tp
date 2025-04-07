@@ -41,7 +41,7 @@ public class HpBar {
             System.out.println(bar2 + " " + current2 + "/" + p2.maxHp);
 
 //            Thread.sleep(Math.min(70 + 2 * i, 300));
-            Thread.sleep(50);
+            Thread.sleep(40);
         }
     }
 
