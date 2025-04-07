@@ -104,11 +104,8 @@ public class Player implements Serializable {
                 .sum();
     }
 
-    public Equipment getEquipment(int equipmentType) throws RolladieException {
+    public Equipment getEquipment(int equipmentType) {
         Equipment currSlot = equipmentList.get(equipmentType);
-        if (currSlot.getId() == -1) {
-            throw new RolladieException("Equipment is not equipped!");
-        }
         return currSlot;
     }
 
@@ -157,7 +154,7 @@ public class Player implements Serializable {
 
         // todo: choose character class to vary these starting stats
         List<Equipment> equipmentList = new ArrayList<Equipment>(List.of(new Tshirt(), new EmptySlot(), new Stick()));
-        Player player = new Player(name, 100, 5, 3, equipmentList, true, 50);
+        Player player = new Player(name, 100, 5, 3, equipmentList, true);
         player.abilities.add(new Flee());
         player.abilities.add(new BasicAttack());
         player.abilities.add(new PowerStrike());

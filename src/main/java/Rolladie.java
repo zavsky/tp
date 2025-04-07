@@ -22,12 +22,7 @@ import java.util.Queue;
 public class Rolladie {
 
     public static void main(String[] args) throws InterruptedException, RolladieException {
-        //Game game = new Game();
-        //Event shop = game.generateShopEvent(2);
-        //shop.run();
         mainMenu();
-        //Player player = Player.createNewPlayer();
-        //Equipment = Player.getEquipment(1);
     }
 
     /**
