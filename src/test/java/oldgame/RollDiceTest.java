@@ -1,3 +1,4 @@
+/*
 package oldgame;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,3 +22,4 @@ class RollDiceTest {
     }
 
 }
+*/

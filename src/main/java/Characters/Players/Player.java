@@ -150,6 +150,7 @@ public class Player implements Serializable {
         // todo: choose character class to vary these starting stats
         List<Equipment> equipmentList = new ArrayList<Equipment>(List.of(new DragonShield(), new EmptySlot(), new FlamingSword()));
         Player player = new Player(name, 100, 5, 2, equipmentList, true);
+        player.abilities.add(new Flee());
         player.abilities.add(new BasicAttack());
         player.abilities.add(new PowerStrike());
         player.abilities.add(new Heal());
@@ -273,6 +274,9 @@ public class Player implements Serializable {
 
         if (isHuman) {
             chosenAbility = showUserMenu();
+            if(chosenAbility == null) {
+                return null;
+            }
         } else {
             chosenAbility = chooseAIAction();
         }
@@ -319,6 +323,9 @@ public class Player implements Serializable {
             }
 
             String input = scanner.nextLine().trim();
+            if(input.equals("exit")) {
+                return null;
+            }
             int intInput = -1;
             try {
                 intInput = Integer.parseInt(input);
