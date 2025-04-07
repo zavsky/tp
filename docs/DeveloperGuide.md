@@ -139,11 +139,12 @@ and upcoming events to a file.
         
 The Attack Feature in RollaDie is a core component of the Game's battle system, 
 allowing the player and enemy to take turns attacking each other. The feature manages input handling, 
-attack calculations, and battle progression.      
+attack calculations, and battle progression.
 - During the player's turn, the Game reads the player's command, 
 determines the action, and roll dice to calculate attack bonuses. If the player chooses to attack, 
 the attack is executed, and damage is applied to the enemy. The Game then prints the attack message 
 and checks if the battle has ended.      
+- The player can choose from the numbers provided on screen to choose different attacks during his turn.
 - During the enemy's turn, the enemy follows a similar process—attacking the player, applying damage, 
 and displaying attack messages. The Game continues alternating between player and 
 enemy turns until either the player or the enemy is defeated. This feature ensures smooth battle flow,
@@ -154,16 +155,17 @@ handles attack mechanics, and updates battle status dynamically, keeping the com
         
 The Attack Feature in RollaDie handles the player's and enemy's turn-based combat interactions. 
 1. The process begins with the player's turn, where the user enters a command,
-which is read and parsed by the Parser class.  
-2. The parsed command is processed by PlayerTurn, which roll dice (RollDice) to determine any attack bonuses.       
-3. The player’s attack is then executed by calling the attack() method in the **Character class**, 
-which calculates the damage and applies it to the enemy.
-4. After the attack, the UI displays the attack message, and BattleLogic checks if the battle has ended.    
-5. If it's the enemy's turn, BattleLogic creates an **EnemyTurn** object, which handles the enemy's actions.
-6. The enemy attacks the player using the attack() method in Character, similar to the player's attack.
-7. The damage is calculated and applied to the player, followed by displaying the attack message and updating character info via UI.
-The turn ends with BattleLogic checking if the battle should continue.
-8. This loop repeats until the battle ends.
+which is read and parsed by the player class.  
+2. The parsed command is processed by Player, which sets chosen ability based on the command parsed.       
+3. If the player's attack requires power, deduct the required power. If power is insufficient, return invalid attack.
+4. The player’s attack chosen will start its cooldown is sent to the **Battle** class where 
+the attack will be stored as the player's ability chosen. The enemy will then choose ability based on 
+chooseAIAction() method in Player class.
+5. Both player and enemy will then roll dices to determine the damage that they do based on the formula: damage =
+[(dice roll result) + (num of dice) * (weapon bonus) - (opponent armor defense)] * [(power) / (max power) * 0.5 * (ability damage multiplier)].
+5. Both the player and enemy will then carry out their move and attack each other, deducting both characters' health based on damage formula.
+6. Cooldown of all abilities decreases by 1.
+7. This loop repeats until the battle ends.
 
 **Sequence Diagram**         
      

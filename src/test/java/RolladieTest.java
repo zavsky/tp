@@ -2,6 +2,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import Characters.Players.Player;
 import Equipment.DragonShield;
+import Equipment.EquipmentList;
 import Equipment.FlamingSword;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
@@ -11,21 +12,21 @@ class RolladieTest {
 
     @Test
     public void createNewPlayer_testStatusOfNewPlayer_playerIsAlive() {
-        String simulatedName = "HeroName\n";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(simulatedName.getBytes());
-        Scanner scanner = new Scanner(inputStream);
+        //String simulatedName = "HeroName\n";
+        //ByteArrayInputStream inputStream = new ByteArrayInputStream(simulatedName.getBytes());
+        //Scanner scanner = new Scanner(inputStream);
 
-        Player player = Rolladie.createNewPlayer(scanner);
+        Player player = Player.createNewPlayer();
         assertTrue(player.isAlive());
     }
 
     @Test
     public void createNewPlayer_testStatusOfNewPlayer_playerIsHuman(){
-        String simulatedName = "HeroName\n";
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(simulatedName.getBytes());
-        Scanner scanner = new Scanner(inputStream);
+        //String simulatedName = "HeroName\n";
+        //ByteArrayInputStream inputStream = new ByteArrayInputStream(simulatedName.getBytes());
+        //Scanner scanner = new Scanner(inputStream);
 
-        Player player = Rolladie.createNewPlayer(scanner);
+        Player player = Player.createNewPlayer();
         assertTrue(player.isHuman);
     }
 
@@ -45,9 +46,9 @@ class RolladieTest {
     public void startGameLoop_noEnemy_assertionThrown() throws InterruptedException {
         String simulatedInput = "n\nn\nn\n"; // adjust for how many waves you want
         Scanner scanner = new Scanner(new ByteArrayInputStream(simulatedInput.getBytes()));
-
+        EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
         Player player = new Player("Hero", 100,
-                5, 2, new FlamingSword(), new DragonShield(), true);
+                5, 2, equipmentList, true);
         int numberOfEnemy = 0;
         try {
             Rolladie.startGameLoop(player, numberOfEnemy, scanner);

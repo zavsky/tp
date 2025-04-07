@@ -1,34 +1,26 @@
 @startuml
 
-actor User
-participant "Main" as Main
-participant "Game" as Game
-participant "Loot" as Loot
-
-participant "Player" as Player
-participant "RollDice" as RollDice
-participant "UI" as UI
-participant "LootUI" as LootUI
-
-User -> Main: Start game
-Main -> Game: game.run()
-Game -> Loot: currentEvent.run()
+actor Player
+participant Game
+participant Battle
+participant Loot
+participant LootUI
+activate Player
+activate Game
+activate Battle
 activate Loot
-Loot -> LootUI: printLootEntry()
-Loot -> Loot: generateRandomLoot()
-Loot -> RollDice: rollDice()
-activate RollDice
-RollDice --> Loot: return diceValue
-deactivate RollDice
-Loot -> RollDice: diceOutcome(diceValue)
-activate RollDice
-RollDice --> Loot: return outcome
-deactivate RollDice
-Loot -> UI: printMessage("You get a bonus of " + outcome / 2 + " gold.")
-Loot -> Player: earnGold(gold)
-Loot -> LootUI: printLootExit(chest, loot, player)
 activate LootUI
-LootUI -> UI: printPlayerEarnGold(player, gold)
-deactivate LootUI
+Game -> Battle : run()
+Battle -> Battle : startGameLoop()
+Battle -> Game : hasWonCurrBattle()
+deactivate Battle
+Game -> Loot : setHasWon(boolean)
+Game -> Loot : run()
+alt Player wins the battle
+    Loot -> Player : addGold()
+    Loot -> LootUI : printLoot(loot)
+else Player loses
+    Loot -> LootUI : printNoLoot()
+end
 deactivate Loot
 @enduml
