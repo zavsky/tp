@@ -10,6 +10,7 @@ import Characters.Abilities.*;
 import Equipment.Equipment;
 import Equipment.DragonShield;
 import Equipment.FlamingSword;
+import Equipment.EmptySlot;
 import Functions.TypewriterEffect;
 import Functions.UI;
 import exceptions.RolladieException;
@@ -23,7 +24,6 @@ import static UI.BattleDisplay.drawPowerBar;
  */
 public class Player implements Serializable {
     private static final long serialVersionUID = 1L;
-
     public String name;
     public int hp, maxHp, baseAttack;
     public int[] diceRolls;
@@ -63,8 +63,8 @@ public class Player implements Serializable {
         this.hp = this.maxHp = maxHp;
         this.baseAttack = baseAttack;
         this.diceRolls = new int[2];
-        this.equipmentList = new ArrayList<>(List.of(null, null, null));
-        this.isHuman = isHuman;
+        this.equipmentList = new ArrayList<>(List.of(new EmptySlot(), new EmptySlot(), new EmptySlot()));
+        this.isHuman = true;
         this.gold = 0;
     }
 
@@ -81,21 +81,21 @@ public class Player implements Serializable {
 
     public int getPlayerAttack() {
         return equipmentList.stream()
-                .filter(e -> e != null)
+                .filter(e -> e.getId() != -1)
                 .mapToInt(Equipment::getAttack)
                 .sum();
     }
 
     public int getPlayerDefense() {
         return equipmentList.stream()
-                .filter(e -> e != null)
+                .filter(e -> e.getId() != -1)
                 .mapToInt(Equipment::getDefense)
                 .sum();
     }
 
     public Equipment getEquipment(int equipmentType) throws RolladieException {
         Equipment currSlot = equipmentList.get(equipmentType);
-        if (currSlot == null) {
+        if (currSlot.getId() == -1) {
             throw new RolladieException("Equipment is not equipped!");
         }
         return currSlot;
@@ -103,7 +103,7 @@ public class Player implements Serializable {
 
     public void obtainEquipment(Equipment equipment) throws RolladieException {
         Equipment currSlot = equipmentList.get(equipment.getId());
-        if (currSlot != null) {
+        if (currSlot.getId() != -1) {
             throw new RolladieException(currSlot.getEquipmentType() + " is already equipped!");
         }
         equipmentList = IntStream.range(0,3)
@@ -113,16 +113,16 @@ public class Player implements Serializable {
 
     public void removeEquipment(int equipmentType) throws RolladieException {
         Equipment equipment = equipmentList.get(equipmentType);
-        if (equipment == null) {
+        if (equipment.getId() == -1) {
             throw new RolladieException("No equipment at this slot!");
         }
         List<Equipment> newSlot = new ArrayList<>(equipmentList);
-        newSlot.set(equipmentType, null);
+        newSlot.set(equipmentType, new EmptySlot());
     }
 
     public boolean buyEquipment(Equipment equipment) throws RolladieException {
         if (this.gold > equipment.getValue()) {
-            if (equipmentList.get(equipment.getId()) == null) {
+            if (equipmentList.get(equipment.getId()).getId() != -1) {
                 removeEquipment(equipment.getId());
             }
             obtainEquipment(equipment);
@@ -462,7 +462,13 @@ public class Player implements Serializable {
         // Add Power bar
         sb.append("Power   : ").append(drawPowerBar(power, maxPower)).append("\n");
         // Add equipment list
-        sb.append(equipmentList.toString()).append("\n");
+        for (Equipment equipment : equipmentList) {
+            if (equipment.getId() != -1) {
+                sb.append(equipment.toString()).append("\n");
+            } else {
+                sb.append("Empty slot\n");
+            }
+        }
 
         // Add abilities
         sb.append("Abilities:\n");
