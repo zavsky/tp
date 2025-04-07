@@ -306,6 +306,7 @@ public class Player implements Serializable {
             String status = a.isReady(power) ? "" : "(cooldown or insufficient power)";
             System.out.printf("%d. %s %s (%s) %s\n", i + 1, a.icon, a.name, a.tags, status);
         }
+        System.out.println("Type exit to return to Main Menu");
 
         while (true) {
             // Ensure Scanner is valid and handle exceptions

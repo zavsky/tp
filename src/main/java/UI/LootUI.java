@@ -1,5 +1,7 @@
 package UI;
 
+import java.util.Scanner;
+
 public class LootUI {
     private static final String CHEST =
             "                            _.--.\n" +
@@ -34,5 +36,10 @@ public class LootUI {
 
     public static void printNoLoot() {
         System.out.println("As you did not win the battle, you did not get anything...");
+    }
+
+    public static void halt() {
+        System.out.println("\nPress Enter to continue...");
+        new Scanner(System.in).nextLine();
     }
 }
