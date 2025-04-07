@@ -30,6 +30,6 @@ public class Boots extends Equipment implements Serializable {
     }
 
     public String toString() {
-        return "Boots   : " + name + " (" + defense + " def) (" + attack + "atk)";
+        return "Boots   : " + name + " (" + defense + " def) (" + attack + " atk)";
     }
 }

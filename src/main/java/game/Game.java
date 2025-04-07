@@ -23,7 +23,7 @@ import java.util.LinkedList;
  */
 public class Game implements Serializable {
     private static final long serialVersionUID = 1L;
-    private static final int MAX_NUMBER_OF_WAVES = 8;
+    private static final int MAX_NUMBER_OF_WAVES = 11;
     private Queue<Event> eventsQueue = new LinkedList<>();
     private Player player;
     private Event currentEvent;
