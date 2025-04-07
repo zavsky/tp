@@ -35,6 +35,15 @@ public class BootsDatabase {
         throw new RolladieException("Boots not found!");
     }
 
+    public static int getIndexByName(String name) throws RolladieException {
+        for (int i = 0; i < bootsList.size(); i++) {
+            if (bootsList.get(i).getName().equalsIgnoreCase(name)) {
+                return i;
+            }
+        }
+        throw new RolladieException("Armor not found!");
+    }
+
     public static int getNumberOfBootsTypes() {
         return bootsList.size();
     }
