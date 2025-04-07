@@ -1,3 +1,4 @@
+//@@author Vincesum
 package equipments.armors;
 
 import exceptions.RolladieException;
