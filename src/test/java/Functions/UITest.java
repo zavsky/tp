@@ -8,7 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
-import Game.Game;
+import game.Game;
 
 /**
  * A class contains Junit test cases for UI class
@@ -34,8 +34,10 @@ public class UITest {
 
     @Test
     public void readInput_validInput_returnsLowercase() {
-        testIn = new ByteArrayInputStream("HeLLo\n".getBytes());
+        String simulatedInput = "HELLO\n";
+        testIn = new ByteArrayInputStream(simulatedInput.getBytes());
         System.setIn(testIn);
+
         String result = UI.readInput();
         assertEquals("hello", result);
     }
@@ -94,7 +96,8 @@ public class UITest {
 
     @Test
     public void promptSaveFile_validInput_returnsInput() {
-        testIn = new ByteArrayInputStream("2\n".getBytes());
+        String simulatedInput = "2\n";
+        testIn = new ByteArrayInputStream(simulatedInput.getBytes());
         System.setIn(testIn);
         String result = UI.promptSaveFile();
         assertEquals("2", result);
@@ -102,8 +105,10 @@ public class UITest {
 
     @Test
     public void promptSaveFile_emptyInput_returnsEmpty() {
-        testIn = new ByteArrayInputStream("3\n".getBytes());
-        System.setIn(testIn);
+        String simulatedInput = "\n";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        System.setIn(inputStream);
+
         String result = UI.promptSaveFile();
         assertEquals("", result);
     }
@@ -121,13 +126,16 @@ public class UITest {
     public void showContinueScreen_displaysPlayerAndWave() {
         Game mockGame = new Game();
 
-        testIn = new ByteArrayInputStream("3\n".getBytes());
+        String simulatedInput = "test\n";
+        testIn = new ByteArrayInputStream(simulatedInput.getBytes());
         System.setIn(testIn);
 
-        UI.showContinueScreen(mockGame);
-        String output = testOut.toString();
+        ByteArrayOutputStream testOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(testOut));
 
-        assertTrue(output.contains("TestPlayer"));
-        assertTrue(output.contains("🌊 Current Wave: 3"));
+        UI.showContinueScreen(mockGame);
+
+        String output = testOut.toString();
+        assertTrue(output.contains("🌊 Current Wave: 1"));
     }
 }

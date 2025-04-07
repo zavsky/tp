@@ -44,6 +44,7 @@ public class WeaponDatabase {
     }
 
     public static Weapon getWeaponByIndex(int index) {
+        assert index >= 0:"index cannot be negative";
         return weaponList.get(index);
     }
 }

@@ -3,12 +3,13 @@ package Events;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import Equipment.Equipment;
 import org.junit.jupiter.api.Test;
 import Characters.Players.Player;
 import Equipment.DragonShield;
-import Equipment.EquipmentList;
 import Equipment.FlamingSword;
-
+import java.util.Arrays;
+import java.util.List;
 
 
 class BattleTest {
@@ -17,7 +18,7 @@ class BattleTest {
     @Test
     public void startGameLoop_noEnemy_assertionThrown() throws InterruptedException, exceptions.RolladieException {
 
-        EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+        List<Equipment> equipmentList =  Arrays.asList(new DragonShield(), new FlamingSword());
         Player player = new Player("Hero", 100, 5, 2, equipmentList, true);
 
         try {

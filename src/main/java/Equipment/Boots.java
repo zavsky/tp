@@ -1,6 +1,6 @@
 package Equipment;
 
-
+import java.io.Serializable;
 /**
  * Represents Weapon that Player can equip
  */

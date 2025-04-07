@@ -60,7 +60,7 @@ public class EquipmentList implements Serializable {
                 .toList();
     }
 
-    public EquipmentList removeEquipment(String equipmentType) throws RolladieException {
+    private EquipmentList removeEquipment(String equipmentType) throws RolladieException {
         Equipment equipment = getEquipment(equipmentType);
         List<Optional<Equipment>> newSlot = equipmentSlot.stream()
                 .map(e -> e.filter(x -> !x.equals(equipment)))
@@ -68,7 +68,7 @@ public class EquipmentList implements Serializable {
         return new EquipmentList(newSlot);
     }
 
-    public Equipment getEquipment(String equipmentType) throws RolladieException {
+    private Equipment getEquipment(String equipmentType) throws RolladieException {
         int currIndex;
         switch(equipmentType) {
         case "armor":
@@ -87,19 +87,19 @@ public class EquipmentList implements Serializable {
         return currSlot.orElseThrow(() -> new RolladieException(equipmentType + " is not equipped!"));
     }
 
-    public int getEquipmentAttack() {
+    private int getEquipmentAttack() {
         return equipmentSlot.stream().filter(Optional::isPresent)
                 .map(x -> x.get().getAttack())
                 .reduce(0, Integer::sum);
     }
 
-    public int getEquipmentHealth() {
+    private int getEquipmentHealth() {
         return equipmentSlot.stream().filter(Optional::isPresent)
                 .map(x -> x.get().getHealth())
                 .reduce(0, Integer::sum);
     }
 
-    public int getEquipmentDefense() {
+    private int getEquipmentDefense() {
         return equipmentSlot.stream().filter(Optional::isPresent)
                 .map(x -> x.get().getDefense())
                 .reduce(0, Integer::sum);
