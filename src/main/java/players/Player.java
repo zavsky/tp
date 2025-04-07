@@ -481,6 +481,7 @@ public class Player implements Serializable {
                 sb.append("Empty slot\n");
             }
         }
+        sb.append("Gold: ").append(gold).append("\n");
 
         // Add abilities
         sb.append("Abilities:\n");
@@ -516,6 +517,7 @@ public class Player implements Serializable {
         this.gold = gold;
         this.power = power;
         this.maxPower = maxPower;
+        this.isHuman = true;
     }
 
     /**

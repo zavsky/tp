@@ -11,9 +11,6 @@ import functions.UI.UI;
 public class Rolladie {
 
     public static void main(String[] args) throws InterruptedException, RolladieException {
-        Game game = new Game();
-        game.saveGame();
-
         mainMenu();
     }
 
@@ -32,7 +29,7 @@ public class Rolladie {
                 case "1":
                     game = new Game();
                     break;
-/*                case "2":
+                case "2":
                     int saveSlot = Integer.parseInt(UI.promptSaveFile());
                     try {
                         game = Storage.loadGame(saveSlot);
@@ -43,7 +40,7 @@ public class Rolladie {
                         UI.printMessage("Starting new game instead.");
                         game = new Game();
                     }
-                    break;*/
+                    break;
                 default:
                     throw new RolladieException("Invalid option");
                 }

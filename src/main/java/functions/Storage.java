@@ -5,8 +5,18 @@ import java.io.IOException;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
+import equipments.Equipment;
+import equipments.armors.Armor;
+import equipments.armors.ArmorDatabase;
+import equipments.boots.Boots;
+import equipments.boots.BootsDatabase;
+import equipments.weapons.Weapon;
+import equipments.weapons.WeaponDatabase;
 import exceptions.RolladieException;
 import functions.UI.UI;
 import game.Game;
@@ -56,13 +66,14 @@ public class Storage {
         }
     }
 
-/*    *//**
+    /**
      * Returns Game object after decoding text from savefile into game parameters
      *
      * @return Game
-     *//*
-    public static Game loadGame() throws RolladieException {
-        File f = new File(FILE_DIRECTORY + FILE_NAME);
+     */
+    public static Game loadGame(int saveSlot) throws RolladieException {
+        String filename = FILE_NAME + saveSlot + FILE_TYPE;
+        File f = new File(FILE_DIRECTORY + filename);
         Scanner s;
         try {
             s = new Scanner(f);
@@ -70,8 +81,7 @@ public class Storage {
             int wave = Integer.parseInt(s.nextLine().trim());
 
             String[] playerData = s.nextLine().split(LOAD_DELIMITER);
-            Player player = parsePlayerFromText(playerData);
-
+            Player player = parsePlayerFromText(wave, playerData);
 
             return new Game(player, wave);
 
@@ -83,9 +93,46 @@ public class Storage {
         return new Game();
     }
 
-    private static Player parsePlayerFromText(String[] playerData) throws RolladieException {
+    private static Player parsePlayerFromText(int wave, String[] playerData) throws RolladieException {
+        String name = playerData[0];
+        int hp = Integer.parseInt(playerData[1]);
+        int maxHp = Integer.parseInt(playerData[2]);
+        int baseAttack = Integer.parseInt(playerData[3]);
+        int numDice = Integer.parseInt(playerData[4]);
+        List<Equipment> equipmentList = parseEquipmentListFromText(Arrays.copyOfRange(playerData, 5, 8));
+        int gold = Integer.parseInt(playerData[8]);
+        int power = Integer.parseInt(playerData[9]);
+        int maxPower = Integer.parseInt(playerData[10]);
 
-    }*/
+        return new Player(wave, name, hp, maxHp, baseAttack, numDice, equipmentList, gold, power, maxPower);
+    }
+
+    private static List<Equipment> parseEquipmentListFromText(String[] parameters) throws RolladieException {
+        int defaultIndex = -1;
+        Equipment armor = ArmorDatabase.getArmorByIndex(defaultIndex);
+        Equipment boots = BootsDatabase.getBootsByIndex(defaultIndex);
+        Equipment weapon = WeaponDatabase.getWeaponByIndex(defaultIndex);
+
+        for (int i = 0; i < parameters.length; i++) {
+            String[] equipmentText = parameters[i].split(" ");
+            String equipmentType = equipmentText[0];
+            int equipmentIndex = Integer.parseInt(equipmentText[1]);
+            switch (equipmentType) {
+            case Armor.EQUIPMENT_TYPE:
+                armor = ArmorDatabase.getArmorByIndex(equipmentIndex);
+                break;
+            case Boots.EQUIPMENT_TYPE:
+                boots = BootsDatabase.getBootsByIndex(equipmentIndex);
+                break;
+            case Weapon.EQUIPMENT_TYPE:
+                weapon = WeaponDatabase.getWeaponByIndex(equipmentIndex);
+                break;
+            default:
+                throw new RolladieException("Invalid equipment type");
+            }
+        }
+        return List.of(armor, boots, weapon);
+    }
 /*
     public static void saveGame(int saveSlot, Game game) {
         String filename = "save_slot_" + saveSlot + ".dat";
