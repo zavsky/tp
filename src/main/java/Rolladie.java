@@ -26,13 +26,15 @@ public class Rolladie {
      * Starts the game menu and shows options for new game or loading from save
      */
     public static void mainMenu() throws InterruptedException {
+        String userInput = "";
 
         UI.printWelcomeMessage();
-
         UI.printOptions();
-        String userInput = UI.readInput();
+        
         Game game;
+        
         while(!userInput.equals("3")) {
+            userInput = UI.readInput();
             try {
                 switch (userInput) {
                 case "1":
