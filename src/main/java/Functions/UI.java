@@ -23,6 +23,18 @@ public class UI {
         return inputLine;
     }
 
+    public static int readIntegerInput() throws InterruptedException {
+        String input = SCANNER.nextLine().trim();
+        int intInput = -1;
+        try {
+            intInput = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Try again.");
+            Thread.sleep(1000);
+        }
+        return intInput;
+    }
+
     /**
      * A string containing the ASCII art LOGO of the game.
      */

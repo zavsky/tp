@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Represents Armor that Player can augment
  */
-public class Armor extends Equipment {
+public class Armor extends Equipment implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public Armor(String name, int defense, int attack, int health, int value) {
@@ -19,6 +19,11 @@ public class Armor extends Equipment {
     @Override
     public String getEquipmentType() {
         return "Armor";
+    }
+
+    @Override
+    public int getId() {
+        return 0;
     }
 
     public String toString() {

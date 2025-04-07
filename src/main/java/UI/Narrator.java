@@ -58,6 +58,22 @@ public class Narrator {
             TypewriterEffect.print("[Narrator] 😬 " + defender.name + " barely survives with a sliver of health!", END_DELAY);
         }
     }
+
+    public static void commentOnShopEntry() {
+
+    }
+
+    public static void commentOnShopBuy(Player p) throws InterruptedException {
+
+    }
+
+    public static void commentOnShopSell(Player p) throws InterruptedException {
+
+    }
+
+    public static void commentOnShopExit() {
+
+    }
     
     public static void newGameSequence() throws InterruptedException {
         TypewriterEffect.print("The tavern was thick with the stench of ale and unwashed ambition. You sat in the corner, nursing a drink, when the murmurs reached your ears.\n" + //
