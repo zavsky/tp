@@ -40,7 +40,8 @@ public class HpBar {
             System.out.printf("%-10s : ", p2.name);
             System.out.println(bar2 + " " + current2 + "/" + p2.maxHp);
 
-            Thread.sleep(Math.min(70 + 2 * i, 300));
+//            Thread.sleep(Math.min(70 + 2 * i, 300));
+            Thread.sleep(0);
         }
     }
 
