@@ -10,7 +10,9 @@ import Game.Game;
 import exceptions.RolladieException;
 import Equipment.DragonShield;
 import Equipment.FlamingSword;
+import Equipment.Boots;
 import Equipment.EmptySlot;
+import Events.Event;
 
 import Functions.UI;
 
@@ -22,6 +24,9 @@ import static Functions.UI.readIntegerInput;
 public class Rolladie {
 
     public static void main(String[] args) throws InterruptedException, RolladieException {
+        //Game game = new Game();
+        //Event shop = game.generateShopEvent(2);
+        //shop.run();
         mainMenu();
     }
 

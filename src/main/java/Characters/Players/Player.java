@@ -106,9 +106,7 @@ public class Player implements Serializable {
         if (currSlot.getId() != -1) {
             throw new RolladieException(currSlot.getEquipmentType() + " is already equipped!");
         }
-        equipmentList = IntStream.range(0,3)
-                .mapToObj(x -> x == equipment.getId() ? equipment : equipmentList.get(x))
-                .toList();
+        equipmentList.set(equipment.getId(), equipment);
     }
 
     public void removeEquipment(int equipmentType) throws RolladieException {
@@ -116,12 +114,11 @@ public class Player implements Serializable {
         if (equipment.getId() == -1) {
             throw new RolladieException("No equipment at this slot!");
         }
-        List<Equipment> newSlot = new ArrayList<>(equipmentList);
-        newSlot.set(equipmentType, new EmptySlot());
+        equipmentList.set(equipmentType, new EmptySlot());
     }
 
     public boolean buyEquipment(Equipment equipment) throws RolladieException {
-        if (this.gold > equipment.getValue()) {
+        if (this.gold >= equipment.getValue()) {
             if (equipmentList.get(equipment.getId()).getId() != -1) {
                 removeEquipment(equipment.getId());
             }
