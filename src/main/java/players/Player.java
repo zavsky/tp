@@ -5,10 +5,10 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import equipments.weapons.Stick;
 import players.abilities.*;
 import equipments.Equipment;
-import equipments.armors.DragonShield;
-import equipments.weapons.FlamingSword;
+import equipments.armors.Tshirt;
 import equipments.boots.EmptySlot;
 import functions.TypewriterEffect;
 import functions.UI.UI;
@@ -148,7 +148,7 @@ public class Player implements Serializable {
         String name = UI.readInput();
 
         // todo: choose character class to vary these starting stats
-        List<Equipment> equipmentList = new ArrayList<Equipment>(List.of(new DragonShield(), new EmptySlot(), new FlamingSword()));
+        List<Equipment> equipmentList = new ArrayList<Equipment>(List.of(new Tshirt(), new EmptySlot(), new Stick()));
         Player player = new Player(name, 100, 5, 3, equipmentList, true);
         player.abilities.add(new Flee());
         player.abilities.add(new BasicAttack());
