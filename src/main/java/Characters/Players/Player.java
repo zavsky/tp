@@ -31,7 +31,7 @@ public class Player implements Serializable {
     public Ability lastAbilityUsed;
     public boolean isHuman;
     public List<Ability> abilities = new ArrayList<>();
-    private int gold;
+    public int gold;
 
     public int power = 50;
     public int maxPower = 100;
