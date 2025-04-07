@@ -95,7 +95,6 @@ public class Game implements Serializable {
             } catch (RolladieException | InterruptedException e) {
                 UI.printErrorMessage(e.getMessage());
             }
-            this.wave++;
         }
         if (!this.player.isAlive()) {
             UI.printDeathMessage();
