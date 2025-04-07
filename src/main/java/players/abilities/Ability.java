@@ -1,14 +1,11 @@
 package players.abilities;
 
-import java.io.Serializable;
-
 import players.Player;
 
 /**
  * Represents Player-class abilities used during a battle encounter
  */
-public abstract class Ability implements Serializable {
-    private static final long serialVersionUID = 1L;
+public abstract class Ability {
 
     public AbilityType type;
     public String name;
@@ -89,4 +86,8 @@ public abstract class Ability implements Serializable {
      * @param player the Player which the ability will affect
      */
     public void additionalFeatures(Player player) {}
+
+    public String toText() {
+        return this.name;
+    }
 }

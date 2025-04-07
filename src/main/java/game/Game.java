@@ -12,16 +12,15 @@ import equipments.Equipment;
 import equipments.weapons.WeaponDatabase;
 import events.Battle;
 import events.Event;
+import functions.UI.GameOverUI;
 
-import java.io.Serializable;
 import java.util.Queue;
 import java.util.LinkedList;
 
 /**
  * Manages all game logic specifically: Event Generation and Sequence
  */
-public class Game implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Game {
     private static final int MAX_NUMBER_OF_WAVES = 8;
     private Queue<Event> eventsQueue = new LinkedList<>();
     private Player player;
@@ -39,7 +38,7 @@ public class Game implements Serializable {
     public Game() {
         this.player = Player.createNewPlayer();
         this.wave = 1;
-        this.eventsQueue = generateEventQueue();
+        this.eventsQueue = generateEventQueue(this.wave);
         this.currentEvent = nextEvent();
     }
 
@@ -56,13 +55,13 @@ public class Game implements Serializable {
      * Main usage is within the Storage class to load game from save file
      *
      * @param player
-     * @param currentEvent
-     * @param eventsQueue
+     * @param wave
      */
-    public Game(Player player, Event currentEvent, Queue<Event> eventsQueue) {
+    public Game(Player player, int wave) {
         this.player = player;
-        this.eventsQueue = eventsQueue;
-        this.currentEvent = currentEvent;
+        this.wave = wave;
+        this.eventsQueue = generateEventQueue(wave);
+        this.currentEvent = nextEvent();
     }
 
     /**
@@ -75,7 +74,7 @@ public class Game implements Serializable {
                 //If current battle is won, sets loot event to give rewards
                 currentEvent.setHasWon(hasWonCurrBattle);
                 //Saves game on loot or shop screen after a battle.
-                if (this.currentEvent instanceof Loot) {
+                if (this.currentEvent instanceof Battle) {
                     saveGame();
                 }
                 this.currentEvent.run();
@@ -96,32 +95,29 @@ public class Game implements Serializable {
                 UI.printErrorMessage(e.getMessage());
             }
         }
-        if (!this.player.isAlive()) {
-            UI.printDeathMessage();
-        } else {
-            UI.printWinMessage();
-        }
+        GameOver gameOver = new GameOver(hasWonCurrBattle);
+        gameOver.run();
     }
-
 
 
     /**
      * Returns a filled queue of events
      * Used during the construction of a new game
      *
+     * @param start
      * @return eventsQueue
      */
-    private Queue<Event> generateEventQueue() {
+    private Queue<Event> generateEventQueue(int start) {
         Queue<Event> eventsQueue = new LinkedList<>();
         int i;
-        for (i = 1; i <= MAX_NUMBER_OF_WAVES; i++) {
+        for (i = start; i <= MAX_NUMBER_OF_WAVES; i++) {
             eventsQueue.add(generateBattle(i));
             eventsQueue.add(generateLoot((i + 1) * 10));
-            if(i % 2 == 0) {
+            if (i % 2 == 0) {
                 eventsQueue.add(generateShopEvent(i));
             }
         }
-        eventsQueue.add(generateBattle(i+1));
+        eventsQueue.add(generateBattle(i + 1));
         return eventsQueue;
     }
 
@@ -160,12 +156,12 @@ public class Game implements Serializable {
     /**
      * Calls the Storage class to save the current game status
      */
-    private void saveGame() {
+    public void saveGame() throws RolladieException {
         UI.printMessage("💾 Save game? (y/n): ");
         String saveInput = UI.readInput();
         if (saveInput.equalsIgnoreCase("y")) {
-            int saveSlot = Integer.parseInt(UI.promptSaveFile());
-            Storage.saveGame(saveSlot, this);
+            int saveSlot = UI.promptSaveFile();
+            Storage.saveGame(saveSlot, wave, this.player);
         }
     }
 

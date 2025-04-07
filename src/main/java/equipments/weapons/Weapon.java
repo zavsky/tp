@@ -1,14 +1,14 @@
+//@@author vincesum
 package equipments.weapons;
 
 import equipments.Equipment;
 
-import java.io.Serializable;
-
 /**
  * Represents Weapon that Player can equip
  */
-public class Weapon extends Equipment implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Weapon extends Equipment {
+    public static final String EQUIPMENT_TYPE = "Weapon";
+
 
     public Weapon(String name, int defense, int attack, int health, int value) {
         super(name, defense, attack, health, value);
@@ -20,7 +20,7 @@ public class Weapon extends Equipment implements Serializable {
 
     @Override
     public String getEquipmentType() {
-        return "weapon";
+        return EQUIPMENT_TYPE;
     }
 
     @Override
@@ -28,7 +28,12 @@ public class Weapon extends Equipment implements Serializable {
         return 2;
     }
 
+    @Override
+    public String toText() {
+        return EQUIPMENT_TYPE + " " + WeaponDatabase.getIndexByName(this.name);
+    }
+
     public String toString() {
-        return "Weapon  : " + name + " (" + attack + " atk)";
+        return EQUIPMENT_TYPE + "  : " + name + " (" + attack + " atk)";
     }
 }
