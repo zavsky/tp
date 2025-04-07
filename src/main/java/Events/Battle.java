@@ -1,6 +1,7 @@
 package Events;
 
 import Characters.Abilities.Ability;
+import Characters.Abilities.AbilityType;
 import Characters.Abilities.Crush;
 import Characters.Abilities.Heal;
 import Characters.Abilities.PowerStrike;
@@ -71,17 +72,12 @@ public class Battle extends Event {
             TypewriterEffect.print("💀 You fell at encounter " + wave, END_DELAY);
             return;
         }
-        else {
-            hasWon = true;
-        }
 
         // Heal partially, recharge power
         System.out.println("🍃 You survived! Regaining strength...");
         player.resetAllCooldowns();
         player.hp = Math.min(player.maxHp, player.hp + 10);
         player.power = Math.min(player.maxPower, player.power + 20);
-
-        wave++;
 
         if (wave == 3 && !player.hasAbility("Whirlwind")) {
             player.abilities.add(new Whirlwind());
@@ -102,13 +98,12 @@ public class Battle extends Event {
     public static Player generateNewEnemy(int wave) {
         assert wave > 0: "Number of enemy encountered must be at least 1";
 
-        Weapon claws = new Weapon("Claws", 2 + wave);
+        Weapon claws = new Weapon("Claws", 1 + wave / 2);
         Armor hide = new Armor("Hide", 1 + wave / 2);
         List<Equipment> equipmentList = new ArrayList<Equipment>(List.of(hide, new EmptySlot(), claws));
-        Player enemy = new Player("Enemy " + wave, 20 + wave * 30, (3 + wave) / 2, 3, equipmentList, false);
+        Player enemy = new Player("Enemy " + wave, 30 + wave * 20, (3 + wave) / 2, 2, equipmentList, false);
 
         enemy.abilities.add(new PowerStrike());
-        if (wave >= 2) enemy.abilities.add(new Heal());
         if (wave >= 3) enemy.abilities.add(new Crush());
 
         return enemy;
@@ -121,7 +116,7 @@ public class Battle extends Event {
      * @param player2
      * @throws InterruptedException
      */
-    private static void startBattle(Player player1, Player player2) throws InterruptedException, RolladieException {
+    private void startBattle(Player player1, Player player2) throws InterruptedException, RolladieException {
         assert player1 != null: "player1 cannot be null";
         assert player2 != null: "player2 cannot be null";
         int round = 1;
@@ -134,6 +129,18 @@ public class Battle extends Event {
 
             // Choose Abilities
             Ability p1Ability = player1.chooseAbility();
+            if(p1Ability == null) {
+                this.isExit = true;
+                return;
+            }
+            if(p1Ability.type.equals(AbilityType.FLEE)) {
+                if(tryToFlee(player1, player2)) {
+                    System.out.println("[Narrator] You escaped...for now!");
+                    hasWon = false;
+                    return;
+                }
+                System.out.println("[Narrator] Fate was not on your side!");
+            }
             Ability p2Ability = player2.chooseAbility();
             System.out.println();
 
@@ -149,7 +156,10 @@ public class Battle extends Event {
 
             // Damage
             int p1Damage = player1.computeDamageTo(player2);
-            int p2Damage = player2.computeDamageTo(player1);
+            int p2Damage = 0;
+            if (p1Damage < player2.hp) {
+                p2Damage = player2.computeDamageTo(player1);
+            }
 
             diceDisplay = player2.applyDamage(p1Damage, player1, diceDisplay);
             Narrator.commentOnMomentum(player1, player2, p1Damage, player2.hp);
@@ -175,7 +185,19 @@ public class Battle extends Event {
                 TypewriterEffect.print("[Narrator] 🔥 " + player1.name + " has unlocked a new ability: Whirlwind!");
             }
         }
+        if (player1.isAlive()) {
+            hasWon = true;
+        }
 
         TypewriterEffect.print("\n🏁 " + (player1.isAlive() ? player1.name : player2.name) + " wins the battle!");
+    }
+
+    private boolean tryToFlee(Player player1, Player player2) throws InterruptedException {
+        int[] temp = player1.diceRolls;
+        player1.diceRolls = new int[player2.diceRolls.length];
+        DiceBattleAnimation.animateBattle(player1.getDiceRolls(), player2.getDiceRolls());
+        boolean canFlee = player1.totalRoll() > player2.totalRoll();
+        player1.diceRolls = temp;
+        return canFlee;
     }
 }

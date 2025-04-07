@@ -22,7 +22,7 @@ import java.util.LinkedList;
  */
 public class Game implements Serializable {
     private static final long serialVersionUID = 1L;
-    private static final int MAX_NUMBER_OF_WAVES = 5;
+    private static final int MAX_NUMBER_OF_WAVES = 9;
     private Queue<Event> eventsQueue = new LinkedList<>();
     private Player player;
     private Event currentEvent;
@@ -38,9 +38,9 @@ public class Game implements Serializable {
      */
     public Game() {
         this.player = Player.createNewPlayer();
+        this.wave = 1;
         this.eventsQueue = generateEventQueue();
         this.currentEvent = nextEvent();
-        this.wave = 1;
     }
 
     public int getWave() {
@@ -74,30 +74,35 @@ public class Game implements Serializable {
             try {
                 //If current battle is won, sets loot event to give rewards
                 currentEvent.setHasWon(hasWonCurrBattle);
+                //Saves game on loot or shop screen after a battle.
+                if (this.currentEvent instanceof Loot) {
+                    saveGame();
+                }
                 this.currentEvent.run();
+                if (this.currentEvent.isExit) {
+                    UI.printExitMessage();
+                    return;
+                }
                 if (!player.isAlive()) {
                     break;
                 }
                 //Checks if current battle is won
                 if (this.currentEvent instanceof Battle) {
+                    this.wave++;
                     hasWonCurrBattle = currentEvent.getHasWon();
                 }
-                //Saves game on loot or shop screen after a battle.
-                if (this.currentEvent instanceof Loot) {
-                    saveGame();
-                }
-
-                //this.currentEvent = optionalShopEvent();
-                // To run the shop event
-                // this.currentEvent.run();
                 this.currentEvent = nextEvent();
             } catch (RolladieException | InterruptedException e) {
                 UI.printErrorMessage(e.getMessage());
             }
-            this.wave++;
         }
-        UI.printDeathMessage();
+        if (!this.player.isAlive()) {
+            UI.printDeathMessage();
+        } else {
+            UI.printWinMessage();
+        }
     }
+
 
 
     /**
@@ -108,15 +113,13 @@ public class Game implements Serializable {
      */
     private Queue<Event> generateEventQueue() {
         Queue<Event> eventsQueue = new LinkedList<>();
-        Battle battle1 = generateBattle();
-        Battle battle2 = generateBattle();
-        Battle battle3 = generateBattle();
-        eventsQueue.add(battle1);
-        eventsQueue.add(generateLoot(20));
-        eventsQueue.add(battle2);
-        eventsQueue.add(generateLoot(30));
-        eventsQueue.add(battle3);
-        eventsQueue.add(generateLoot(40));
+        for (int i = 1; i <= MAX_NUMBER_OF_WAVES; i++) {
+            eventsQueue.add(generateBattle(i));
+            eventsQueue.add(generateLoot((i + 1) * 10));
+            if(i % 2 == 0) {
+                eventsQueue.add(generateShopEvent(i));
+            }
+        }
         return eventsQueue;
     }
 
@@ -125,9 +128,8 @@ public class Game implements Serializable {
      *
      * @return Event
      */
-    private Battle generateBattle() {
+    private Battle generateBattle(int wave) {
         Battle newBattle = new Battle(this.player, wave);
-        wave++; //increment wave after battle
         return newBattle;
     }
 
@@ -135,11 +137,11 @@ public class Game implements Serializable {
         return new Loot(this.player, loot);
     }
 
-    private Event generateShopEvent(int wave) {
+    public Event generateShopEvent(int wave) {
         Equipment[] equipmentsForSale = {
-                ArmorDatabase.getArmorByIndex(wave / 2),
-                BootsDatabase.getBootsByIndex(wave / 2),
-                WeaponDatabase.getWeaponByIndex(wave / 2),
+                ArmorDatabase.getArmorByIndex((wave / 2) - 1),
+                BootsDatabase.getBootsByIndex((wave / 2) - 1),
+                WeaponDatabase.getWeaponByIndex((wave / 2) - 1),
         };
         return new Shop(this.player, equipmentsForSale);
     }
@@ -165,20 +167,4 @@ public class Game implements Serializable {
         }
     }
 
-    private Event optionalShopEvent() {
-        if (Math.random() <= (0.3 + 0.2 * turnsWithoutShop)) {
-            turnsWithoutShop = 0;
-            // shop entered
-            Equipment[] equipmentsForSale = {
-                    ArmorDatabase.getArmorByIndex((int) (Math.random() * ArmorDatabase.getNumberOfArmorTypes())),
-                    BootsDatabase.getBootsByIndex((int) (Math.random() * BootsDatabase.getNumberOfBootsTypes())),
-                    WeaponDatabase.getWeaponByIndex((int) (Math.random() * WeaponDatabase.getNumberOfWeaponTypes()))
-            };
-            UI.printMessage("SHOP EVENT");
-        } else {
-            // shop not provisioned
-            turnsWithoutShop++;
-        }
-        return null;
-    }
 }

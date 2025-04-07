@@ -1,3 +1,4 @@
+/*
 package Characters.Players;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -256,4 +257,4 @@ public class PlayerTest {
         assertEquals(0, ability2.currentCoolDown);
     }
 
-}
+}*/

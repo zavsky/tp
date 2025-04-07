@@ -109,9 +109,7 @@ public class Player implements Serializable {
         if (currSlot.getId() != -1) {
             throw new RolladieException(currSlot.getEquipmentType() + " is already equipped!");
         }
-        equipmentList = IntStream.range(0,3)
-                .mapToObj(x -> x == equipment.getId() ? equipment : equipmentList.get(x))
-                .toList();
+        equipmentList.set(equipment.getId(), equipment);
     }
 
     public void removeEquipment(int equipmentType) throws RolladieException {
@@ -119,12 +117,11 @@ public class Player implements Serializable {
         if (equipment.getId() == -1) {
             throw new RolladieException("No equipment at this slot!");
         }
-        List<Equipment> newSlot = new ArrayList<>(equipmentList);
-        newSlot.set(equipmentType, new EmptySlot());
+        equipmentList.set(equipmentType, new EmptySlot());
     }
 
     public boolean buyEquipment(Equipment equipment) throws RolladieException {
-        if (this.gold > equipment.getValue()) {
+        if (this.gold >= equipment.getValue()) {
             if (equipmentList.get(equipment.getId()).getId() != -1) {
                 removeEquipment(equipment.getId());
             }
@@ -152,7 +149,8 @@ public class Player implements Serializable {
 
         // todo: choose character class to vary these starting stats
         List<Equipment> equipmentList = new ArrayList<Equipment>(List.of(new DragonShield(), new EmptySlot(), new FlamingSword()));
-        Player player = new Player(name, 100, 5, 2, equipmentList, true);
+        Player player = new Player(name, 100, 5, 3, equipmentList, true);
+        player.abilities.add(new Flee());
         player.abilities.add(new BasicAttack());
         player.abilities.add(new PowerStrike());
         player.abilities.add(new Heal());
@@ -277,6 +275,9 @@ public class Player implements Serializable {
 
         if (isHuman) {
             chosenAbility = showUserMenu();
+            if(chosenAbility == null) {
+                return null;
+            }
         } else {
             chosenAbility = chooseAIAction();
         }
@@ -306,6 +307,7 @@ public class Player implements Serializable {
             String status = a.isReady(power) ? "" : "(cooldown or insufficient power)";
             System.out.printf("%d. %s %s (%s) %s\n", i + 1, a.icon, a.name, a.tags, status);
         }
+        System.out.println("Type exit to return to Main Menu");
 
         while (true) {
             // Ensure Scanner is valid and handle exceptions
@@ -323,6 +325,9 @@ public class Player implements Serializable {
             }
 
             String input = scanner.nextLine().trim();
+            if(input.equals("exit")) {
+                return null;
+            }
             int intInput = -1;
             try {
                 intInput = Integer.parseInt(input);
