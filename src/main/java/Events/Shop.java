@@ -1,3 +1,5 @@
+//@@James17042002
+
 package Events;
 
 import Characters.Players.Player;
@@ -35,7 +37,7 @@ public class Shop extends Event {
         case 1: //buy
             ShopUI.printBuyInstructions();
             int buyInput = readIntegerInput();
-            if (buyInput >= equipments.length || buyInput < 0) {
+            if (buyInput > equipments.length || buyInput < 0) {
                 UI.printErrorMessage("Buy index out of range!");
                 break;
             }
@@ -50,7 +52,7 @@ public class Shop extends Event {
             }
             handleSellInput(sellInput);
             break;
-        case 3: //sell
+        case 3: //exit
             isDone = true;
             break;
         default:

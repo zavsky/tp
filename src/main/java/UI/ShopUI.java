@@ -11,7 +11,7 @@ public class ShopUI {
     public static void printShopCollection(Equipment[] equipments) {
         TypewriterEffect.print("[Shopkeeper] Here is my shop collection!");
         for (int i = 1; i <= equipments.length; i++) {
-            System.out.println(i + ": " + equipments[i - 1]);
+            System.out.println(i + ": " + equipments[i - 1] + "( " + equipments[i - 1].getValue() + " gold)");
         }
     }
 
