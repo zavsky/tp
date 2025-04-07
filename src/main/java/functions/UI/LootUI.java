@@ -1,7 +1,5 @@
 package functions.UI;
 
-import java.util.Scanner;
-
 public class LootUI {
     private static final String CHEST =
             "                            _.--.\n" +
