@@ -161,6 +161,7 @@ public class Player implements Serializable {
      */
     public int computeDamageTo(Player opponent) throws InterruptedException {
         assert opponent.isAlive(): "Opponent must be alive to receive damage";
+
         int base = totalRoll() + (diceRolls.length * getPlayerAttack());
 
         // if (powerStrikeActive) base *= 1.5;

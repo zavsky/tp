@@ -1,10 +1,15 @@
 package Characters.Players;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Test;
+import java.io.ByteArrayInputStream;
+import java.util.NoSuchElementException;
+import Equipment.DragonShield;
+import Equipment.EquipmentList;
+import Equipment.FlamingSword;
 import Characters.Abilities.Ability;
 import Characters.Abilities.BasicAttack;
 import Characters.Abilities.PowerStrike;
@@ -13,10 +18,33 @@ import Equipment.Weapon;
 
 public class PlayerTest {
 
+    private Player player;
+    private Player opponent;
+
+    @Test
+    public void createNewPlayer_testStatusOfNewPlayer_playerIsAlive() {
+        String simulatedInput = "HeroName\n";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+
+        player = Player.createNewPlayer();
+        assertTrue(player.isAlive());
+    }
+
+    @Test
+    public void createNewPlayer_emptyInput_throwsException() {
+        System.setIn(new ByteArrayInputStream("".getBytes()));
+
+        assertThrows(NoSuchElementException.class, () -> {
+            Player.createNewPlayer();
+        });
+    }
+
+
+
     @Test
     public void totalRoll_checkDiceSum_sumIsCorrect(){
-        Player player = new Player("Hero", 100, 5, 2,
-                new Weapon("Sword", 2), new Armor("Leather", 1), true);
+        EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+        player = new Player("Hero", 100, 5, 2, equipmentList, true);
 
         player.diceRolls = new int[]{5,10,12};
         int total = player.totalRoll();
@@ -26,9 +54,9 @@ public class PlayerTest {
 
 
     @Test
-    void totalRoll_NegativeRolls_sumIsCorrectlyCalculated() {
-        Player player = new Player("Hero", 100, 5, 3,
-                new Weapon("Sword", 2), new Armor("Shield", 1), true);
+    public void totalRoll_NegativeRolls_sumIsCorrectlyCalculated() {
+        EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+        player = new Player("Hero", 100, 5, 2, equipmentList, true);
 
         player.diceRolls = new int[]{-1, 5, 3};
         int total = player.totalRoll();
@@ -37,34 +65,60 @@ public class PlayerTest {
     }
 
     @Test
-    public void computeDamageTo_testDamageCalculation_damageEqualsNine() throws InterruptedException{
-        Player attacker = new Player("Hero", 100, 5, 2,
-                new Weapon("Sword", 2), new Armor("Leather", 1), true);
+    public void computeDamageTo_validInputs_expectedDamage() throws InterruptedException{
 
-        attacker.maxPower = 100;
-        attacker.power = 50;
-        attacker.lastAbilityUsed = new BasicAttack();
+        Weapon attackerWeapon = new Weapon("Flaming Sword", 5); // weapon bonus = 5
+        Armor attackerArmor = new Armor("Cloth Armor", 0);
+        EquipmentList playerEquip = new EquipmentList(attackerArmor, null, attackerWeapon);
 
-        attacker.diceRolls = new int[]{4, 3};
+        Weapon opponentWeapon = new Weapon("Claws", 2);
+        Armor opponentArmor = new Armor("Leather Armor", 3); // defense = 3
+        EquipmentList opponentEquip = new EquipmentList(opponentArmor, null, opponentWeapon);
 
-        Player opponent = new Player("Enemy", 100, 3, 4,
-                new Weapon("Claws", 1), new Armor("Shield", 4), false);
+        player = new Player("Attacker", 100, 10, 2, playerEquip, true);
+        opponent = new Player("Opponent", 80, 8, 2, opponentEquip, false);
 
-        int damage = attacker.computeDamageTo(opponent);
-        assertEquals(9,damage);
+        // Simulate dice rolls
+        player.diceRolls[0] = 4;
+        player.diceRolls[1] = 5;
+
+        // Set power and ability
+        player.power = 50;
+        player.maxPower = 100;
+        player.lastAbilityUsed = new BasicAttack();
+
+
+        int totalRoll = 4 + 5;
+        int numDice = 2;
+        int weaponBonus = 5;
+        int base = totalRoll + (numDice * weaponBonus); // 9 + 10 = 19
+
+        double powerMultiplier = 1.0 + (player.power / (double) player.maxPower) * 0.5; // 1.25
+        double damageMult = player.lastAbilityUsed.damageMult; // 1.0
+        int rawDamage = (int) (base * powerMultiplier * damageMult); // (19 * 1.25 * 1.0) = 23
+        int expectedDamage = Math.max(0, rawDamage - opponent.getPlayerDefense()); // 23 - 3 = 20
+
+        int actualDamage = player.computeDamageTo(opponent);
+
+        assertEquals(expectedDamage, actualDamage);
+
     }
 
     @Test
     public void computeDamageTo_opponentIsNotAlive_assertionThrown() throws InterruptedException{
         try{
-            Player opponent =  new Player("Enemy", 0, 5, 2,
-                    new Weapon("Sword", 2), new Armor("Leather", 1), true);
-            Player attacker = new Player("Hero", 100, 5, 2,
-                    new Weapon("Sword", 2), new Armor("Leather", 1), true);
 
-            attacker.lastAbilityUsed = new BasicAttack();
-            attacker.lastAbilityUsed.damageMult = 1;
-            attacker.computeDamageTo(opponent);
+            EquipmentList opponentEquip = new EquipmentList(new Armor("Leather Armor", 3),
+                    null, new Weapon("Claws", 2));
+
+            opponent = new Player("Opponent", 0, 5, 2, opponentEquip, false);
+
+            EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+            player = new Player("Hero", 100, 5, 2, equipmentList, true);
+
+            player.lastAbilityUsed = new BasicAttack();
+            player.lastAbilityUsed.damageMult = 1;
+            player.computeDamageTo(opponent);
         }catch(AssertionError e){
             assertEquals("Opponent must be alive to receive damage", e.getMessage());
 
@@ -75,14 +129,18 @@ public class PlayerTest {
 
     @Test
     public void applyDamage_largeDamage_DevastatingBlow() throws InterruptedException {
-        Player opponent = new Player("Knight", 100, 6, 4,
-                new Weapon("Spear", 2), new Armor("Steel", 3), true);
-        Player attacker = new Player("Dragon", 100, 10, 5,
-                new Weapon("Flame Claws", 5), new Armor("Scales", 4), false);
+
+        EquipmentList opponentEquip = new EquipmentList(new Armor("Leather Armor", 3),
+                null, new Weapon("Claws", 2));
+
+        opponent = new Player("Opponent", 100, 6, 4, opponentEquip, false);
+
+        EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+        player = new Player("Hero", 100, 10, 2, equipmentList, true);
 
 
         opponent.lastAbilityUsed = new BasicAttack();
-        String result = opponent.applyDamage(15, attacker, "Battle: ");
+        String result = opponent.applyDamage(15, opponent, "Battle: ");
 
         assertEquals(85, opponent.getHp());
         assertTrue(result.contains("devastating blow"));
@@ -90,15 +148,19 @@ public class PlayerTest {
 
     @Test
     public void applyDamage_playerDamageIsNegative_assertionThrown()throws InterruptedException {
-        Player attacker = new Player("Hero", 100, 5, 2,
-                new Weapon("Sword", 2), new Armor("Leather", 1), true);
 
-        Player opponent = new Player("Enemy", 100, 3, 4,
-                new Weapon("Claws", 1), new Armor("Shield", 4), false);
-        int attacker_damage = 0;
+        EquipmentList opponentEquip = new EquipmentList(new Armor("Leather Armor", 3),
+                null, new Weapon("Claws", 2));
+
+        opponent = new Player("Opponent", 100, 6, 4, opponentEquip, false);
+
+        EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+        player = new Player("Hero", 100, 10, 2, equipmentList, true);
+
+        int attacker_damage = -10;
 
         try{
-            attacker.applyDamage(attacker_damage,opponent,"Testing");
+            player.applyDamage(attacker_damage,opponent,"Testing");
 
         }catch(AssertionError e){
             assertEquals("damage value must be non-negative",e.getMessage());
@@ -110,8 +172,8 @@ public class PlayerTest {
     @Test
     public void heal_healAmountIsNegative_assertionThrown() {
         try{
-            Player player = new Player("Hero", 100, 5, 2,
-                    new Weapon("Sword", 2), new Armor("Leather", 1), true);
+            EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+            player = new Player("Hero", 100, 10, 2, equipmentList, true);
 
             player.heal(-100);
         }catch(AssertionError e){
@@ -121,8 +183,8 @@ public class PlayerTest {
 
     @Test
     public void heal_healAmountEqualsFIve_hpUpdatedCorrectly() {
-        Player player = new Player("Hero", 100, 5, 2,
-                new Weapon("Sword", 2), new Armor("Leather", 1), true);
+        EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+        player = new Player("Hero", 100, 10, 2, equipmentList, true);
 
         player.heal(5);
         assertEquals(100, player.getHp());
@@ -131,8 +193,8 @@ public class PlayerTest {
 
     @Test
     public void updatePower_updateAmountIsFive_powerValueUpdatedCorrectly(){
-        Player player = new Player("Hero", 100, 5, 2,
-                new Weapon("Sword", 2), new Armor("Leather", 1), true);
+       EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+        player = new Player("Hero", 100, 10, 2, equipmentList, true);
 
         player.updatePower(5);
         assertEquals(55, player.power);
@@ -142,10 +204,10 @@ public class PlayerTest {
     @Test
     public void updatePower_updateAmountIsNegative_assertionThrown() {
         try{
-            Player player = new Player("Hero", 100, 5, 2,
-                    new Weapon("Sword", 2), new Armor("Leather", 1), true);
-
+           EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+            player = new Player("Hero", 100, 10, 2, equipmentList, true);
             player.updatePower(-100);
+
         }catch(AssertionError e){
             assertEquals("power value must be non-negative", e.getMessage());
         }
@@ -153,10 +215,10 @@ public class PlayerTest {
 
     @Test
     public void resetAllCooldowns_nullAbilityInList_gracefulHandling() {
-        Player player = new Player("TestHero", 100, 5, 3,
-                new Weapon("TestSword", 1), new Armor("TestArmor", 1), true);
+        EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+        player = new Player("Hero", 100, 10, 2, equipmentList, true);
 
-        player.abilities.add(null); // Unexpected null
+        player.abilities.add(null);
         player.abilities.add(new BasicAttack());
 
         assertThrows(NullPointerException.class, player::resetAllCooldowns);
@@ -165,8 +227,8 @@ public class PlayerTest {
     @Test
     public void resetAllCooldowns_setsAllCooldownsToZero() {
 
-        Player player = new Player("TestHero", 100, 5, 3,
-                new Weapon("TestSword", 1), new Armor("TestArmor", 1), true);
+        EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+        player = new Player("Hero", 100, 10, 2, equipmentList, true);
 
         Ability ability1 = new BasicAttack();
         Ability ability2 = new PowerStrike();
