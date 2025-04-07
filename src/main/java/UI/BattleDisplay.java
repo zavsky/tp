@@ -2,6 +2,7 @@ package UI;
 
 import Characters.Abilities.Ability;
 import Characters.Players.Player;
+import exceptions.RolladieException;
 
 public class BattleDisplay {
     /**
@@ -10,20 +11,24 @@ public class BattleDisplay {
      * 
      * @param p Player to query status on
      */
-    public static void showPlayerStatus(Player p) {
+    public static void showPlayerStatus(Player p) throws RolladieException {
+        /*
         System.out.println("🧍 " + p.name + (p.isHuman ? "" : " (AI)"));
         System.out.println("HP      : " + p.hp + "/" + p.maxHp + " ❤️");
         System.out.println("Power   : " + drawPowerBar(p.power, p.maxPower));
-        System.out.println("Weapon  : " + p.weapon.name + " (+" + p.weapon.bonusPerDie + " dmg)");
-        System.out.println("Armor   : " + p.armor.name + " (" + p.armor.defense + " def)");
+        System.out.println(p.equipmentList.toString());
         System.out.println("Abilities:");
         
         for (int i = 0; i < p.abilities.size(); i++) {
             Ability a = p.abilities.get(i);
-            String status = a.isCDReady() ? "✅ ready" : "⏳ " + a.currentCooldown + " turn(s)";
+            String status = a.isCDReady() ? "✅ ready" : "⏳ " + a.currentCoolDown + " turn(s)";
             System.out.printf(" %d. %s %s (%s)\n", i + 1, a.icon, a.name, status);
         }
         System.out.println();
+
+         */
+
+        System.out.println(p.toString());
     }
 
     public static String drawPowerBar(int power, int maxPower) {

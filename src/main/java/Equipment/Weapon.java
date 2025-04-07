@@ -5,14 +5,23 @@ import java.io.Serializable;
 /**
  * Represents Weapon that Player can equip
  */
-public class Weapon implements Serializable {
+public class Weapon extends Equipment {
     private static final long serialVersionUID = 1L;
-    
-    public String name;
-    public int bonusPerDie;
 
-    public Weapon(String name, int bonusPerDie) {
-        this.name = name;
-        this.bonusPerDie = bonusPerDie;
+    public Weapon(String name, int defense, int attack, int health, int value) {
+        super(name, defense, attack, health, value);
+    }
+
+    public Weapon(String name, int attack) {
+        super(name, 0, attack, 0, 0);
+    }
+
+    @Override
+    public String getEquipmentType() {
+        return "weapon";
+    }
+
+    public String toString() {
+        return "Weapon  : " + name + " (" + attack + " atk)";
     }
 }

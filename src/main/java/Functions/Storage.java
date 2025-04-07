@@ -10,7 +10,7 @@ import java.util.Scanner;
 import Characters.Abilities.Ability;
 import Characters.Players.Player;
 import exceptions.RolladieException;
-import game.Game;
+import Game.Game;
 
 /**
  * Saving and loading games
@@ -34,5 +34,6 @@ public class Storage {
         } catch (IOException | ClassNotFoundException e) {
             throw new RolladieException("❌ Load failed: " + e.getMessage());
         }
+
     }
 }
