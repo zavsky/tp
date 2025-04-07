@@ -1,7 +1,7 @@
 package functionalities.ui;
 
-import game.characters.Player;
-import game.equipment.Equipment;
+import oldgame.characters.Player;
+import oldgame.equipment.Equipment;
 
 public class ShopUI extends UI {
     public static void printShopEntry() {

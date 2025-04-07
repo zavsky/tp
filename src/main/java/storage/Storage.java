@@ -2,24 +2,23 @@ package storage;
 
 import exceptions.RolladieException;
 import functionalities.ui.UI;
-import game.characters.Character;
-import game.characters.Enemy;
-import game.characters.Player;
-import game.equipment.ArmorDatabase;
-import game.equipment.BootsDatabase;
-import game.equipment.Equipment;
-import game.equipment.EquipmentList;
-import game.equipment.WeaponDatabase;
-import game.events.battle.Battle;
-import game.events.Event;
-import game.Game;
-import game.events.loot.Loot;
+import oldgame.characters.Character;
+import oldgame.characters.Enemy;
+import oldgame.characters.Player;
+import oldgame.equipment.ArmorDatabase;
+import oldgame.equipment.BootsDatabase;
+import oldgame.equipment.Equipment;
+import oldgame.equipment.EquipmentList;
+import oldgame.equipment.WeaponDatabase;
+import oldgame.events.battle.Battle;
+import oldgame.events.Event;
+import oldgame.oldGame;
+import oldgame.events.loot.Loot;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -198,7 +197,7 @@ public class Storage {
      *
      * @return Game
      */
-    public static Game loadGame() throws RolladieException {
+    public static oldGame loadGame() throws RolladieException {
         File f = new File(FILE_DIRECTORY + FILE_NAME);
         Scanner s;
         try {
@@ -225,6 +224,6 @@ public class Storage {
         } catch (RolladieException e) {
             UI.printErrorMessage("savefile.txt corrupted\nStarting new game");
         }
-        return new Game();
+        return new oldGame();
     }
 }

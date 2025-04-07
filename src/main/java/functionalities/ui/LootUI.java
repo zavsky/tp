@@ -1,6 +1,6 @@
 package functionalities.ui;
 
-import game.characters.Player;
+import oldgame.characters.Player;
 
 public class LootUI extends UI {
     public static void printLootEntry() {

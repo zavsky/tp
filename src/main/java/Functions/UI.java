@@ -1,8 +1,7 @@
 package Functions;
 
-import Characters.Abilities.Ability;
 import Characters.Players.Player;
-import game.Game;
+import Game.Game;
 
 import java.util.Scanner;
 
@@ -29,10 +28,10 @@ public class UI {
      */
     public static final String LOGO =
             " ____    " + "  ___   " + " _      " + " _      " + "    _    " + " ____   " + " ___  " + " _____  " + "\n" +
-                    "|  _ \\   " + " / _ \\  " + "| |     " + "| |     " + "   / \\   " + "|  _ \\  " + "|_ _| " + "| ____| " + "\n" +
-                    "| |_) |  " + "| | | | " + "| |     " + "| |     " + "  / _ \\  " + "| | | | " + " | |  " + "|  _|   " + "\n" +
-                    "|  _ <   " + "| |_| | " + "| |___  " + "| |___  " + " / /_\\ \\ " + "| |_| | " + " | |  " + "| |___  " + "\n" +
-                    "|_| \\_\\  " + " \\___/  " + "|_____| " + "|_____| " + "/_/   \\_\\" + "|____/  " + "|___| " + "|_____| ";
+            "|  _ \\ " + "   / _ \\  " + "| |     " + "| |     " + "   / \\   " + "|  _ \\  " + "|_ _| " + "| ____| " + "\n" +
+            "| |_) |  " + "| | | | " + "| |     " + "| |     " + "  / _ \\  " + "| | | | " + " | |  " + "|  _|   " + "\n" +
+            "|  _ <   " + "| |_| | " + "| |___  " + "| |___  " + " / /_\\ \\ " + "| |_| | " + " | |  " + "| |___  " + "\n" +
+            "|_| \\_\\  " + " \\___/  " + "|_____| " + "|_____| " + "/_/   \\_\\" + "|____/  " + "|___| " + "|_____| ";
     /**
      * Prints a message to the console.
      *
@@ -81,17 +80,7 @@ public class UI {
     public static void showContinueScreen(Game game) {
         Player player = game.getPlayer();
         int wave = game.getWave();
-        System.out.println("\n===== CONTINUE SCREEN =====");
-        System.out.println("👤 Name: " + player.name);
-        System.out.println("❤️ HP: " + player.hp + " / " + player.maxHp);
-        System.out.println("⚡ Power: " + player.power + " / " + player.maxPower);
-        System.out.println("🗡️ Weapon: " + player.weapon.name + " (+" + player.weapon.bonusPerDie + " dmg)");
-        System.out.println("🛡️ Armor: " + player.armor.name + " (+" + player.armor.defense + " def)");
-
-        System.out.println("🧪 Abilities:");
-        for (Ability a : player.abilities) {
-            System.out.printf("   • %s (%s) | Cooldown: %d | Cost: %d\n", a.name, a.icon, a.cooldown, a.powerCost);
-        }
+        System.out.println(player.toString());
 
         System.out.println("🌊 Current Wave: " + wave);
         System.out.println("\nPress Enter to continue...");

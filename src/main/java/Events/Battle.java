@@ -7,6 +7,7 @@ import Characters.Abilities.PowerStrike;
 import Characters.Abilities.Whirlwind;
 import Characters.Players.Player;
 import Equipment.Armor;
+import Equipment.EquipmentList;
 import Equipment.Weapon;
 import Functions.DiceBattleAnimation;
 import Functions.TypewriterEffect;
@@ -31,10 +32,10 @@ public class Battle extends Event {
     }
 
     @Override
-    public void run() throws RolladieException {
+    public void run() {
         try {
             startGameLoop(this.player, this.wave, new Scanner(System.in));
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | RolladieException e) {
             UI.printErrorMessage(e.getMessage());
         }
     }
@@ -48,12 +49,13 @@ public class Battle extends Event {
      * @param scanner
      * @throws InterruptedException
      */
-    public void startGameLoop(Player player, int wave, Scanner scanner) throws InterruptedException {
+    public void startGameLoop(Player player, int wave, Scanner scanner) throws InterruptedException, RolladieException {
         System.out.println("🌊 Encounter " + wave + " begins!");
 
         if (!this.enemy.isAlive()) {
             this.enemy = generateNewEnemy(wave); // todo make tougher per wave
         }
+
         startBattle(player, enemy);
 
         if (!player.isAlive()) {
@@ -75,8 +77,8 @@ public class Battle extends Event {
         }
 
         if (wave == 5) {
-            player.weapon = new Weapon("Flame Blade", 5);
-            TypewriterEffect.print("🗡️ You obtained the Flame Blade!", END_DELAY);
+            player.obtainEquipment(new Weapon("Flame Blade", 5));
+            TypewriterEffect.print("🗡️ You obtained the Flame Blade!", 1000);
         }
     }
 
@@ -86,7 +88,8 @@ public class Battle extends Event {
     public static Player generateNewEnemy(int wave) {
         Weapon claws = new Weapon("Claws", 2 + wave);
         Armor hide = new Armor("Hide", 1 + wave / 2);
-        Player enemy = new Player("Enemy " + wave, 20 + wave * 30, (3 + wave) / 2, 3, claws, hide, false);
+        EquipmentList equipmentList = new EquipmentList(hide, null, claws);
+        Player enemy = new Player("Enemy " + wave, 20 + wave * 30, (3 + wave) / 2, 3, equipmentList, false);
 
         enemy.abilities.add(new PowerStrike());
         if (wave >= 2) enemy.abilities.add(new Heal());
@@ -102,7 +105,7 @@ public class Battle extends Event {
      * @param player2
      * @throws InterruptedException
      */
-    private static void startBattle(Player player1, Player player2) throws InterruptedException {
+    private static void startBattle(Player player1, Player player2) throws InterruptedException, RolladieException {
         int round = 1;
 
         while (player1.isAlive() && player2.isAlive()) {
