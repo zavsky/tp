@@ -9,9 +9,18 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import Characters.Abilities.*;
+import Equipment.EquipmentList;
+import Equipment.Equipment;
 import Equipment.Armor;
+import Equipment.DragonShield;
+import Equipment.FlamingSword;
 import Equipment.Weapon;
 import Functions.TypewriterEffect;
+import Functions.UI;
+import exceptions.RolladieException;
+
+import static UI.BattleDisplay.drawPowerBar;
+
 
 /**
  * Represents player and non-player characters in the game
@@ -22,11 +31,11 @@ public class Player implements Serializable {
     public String name;
     public int hp, maxHp, baseAttack;
     public int[] diceRolls;
-    public Weapon weapon;
-    public Armor armor;
+    public EquipmentList equipmentList;
     public Ability lastAbilityUsed;
     public boolean isHuman;
     public List<Ability> abilities = new ArrayList<>();
+    public int gold;
 
     public int power = 50;
     public int maxPower = 100;
@@ -40,18 +49,66 @@ public class Player implements Serializable {
      * @param maxHp Maximum hitpoints the character can take
      * @param baseAttack Base damage amount
      * @param numDice Number of dice to roll during battle encounters
-     * @param weapon Weapon object attachable to the character
-     * @param armor Armor object augmentable to the character
+     * @param equipmentList A list to encapsulate all the equipment equipped by a character,
      * @param isHuman True if creating player-controlled character, false otherwise
      */
-    public Player(String name, int maxHp, int baseAttack, int numDice, Weapon weapon, Armor armor, boolean isHuman) {
+    public Player(String name, int maxHp, int baseAttack, int numDice, EquipmentList equipmentList, boolean isHuman) {
         this.name = name;
         this.hp = this.maxHp = maxHp;
         this.baseAttack = baseAttack;
         this.diceRolls = new int[numDice];
-        this.weapon = weapon;
-        this.armor = armor;
+        this.equipmentList = equipmentList;
         this.isHuman = isHuman;
+        this.gold = 0;
+    }
+
+    public Player(String name, int maxHp, int baseAttack) {
+        this.name = name;
+        this.hp = this.maxHp = maxHp;
+        this.baseAttack = baseAttack;
+        this.diceRolls = new int[2];
+        this.equipmentList = new EquipmentList();
+        this.isHuman = isHuman;
+        this.gold = 0;
+    }
+
+    public int getPlayerAttack() {
+        return equipmentList.getEquipmentAttack();
+    }
+
+    public int getPlayerDefense() {
+        return equipmentList.getEquipmentDefense();
+    }
+
+    public void obtainEquipment(Equipment equipment) throws RolladieException {
+        this.equipmentList = this.equipmentList.addEquipment(equipment);
+    }
+
+    public void removeEquipment(String equipmentType) throws RolladieException {
+        this.equipmentList = this.equipmentList.removeEquipment(equipmentType);
+    }
+
+    public Equipment getEquipment(String equipmentType) throws RolladieException {
+        return this.equipmentList.getEquipment(equipmentType);
+    }
+
+    /**
+     * Creates a new human player when starting from new game
+     *
+     * @return Player character
+     */
+    public static Player createNewPlayer() {
+        UI.printMessage("Enter your hero's name: ");
+        String name = UI.readInput();
+
+        // todo: choose character class to vary these starting stats
+        EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+        Player player = new Player(name, 100, 5, 2, equipmentList, true);
+        player.abilities.add(new BasicAttack());
+        player.abilities.add(new PowerStrike());
+        player.abilities.add(new Heal());
+
+        return player;
     }
 
     private void rollDice() {
@@ -105,10 +162,11 @@ public class Player implements Serializable {
     public int computeDamageTo(Player opponent) throws InterruptedException {
         assert opponent.isAlive(): "Opponent must be alive to receive damage";
         int base = totalRoll() + (diceRolls.length * weapon.bonusPerDie);
+
         // if (powerStrikeActive) base *= 1.5;
         double powerMultiplier = 1.0 + (power / (double) maxPower) * 0.5; // up to +50%
         int rawDamage = (int) (base * powerMultiplier * lastAbilityUsed.damageMult);
-        int damage = Math.max(0, rawDamage - opponent.armor.defense);
+        int damage = Math.max(0, rawDamage - opponent.getPlayerDefense());
 
         return damage;
     }
@@ -177,7 +235,7 @@ public class Player implements Serializable {
         power = Math.max(0, power - chosenAbility.powerCost); // in case AI has no viable ability and has to revert to basic attack
 
         TypewriterEffect.print("[Narrator] " + name + " uses " + chosenAbility.name);
-        Thread.sleep(1000);
+        Thread.sleep(0);
         return chosenAbility;
     }
 
@@ -342,5 +400,32 @@ public class Player implements Serializable {
         for (Ability a : abilities) {
             a.resetCooldown();
         }
+    }
+
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        // Add name and player type (Human or AI)
+        sb.append("🧍 ").append(name).append(isHuman ? "" : " (AI)").append("\n");
+        // Add HP information
+        sb.append("HP      : ").append(hp).append("/").append(maxHp).append(" ❤️\n");
+
+        // Add Power bar
+        sb.append("Power   : ").append(drawPowerBar(power, maxPower)).append("\n");
+        // Add equipment list
+        sb.append(equipmentList.toString()).append("\n");
+
+        // Add abilities
+        sb.append("Abilities:\n");
+        for (int i = 0; i < abilities.size(); i++) {
+            Ability a = abilities.get(i);
+            String status = a.isCDReady() ? "✅ ready" : "⏳ " + a.currentCooldown + " turn(s)";
+            sb.append(String.format(" %d. %s %s %s\n", i + 1, a.icon, a.name, status));
+        }
+
+
+        // Return the final string representation
+        return sb.toString();
     }
 }
