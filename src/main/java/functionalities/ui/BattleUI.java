@@ -1,7 +1,7 @@
 package functionalities.ui;
 
-import game.characters.Character;
-import game.characters.Enemy;
+import oldgame.characters.Character;
+import oldgame.characters.Enemy;
 
 public class BattleUI extends UI {
 
@@ -24,7 +24,7 @@ public class BattleUI extends UI {
      * @param player The player character involved in the battle.
      * @param enemy The enemy character involved in the battle.
      */
-    public static void printBattleTurnStart(game.characters.Character player, Character enemy) {
+    public static void printBattleTurnStart(oldgame.characters.Character player, Character enemy) {
         System.out.println(LINE_SEPARATOR);
         printCharacterInfo(player);
         System.out.println(LINE_SEPARATOR);

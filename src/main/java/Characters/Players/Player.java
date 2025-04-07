@@ -102,7 +102,8 @@ public class Player implements Serializable {
         String name = UI.readInput();
 
         // todo: choose character class to vary these starting stats
-        Player player = new Player(name, 100, 5, 2, new FlamingSword(), new DragonShield(), true);
+        EquipmentList equipmentList = new EquipmentList(new DragonShield(), null, new FlamingSword());
+        Player player = new Player(name, 100, 5, 2, equipmentList, true);
         player.abilities.add(new BasicAttack());
         player.abilities.add(new PowerStrike());
         player.abilities.add(new Heal());
@@ -393,13 +394,11 @@ public class Player implements Serializable {
 
         // Add name and player type (Human or AI)
         sb.append("🧍 ").append(name).append(isHuman ? "" : " (AI)").append("\n");
-
         // Add HP information
         sb.append("HP      : ").append(hp).append("/").append(maxHp).append(" ❤️\n");
 
         // Add Power bar
         sb.append("Power   : ").append(drawPowerBar(power, maxPower)).append("\n");
-
         // Add equipment list
         sb.append(equipmentList.toString()).append("\n");
 
@@ -408,8 +407,9 @@ public class Player implements Serializable {
         for (int i = 0; i < abilities.size(); i++) {
             Ability a = abilities.get(i);
             String status = a.isCDReady() ? "✅ ready" : "⏳ " + a.currentCooldown + " turn(s)";
-            sb.append(String.format(" %d. %s %s %s (%s)\n", i + 1, a.icon, a.name, status));
+            sb.append(String.format(" %d. %s %s %s\n", i + 1, a.icon, a.name, status));
         }
+
 
         // Return the final string representation
         return sb.toString();

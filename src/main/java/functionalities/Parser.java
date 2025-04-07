@@ -1,14 +1,14 @@
 package functionalities;
 
-import game.actions.Action;
-import game.actions.battleaction.AttackAction;
-import game.actions.battleaction.DefendAction;
-import game.actions.battleaction.FleeAction;
-import game.actions.ExitAction;
-import game.actions.HelpAction;
-import game.actions.shopaction.BuyAction;
-import game.actions.shopaction.LeaveAction;
-import game.actions.shopaction.SellAction;
+import oldgame.actions.Action;
+import oldgame.actions.battleaction.AttackAction;
+import oldgame.actions.battleaction.DefendAction;
+import oldgame.actions.battleaction.FleeAction;
+import oldgame.actions.ExitAction;
+import oldgame.actions.HelpAction;
+import oldgame.actions.shopaction.BuyAction;
+import oldgame.actions.shopaction.LeaveAction;
+import oldgame.actions.shopaction.SellAction;
 
 import java.util.Scanner;
 

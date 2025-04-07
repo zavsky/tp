@@ -1,7 +1,7 @@
 package functionalities.ui;
 
-import game.characters.Character;
-import game.characters.Player;
+import oldgame.characters.Character;
+import oldgame.characters.Player;
 
 /**
  * The UI class is responsible for handling the user interface in the text-based RPG game.
