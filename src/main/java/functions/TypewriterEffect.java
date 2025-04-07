@@ -2,6 +2,8 @@ package functions;
 
 import java.util.Scanner;
 
+import functions.UI.UI;
+
 public class TypewriterEffect {
     private static volatile boolean skipAnimation = false;
 
@@ -35,10 +37,8 @@ public class TypewriterEffect {
         Thread inputThread = new Thread(() -> {
             try {
                 // System.in.read();
-                Scanner scanner = new Scanner(System.in);
-                scanner.nextLine();
+                UI.nextLine();
                 skipAnimation = true;
-                scanner.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }

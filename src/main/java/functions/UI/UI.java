@@ -18,6 +18,9 @@ public class UI {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
+    public static void nextLine() {
+        SCANNER.nextLine();
+    }
 
     public static String readInput() {
         String inputLine = SCANNER.nextLine().toLowerCase();

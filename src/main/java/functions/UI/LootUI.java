@@ -40,6 +40,6 @@ public class LootUI {
 
     public static void halt() {
         System.out.println("\nPress Enter to continue...");
-        new Scanner(System.in).nextLine();
+        UI.nextLine();
     }
 }
