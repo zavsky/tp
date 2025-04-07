@@ -13,5 +13,5 @@ public abstract class Event implements Serializable {
         this.player = player;
     }
 
-    public abstract void run() throws RolladieException;
+    public abstract void run() throws RolladieException, InterruptedException;
 }

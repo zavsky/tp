@@ -1,5 +1,6 @@
 package Game;
 
+import Events.Shop;
 import exceptions.RolladieException;
 import Functions.Storage;
 import Functions.UI;
@@ -79,7 +80,7 @@ public class Game implements Serializable {
                 // To run the shop event
                 // this.currentEvent.run();
                 this.currentEvent = nextEvent();
-            } catch (RolladieException e) {
+            } catch (RolladieException | InterruptedException e) {
                 UI.printErrorMessage(e.getMessage());
             }
             this.wave++;
@@ -97,7 +98,10 @@ public class Game implements Serializable {
     private Queue<Event> generateEventQueue() {
         Queue<Event> eventsQueue = new LinkedList<>();
         for (int i = 1; i < MAX_NUMBER_OF_WAVES + 1; i++) {
-            eventsQueue.add(generateEvent(i));
+            eventsQueue.add(generateBattleEvent(i));
+            if (wave % 2 == 0) {
+                //eventsQueue.add(generateShopEvent(i));
+            }
         }
         return eventsQueue;
     }
@@ -110,8 +114,17 @@ public class Game implements Serializable {
      *
      * @return Event
      */
-    private Event generateEvent(int wave) {
+    private Event generateBattleEvent(int wave) {
         return new Battle(this.player, wave);
+    }
+
+    private Event generateShopEvent(int wave) {
+        Equipment[] equipmentsForSale = {
+                ArmorDatabase.getArmorByIndex(wave / 2),
+                BootsDatabase.getBootsByIndex(wave / 2),
+                WeaponDatabase.getWeaponByIndex(wave / 2),
+        };
+        return new Shop(this.player, equipmentsForSale);
     }
 
     /**
