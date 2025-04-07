@@ -2,6 +2,7 @@ package UI;
 
 import Characters.Players.Player;
 import Functions.TypewriterEffect;
+import Equipment.Equipment;
 
 public class Narrator {
 
@@ -60,19 +61,21 @@ public class Narrator {
     }
 
     public static void commentOnShopEntry() {
-
+        TypewriterEffect.print("[Narrator] You enter an Equipment Shop! Upgrade your Stats here!");
     }
 
-    public static void commentOnShopBuy(Player p) throws InterruptedException {
-
+    public static void commentOnShopBuy(Player p, Equipment equipment) throws InterruptedException {
+        TypewriterEffect.print("[Narrator] You buy " + equipment + " for " + equipment.getValue() + " gold.");
+        System.out.println(p);
     }
 
-    public static void commentOnShopSell(Player p) throws InterruptedException {
-
+    public static void commentOnShopSell(Player p, Equipment equipment) throws InterruptedException {
+        TypewriterEffect.print("[Narrator] You sell " + equipment + " for " + equipment.getValue()/2 + " gold.");
+        System.out.println(p);
     }
 
     public static void commentOnShopExit() {
-
+        TypewriterEffect.print("[Narrator] You leave with your new gear, feeling stronger than ever!");
     }
     
     public static void newGameSequence() throws InterruptedException {
