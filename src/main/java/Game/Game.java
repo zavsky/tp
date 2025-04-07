@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 import Events.Loot;
 import Events.Shop;
@@ -88,15 +88,13 @@ public class Game implements Serializable {
                 }
                 //Checks if current battle is won
                 if (this.currentEvent instanceof Battle) {
+                    this.wave++;
                     hasWonCurrBattle = currentEvent.getHasWon();
                 }
-
-
                 this.currentEvent = nextEvent();
             } catch (RolladieException | InterruptedException e) {
                 UI.printErrorMessage(e.getMessage());
             }
-            this.wave++;
         }
         if (!this.player.isAlive()) {
             UI.printDeathMessage();

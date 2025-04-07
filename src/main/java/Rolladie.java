@@ -3,7 +3,7 @@
  */
 
 import Functions.Storage;
-import Game.Game;
+import game.Game;
 import exceptions.RolladieException;
 
 import Functions.UI;
