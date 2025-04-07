@@ -12,6 +12,7 @@ import players.abilities.BasicAttack;
 import players.abilities.PowerStrike;
 import equipments.armors.Armor;
 import equipments.weapons.Weapon;
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 public class PlayerTest {
@@ -31,8 +32,14 @@ public class PlayerTest {
         opponentList = List.of(new Weapon("Claws", 1), new Armor("Shield", 4));
         opponent = new Player("Enemy", 100, 3, 4,
                 opponentList, false);
+    }
 
-
+    @Test
+    public void createNewPlayer_validInput_playerIsAlive(){
+        String simulatedInput = "TestHero\n\n\n\n";
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        Player player = Player.createNewPlayer();
+        assertTrue(player.isAlive());
     }
 
     @Test
@@ -81,8 +88,6 @@ public class PlayerTest {
         }
     }
 
-
-
     @Test
     public void applyDamage_largeDamage_DevastatingBlow() throws InterruptedException {
 
@@ -103,9 +108,7 @@ public class PlayerTest {
 
         }catch(AssertionError e){
             assertEquals("damage value must be non-negative",e.getMessage());
-
         }
-
     }
 
     @Test

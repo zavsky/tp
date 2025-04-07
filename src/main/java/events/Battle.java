@@ -115,6 +115,7 @@ public class Battle extends Event {
     private void startBattle(Player player1, Player player2) throws InterruptedException, RolladieException {
         assert player1 != null: "player1 cannot be null";
         assert player2 != null: "player2 cannot be null";
+
         int round = 1;
 
         while (player1.isAlive() && player2.isAlive()) {

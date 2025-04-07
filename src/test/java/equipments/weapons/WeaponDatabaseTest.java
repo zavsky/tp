@@ -12,7 +12,7 @@ public class WeaponDatabaseTest {
     @Test
     public void getAllWeapon_weaponListFixed_fourWeapon() {
 
-        assertEquals(4, WeaponDatabase.getAllWeapon().size());
+        assertEquals(5, WeaponDatabase.getAllWeapon().size());
     }
 
     @Test
@@ -34,7 +34,7 @@ public class WeaponDatabaseTest {
     @Test
     public void getNumberOfWeaponTypes_weaponListFixed_fourTypes() {
 
-        assertEquals(4, WeaponDatabase.getNumberOfWeaponTypes());
+        assertEquals(5, WeaponDatabase.getNumberOfWeaponTypes());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class WeaponDatabaseTest {
 
         Weapon weapon = WeaponDatabase.getWeaponByIndex(0);
         assertNotNull(weapon);
-        assertEquals("Iron Sword", weapon.getName());
+        assertEquals("Wooden Sword", weapon.getName());
     }
 
     @Test
