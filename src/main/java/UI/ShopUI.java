@@ -1,6 +1,7 @@
 package UI;
 
 
+import Characters.Players.Player;
 import Events.Shop;
 import Equipment.Equipment;
 import Functions.TypewriterEffect;
@@ -14,8 +15,8 @@ public class ShopUI {
         }
     }
 
-    public static void printShopMenu() {
-        System.out.println(" — choose an action:");
+    public static void printShopMenu(Player player) {
+        System.out.println(player.name + " has " + player.gold + " gold — choose an action:");
         System.out.println("1. Buy");
         System.out.println("2. Sell");
         System.out.println("3. Exit the Shop");

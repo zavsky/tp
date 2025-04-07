@@ -45,7 +45,7 @@ public class Shop extends Event {
             ShopUI.printSellInstructions();
             int sellInput = readIntegerInput();
             if (sellInput >= 3 || sellInput < 0) {
-                UI.printErrorMessage("Buy index out of range!");
+                UI.printErrorMessage("Sell index out of range!");
                 break;
             }
             handleSellInput(sellInput);
@@ -59,10 +59,10 @@ public class Shop extends Event {
     }
 
     public void handleBuyInput(int buyInput) throws RolladieException, InterruptedException {
-        if (buyInput >= equipments.length || buyInput < 0) {
+        if (buyInput > equipments.length || buyInput < 1) {
             throw new RolladieException("Buy index out of range!");
         }
-        Equipment equipment = equipments[buyInput];
+        Equipment equipment = equipments[buyInput - 1];
         boolean hasBought = player.buyEquipment(equipment);
         if (hasBought) {
             Narrator.commentOnShopBuy(player, equipment);
@@ -89,7 +89,7 @@ public class Shop extends Event {
     public void startShopping() throws RolladieException, InterruptedException {
         while (!isDone) {
             ShopUI.printShopCollection(equipments);
-            ShopUI.printShopMenu();
+            ShopUI.printShopMenu(player);
             int input = readIntegerInput();
             handleShopInput(input);
         }
