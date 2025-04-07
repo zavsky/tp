@@ -1,17 +1,17 @@
 package game;
 
-import Events.Loot;
-import Events.Shop;
+import events.Loot;
+import events.Shop;
 import exceptions.RolladieException;
-import Functions.Storage;
-import Functions.UI;
-import Characters.Players.Player;
-import Equipment.ArmorDatabase;
-import Equipment.BootsDatabase;
-import Equipment.Equipment;
-import Equipment.WeaponDatabase;
-import Events.Battle;
-import Events.Event;
+import functions.Storage;
+import functions.UI.UI;
+import players.Player;
+import equipments.armors.ArmorDatabase;
+import equipments.boots.BootsDatabase;
+import equipments.Equipment;
+import equipments.weapons.WeaponDatabase;
+import events.Battle;
+import events.Event;
 
 import java.io.Serializable;
 import java.util.Queue;
@@ -22,7 +22,7 @@ import java.util.LinkedList;
  */
 public class Game implements Serializable {
     private static final long serialVersionUID = 1L;
-    private static final int MAX_NUMBER_OF_WAVES = 9;
+    private static final int MAX_NUMBER_OF_WAVES = 8;
     private Queue<Event> eventsQueue = new LinkedList<>();
     private Player player;
     private Event currentEvent;
@@ -113,13 +113,15 @@ public class Game implements Serializable {
      */
     private Queue<Event> generateEventQueue() {
         Queue<Event> eventsQueue = new LinkedList<>();
-        for (int i = 1; i <= MAX_NUMBER_OF_WAVES; i++) {
+        int i;
+        for (i = 1; i <= MAX_NUMBER_OF_WAVES; i++) {
             eventsQueue.add(generateBattle(i));
             eventsQueue.add(generateLoot((i + 1) * 10));
             if(i % 2 == 0) {
                 eventsQueue.add(generateShopEvent(i));
             }
         }
+        eventsQueue.add(generateBattle(i+1));
         return eventsQueue;
     }
 
