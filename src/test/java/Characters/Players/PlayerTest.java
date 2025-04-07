@@ -1,4 +1,4 @@
-/*
+
 package Characters.Players;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,7 +26,7 @@ public class PlayerTest {
 
     @Test
     public void createNewPlayer_testStatusOfNewPlayer_playerIsAlive() {
-        String simulatedInput = "TestHero\n";
+        String simulatedInput = "TestHero\n\n";
         System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
         player = Player.createNewPlayer();
@@ -257,4 +257,4 @@ public class PlayerTest {
         assertEquals(0, ability2.currentCoolDown);
     }
 
-}*/
+}
