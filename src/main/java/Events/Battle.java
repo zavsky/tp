@@ -76,8 +76,6 @@ public class Battle extends Event {
         player.hp = Math.min(player.maxHp, player.hp + 10);
         player.power = Math.min(player.maxPower, player.power + 20);
 
-        wave++;
-
         if (wave == 3 && !player.hasAbility("Whirlwind")) {
             player.abilities.add(new Whirlwind());
             TypewriterEffect.print("🔥 You’ve learned Whirlwind!", END_DELAY);
