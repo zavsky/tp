@@ -7,16 +7,22 @@ import Characters.Abilities.PowerStrike;
 import Characters.Abilities.Whirlwind;
 import Characters.Players.Player;
 import Equipment.Armor;
-import Equipment.EquipmentList;
+import Equipment.Equipment;
 import Equipment.Weapon;
+import Equipment.EmptySlot;
 import Functions.DiceBattleAnimation;
 import Functions.TypewriterEffect;
 import exceptions.RolladieException;
-import functionalities.ui.UI;
 import UI.Narrator;
 import UI.BattleDisplay;
 import UI.HpBar;
+import Functions.UI;
 
+
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static UI.Narrator.END_DELAY;
@@ -88,7 +94,7 @@ public class Battle extends Event {
     public static Player generateNewEnemy(int wave) {
         Weapon claws = new Weapon("Claws", 2 + wave);
         Armor hide = new Armor("Hide", 1 + wave / 2);
-        EquipmentList equipmentList = new EquipmentList(hide, null, claws);
+        List<Equipment> equipmentList = new ArrayList<Equipment>(List.of(hide, new EmptySlot(), claws));
         Player enemy = new Player("Enemy " + wave, 20 + wave * 30, (3 + wave) / 2, 3, equipmentList, false);
 
         enemy.abilities.add(new PowerStrike());
