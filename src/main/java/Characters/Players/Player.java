@@ -75,7 +75,7 @@ public class Player implements Serializable {
     public int getGold() {
         return gold;
     }
-    public int addGold(int gold) {
+    public void addGold(int gold) {
         this.gold += gold;
     }
     public int getPlayerAttack() {
@@ -194,7 +194,7 @@ public class Player implements Serializable {
         String textToPrint;
 
         if (damage > 10) {
-            textToPrint = "[Narrator] It's a devastating blow from " + opponent.name + "!";
+            textToPrint = "[Narrator] It's a devastating blow from " + opponent.name + " doing " + damage + " damage!";
         } else if (damage == 0) {
             textToPrint = "[Narrator] But the attack glances harmlessly off " + name + "'s armor!";
         } else {
