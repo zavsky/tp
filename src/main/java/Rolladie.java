@@ -22,8 +22,7 @@ import static Functions.UI.readIntegerInput;
 public class Rolladie {
 
     public static void main(String[] args) throws InterruptedException, RolladieException {
-        //mainMenu();
-        Game game = new Game();
+        mainMenu();
     }
 
     /**
