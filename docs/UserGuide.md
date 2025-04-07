@@ -116,7 +116,9 @@ To break it down further:
 - Finally, the equipped armor and player's defense stat will have a fixed damage reduction bonus applied on top.
 ### Looting the enemy
 
-<< in progress >>
+After every battle, there will be a loot event!
+If you defeated the enemy, the loot event will grant you gold.
+If you fled from the enemy, no gold for you!
 
 ### Purchasing from the shop
 
