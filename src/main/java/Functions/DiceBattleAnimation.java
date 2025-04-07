@@ -79,7 +79,7 @@ public class DiceBattleAnimation {
             // System.out.println("🎲 Dice Rolling...");
             printBattleBoards(p1Rolls, p2Rolls, p1Offsets, p2Offsets);
 
-            Thread.sleep(90);
+            Thread.sleep(0);
         }
 
         // Final result frame

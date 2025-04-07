@@ -1,4 +1,4 @@
-package Game;
+package oldgame;
 
 import exceptions.RolladieException;
 import Functions.Storage;
@@ -18,7 +18,7 @@ import java.util.LinkedList;
 /**
  * Manages all game logic specifically: Event Generation and Sequence
  */
-public class Game implements Serializable {
+public class oldGame implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final int MAX_NUMBER_OF_WAVES = 5;
     private Queue<Event> eventsQueue = new LinkedList<>();
@@ -33,7 +33,7 @@ public class Game implements Serializable {
      * Generates the event queue
      * Polls the first event from the queue to be the current event
      */
-    public Game() {
+    public oldGame() {
         this.player = Player.createNewPlayer();
         this.eventsQueue = generateEventQueue();
         this.currentEvent = nextEvent();
@@ -56,7 +56,7 @@ public class Game implements Serializable {
      * @param currentEvent
      * @param eventsQueue
      */
-    public Game(Player player, Event currentEvent, Queue<Event> eventsQueue) {
+    public oldGame(Player player, Event currentEvent, Queue<Event> eventsQueue) {
         this.player = player;
         this.eventsQueue = eventsQueue;
         this.currentEvent = currentEvent;
@@ -66,6 +66,8 @@ public class Game implements Serializable {
      * Runs the current game until the event sequence is completed
      * Ends the game prematurely if the player died within the event
      */
+
+    /*
     public void run() {
         while (this.currentEvent != null && this.player.isAlive()) {
             try {
@@ -87,6 +89,8 @@ public class Game implements Serializable {
         UI.printDeathMessage();
     }
 
+
+     */
 
     /**
      * Returns a filled queue of events
@@ -126,6 +130,7 @@ public class Game implements Serializable {
     /**
      * Calls the Storage class to save the current game status
      */
+    /*
     private void saveGame() {
         UI.printMessage("💾 Save game? (y/n): ");
         String saveInput = UI.readInput();
@@ -135,6 +140,8 @@ public class Game implements Serializable {
         }
     }
 
+
+     */
     private Event optionalShopEvent() {
         if (Math.random() <= (0.3 + 0.2 * turnsWithoutShop)) {
             turnsWithoutShop = 0;

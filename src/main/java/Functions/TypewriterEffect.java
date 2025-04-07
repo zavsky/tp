@@ -63,11 +63,11 @@ public class TypewriterEffect {
 
             try {
                 if (ch == '.' || ch == ',') {
-                    Thread.sleep(300);
+                    Thread.sleep(0);
                 } else if (ch == ' ') {
-                    Thread.sleep(50);
+                    Thread.sleep(0);
                 } else {
-                    Thread.sleep(30);
+                    Thread.sleep(0);
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();

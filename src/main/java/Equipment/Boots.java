@@ -5,15 +5,15 @@ import java.io.Serializable;
 /**
  * Represents Weapon that Player can equip
  */
-public class Weapon extends Equipment {
+public class Boots extends Equipment {
     private static final long serialVersionUID = 1L;
 
-    public Weapon(String name, int defense, int attack, int health, int value) {
+    public Boots(String name, int defense, int attack, int health, int value) {
         super(name, defense, attack, health, value);
     }
 
-    public Weapon(String name, int attack) {
-        super(name, 0, attack, 0, 0);
+    public Boots(String name, int defense, int attack) {
+        super(name, defense, attack, 0, 0);
     }
 
     @Override
@@ -22,6 +22,6 @@ public class Weapon extends Equipment {
     }
 
     public String toString() {
-        return "Weapon  : " + name + " (" + attack + " atk)";
+        return "Boots   : " + name + " (" + defense + " def) (" + attack + "atk)";
     }
 }
