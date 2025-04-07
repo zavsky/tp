@@ -12,10 +12,11 @@ public class ArmorDatabase {
 
     // Static block to initialize predefined armors
     static {
-        armorList.add(new Armor("Iron Armor", 50, 150, 5, 40));
-        armorList.add(new Armor("Steel Armor", 70, 200, 3, 60));
-        armorList.add(new Armor("Leather Armor", 20, 50, 10, 10));
-        armorList.add(new Armor("Dragon Scale Armor", 150, 300, 20, 150));
+        armorList.add(new Armor("Leather Armor", 8, 0, 0, 10));
+        armorList.add(new Armor("Chainmail Armor", 15, 0, 0, 20));
+        armorList.add(new Armor("Iron Armor", 20, 0, 0, 25));
+        armorList.add(new Armor("Diamond Armor", 30, 0, 0, 45));
+        armorList.add(new Armor("Dragon Scale Armor", 40, 0, 0, 60));
     }
 
     public static ArrayList<Armor> getAllArmor() {

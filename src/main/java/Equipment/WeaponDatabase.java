@@ -15,10 +15,11 @@ public class WeaponDatabase {
 
     // Static block to initialize predefined weapons
     static {
-        weaponList.add(new Weapon("Iron Sword", 40, 100, 20, 30));
-        weaponList.add(new Weapon("Steel Daggers", 50, 80, 40, 50));
-        weaponList.add(new Weapon("Executioner's Axe", 90, 120, 10, 100));
-        weaponList.add(new Weapon("Dragon Tooth Sword", 150, 200, 50, 300));
+        weaponList.add(new Weapon("Stick", 0, 10, 0, 5));
+        weaponList.add(new Weapon("Iron Sword", 0, 20, 0, 10));
+        weaponList.add(new Weapon("Kunai", 0, 30, 0, 20));
+        weaponList.add(new Weapon("Executioner's Axe", 0, 40, 0, 30));
+        weaponList.add(new Weapon("Dragon Tooth Sword", 0, 50, 0, 40));
     }
 
     public static ArrayList<Weapon> getAllWeapon() {
