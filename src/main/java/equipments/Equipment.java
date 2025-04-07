@@ -1,12 +1,9 @@
 package equipments;
 
-import java.io.Serializable;
-
 /**
  * Represents Armor that Player can augment
  */
-public abstract class Equipment implements Serializable {
-    private static final long serialVersionUID = 1L;
+public abstract class Equipment {
 
     public String name;
     public int defense;
@@ -21,8 +18,6 @@ public abstract class Equipment implements Serializable {
         this.health = health;
         this.value = value;
     }
-
-    public abstract String getEquipmentType();
 
     public abstract int getId();
 
@@ -63,4 +58,8 @@ public abstract class Equipment implements Serializable {
 
         return false;  // If obj is not an instance of Equipment, return false
     }
+
+    public abstract String getEquipmentType();
+
+    public abstract String toText();
 }

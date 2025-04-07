@@ -21,7 +21,7 @@ import java.util.Queue;
 
 public class Rolladie {
 
-    public static void main(String[] args) throws InterruptedException, RolladieException {
+    public static void main(String[] args) {
         mainMenu();
     }
 
@@ -41,14 +41,12 @@ public class Rolladie {
                     game = new Game();
                     break;
                 case "2":
-                    int saveSlot = Integer.parseInt(UI.promptSaveFile());
+                    int saveSlot = UI.promptSaveFile();
                     try {
                         game = Storage.loadGame(saveSlot);
-                        UI.printMessage("✅ Game loaded from save slot " + saveSlot);
                         UI.showContinueScreen(game);
                     } catch (RolladieException e) {
                         UI.printErrorMessage(e.getMessage());
-                        UI.printMessage("Starting new game instead.");
                         game = new Game();
                     }
                     break;

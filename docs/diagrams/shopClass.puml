@@ -1,7 +1,6 @@
 @startuml
 
 ' Interfaces and Base Classes
-interface Serializable
 class Event {
     - player: Player
     + Event(player: Player)

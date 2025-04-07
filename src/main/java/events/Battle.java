@@ -9,7 +9,7 @@ import players.Player;
 import equipments.armors.Armor;
 import equipments.Equipment;
 import equipments.weapons.Weapon;
-import equipments.boots.EmptySlot;
+import equipments.EmptySlot;
 import functions.DiceBattleAnimation;
 import functions.TypewriterEffect;
 import exceptions.RolladieException;
