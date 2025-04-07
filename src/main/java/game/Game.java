@@ -159,12 +159,12 @@ public class Game implements Serializable {
     /**
      * Calls the Storage class to save the current game status
      */
-    private void saveGame() {
+    public void saveGame() throws RolladieException {
         UI.printMessage("💾 Save game? (y/n): ");
         String saveInput = UI.readInput();
         if (saveInput.equalsIgnoreCase("y")) {
             int saveSlot = Integer.parseInt(UI.promptSaveFile());
-            Storage.saveGame(saveSlot, this);
+            Storage.saveGame(saveSlot, wave, this.player);
         }
     }
 

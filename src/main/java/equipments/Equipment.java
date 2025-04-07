@@ -22,8 +22,6 @@ public abstract class Equipment implements Serializable {
         this.value = value;
     }
 
-    public abstract String getEquipmentType();
-
     public abstract int getId();
 
     public String getName() {
@@ -63,6 +61,8 @@ public abstract class Equipment implements Serializable {
 
         return false;  // If obj is not an instance of Equipment, return false
     }
+
+    public abstract String getEquipmentType();
 
     public abstract String toText();
 }

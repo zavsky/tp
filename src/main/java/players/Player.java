@@ -497,44 +497,37 @@ public class Player implements Serializable {
 
     /**
      * Overloaded constructor to load player from save file
-     *
-     * @param name
-     * @param hp
-     * @param maxHp
-     * @param baseAttack
-     * @param numDice
-     * @param equipmentList
-     * @param abilities
-     * @param gold
-     * @param power
-     * @param maxPower
-     * @param isHuman
      */
 
-    public Player(String name, int hp, int maxHp, int baseAttack, int numDice,
-                  List<Equipment> equipmentList, List<Ability> abilities,
-                  int gold, int power, int maxPower, boolean isHuman) {
+    public Player(int wave, String name, int hp, int maxHp, int baseAttack, int numDice,
+                  List<Equipment> equipmentList,
+                  int gold, int power, int maxPower) {
+        this.abilities.add(new Flee());
+        this.abilities.add(new BasicAttack());
+        this.abilities.add(new PowerStrike());
+        this.abilities.add(new Heal());
+        if (wave > 2) this.abilities.add(new Whirlwind());
         this.name = name;
         this.hp = hp;
         this.maxHp = maxHp;
         this.baseAttack = baseAttack;
         this.diceRolls = new int[numDice];
         this.equipmentList = equipmentList;
-        this.abilities = abilities;
         this.gold = gold;
         this.power = power;
         this.maxPower = maxPower;
-        this.isHuman = isHuman;
     }
+
+    /**
+     * Returns encoded string of player data to be saved
+     *
+     * @return encoded text
+     */
 
     public String toText() {
         String equipmentsText = "";
         for (Equipment equipment : equipmentList) {
-            equipmentsText += equipment.toText();
-        }
-        String abilitiesText = "";
-        for (Ability ability : abilities) {
-            abilitiesText += ability.toText();
+            equipmentsText += equipment.toText() + SAVE_DELIMITER;
         }
 
         return this.name + SAVE_DELIMITER +
@@ -542,11 +535,9 @@ public class Player implements Serializable {
                 this.maxHp + SAVE_DELIMITER +
                 this.baseAttack + SAVE_DELIMITER +
                 this.diceRolls.length + SAVE_DELIMITER +
-                equipmentsText + SAVE_DELIMITER +
-                abilitiesText + SAVE_DELIMITER +
+                equipmentsText +
                 this.gold + SAVE_DELIMITER +
                 this.power + SAVE_DELIMITER +
-                this.maxPower + SAVE_DELIMITER +
-                this.isHuman;
+                this.maxPower;
     }
 }

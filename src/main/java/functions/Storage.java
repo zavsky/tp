@@ -1,12 +1,15 @@
 package functions;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.Scanner;
 
 import exceptions.RolladieException;
 import functions.UI.UI;
+import game.Game;
 import players.Player;
 
 /**
@@ -28,7 +31,7 @@ public class Storage {
      * @param wave
      * @throws RolladieException
      */
-    public static void saveGame(int saveSlot, Player player, int wave) throws RolladieException {
+    public static void saveGame(int saveSlot, int wave, Player player) throws RolladieException {
         File dir = new File(FILE_DIRECTORY);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -41,17 +44,48 @@ public class Storage {
             }
             FileWriter fw = new FileWriter(file);
 
-            String playerText = player.toText();
-            fw.write(playerText + System.lineSeparator());
-
             String waveText = Integer.toString(wave);
             fw.write(waveText + System.lineSeparator());
 
+            String playerText = player.toText();
+            fw.write(playerText + System.lineSeparator());
+
             fw.close();
         } catch (IOException e) {
-            throw new RolladieException("savefile.txt failed to save");
+            throw new RolladieException("❌ Save failed: " + e.getMessage());
         }
     }
+
+/*    *//**
+     * Returns Game object after decoding text from savefile into game parameters
+     *
+     * @return Game
+     *//*
+    public static Game loadGame() throws RolladieException {
+        File f = new File(FILE_DIRECTORY + FILE_NAME);
+        Scanner s;
+        try {
+            s = new Scanner(f);
+
+            int wave = Integer.parseInt(s.nextLine().trim());
+
+            String[] playerData = s.nextLine().split(LOAD_DELIMITER);
+            Player player = parsePlayerFromText(playerData);
+
+
+            return new Game(player, wave);
+
+        } catch (FileNotFoundException e) {
+            throw new RolladieException("savefile.txt not found!");
+        } catch (RolladieException e) {
+            UI.printErrorMessage("savefile.txt corrupted\nStarting new game");
+        }
+        return new Game();
+    }
+
+    private static Player parsePlayerFromText(String[] playerData) throws RolladieException {
+
+    }*/
 /*
     public static void saveGame(int saveSlot, Game game) {
         String filename = "save_slot_" + saveSlot + ".dat";

@@ -1,14 +1,15 @@
 package equipments.armors;
 
 import equipments.Equipment;
+import equipments.boots.BootsDatabase;
 
 import java.io.Serializable;
 
 /**
  * Represents Armor that Player can augment
  */
-public class Armor extends Equipment implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Armor extends Equipment {
+    public static final String EQUIPMENT_TYPE = "Armor";
 
     public Armor(String name, int defense, int attack, int health, int value) {
         super(name, defense, attack, health, value);
@@ -20,7 +21,12 @@ public class Armor extends Equipment implements Serializable {
 
     @Override
     public String getEquipmentType() {
-        return "Armor";
+        return EQUIPMENT_TYPE;
+    }
+
+    @Override
+    public String toText() {
+        return EQUIPMENT_TYPE + " " + ArmorDatabase.getIndexByName(this.name);
     }
 
     @Override
@@ -29,6 +35,6 @@ public class Armor extends Equipment implements Serializable {
     }
 
     public String toString() {
-        return "Armor   : " + name + " (" + defense + " def)";
+        return EQUIPMENT_TYPE +"   : " + name + " (" + defense + " def)";
     }
 }
