@@ -88,8 +88,8 @@ public class Battle extends Event {
     /**
      * Creates a new enemy when the previous one is defeated, increasing difficulty as wave progresses
      */
-    public Player generateNewEnemy(int wave) {
-        Weapon claws = new Weapon("Claws", 2 + wave);
+    public static Player generateNewEnemy(int wave) {
+        Weapon claws = new Weapon("Claws", 1 + wave / 2);
         Armor hide = new Armor("Hide", 1 + wave / 2);
         List<Equipment> equipmentList = new ArrayList<Equipment>(List.of(hide, new EmptySlot(), claws));
         Player enemy = new Player("Enemy " + wave, 30 + wave * 20, (3 + wave) / 2, 2, equipmentList, false);

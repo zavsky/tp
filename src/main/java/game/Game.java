@@ -74,12 +74,10 @@ public class Game implements Serializable {
             try {
                 //If current battle is won, sets loot event to give rewards
                 currentEvent.setHasWon(hasWonCurrBattle);
-
                 //Saves game on loot or shop screen after a battle.
                 if (this.currentEvent instanceof Loot) {
                     saveGame();
                 }
-
                 this.currentEvent.run();
                 if (this.currentEvent.isExit) {
                     UI.printExitMessage();
