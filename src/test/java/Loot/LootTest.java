@@ -25,6 +25,6 @@ public class LootTest {
         catch (Exception e) {
             e.printStackTrace();
         }
-        assertTrue(player.gold >= 10);
+        assertTrue(player.getGold() >= 10);
     }
 }

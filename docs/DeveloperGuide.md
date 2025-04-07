@@ -134,18 +134,43 @@ and upcoming events to a file.
 ## Implementation
 ## Key Features
 
-### 1. Attack       
+### 1. Save and Load
+**Overview**    
+The Save and Load feature in Rolladie is an important part of the game as it allows players to not lose
+their progress in the game. When the player starts the game, he is brought to the main menu, which allows him
+to select between Start Game, Load Game and Exit. If the player chooses to start the game, he automatically starts
+a new game. If the player chooses to load game, he will be able to choose a save slot to load from.
+
+**Implementation Details**     
+The Save and Load feature in RollaDie handles the storage of all player information and battle information.
+1. The process begins with the player booting up the game.
+2. The player will be greeted by the main menu, allowing the player to choose from 1-3, where 1 is
+Start Game, 2 is Load Game and 3 is exit game.
+3. If player chooses 1, a new Game object is created where player starts a new game.
+4. If player chooses 2, loadGame() in the Storage class will be called to fetch the serialised data, which
+is processed to load the game information, and initialise a new Game object based on the data fetched.
+5. If player chooses 3, the game exits itself.
+6. After every loot and shop event, the game also presents the users with an opportunity to save the game.
+7. If the player selects y, the game prompts the user to choose from 1-3 to save to a save slot, else game does not save.
+
+**Sequence Diagram**         
+     
+The sequence diagram below illustrates the process that occurs when the game boots and prompts user to load.
+
+![Sequence Diagram](uml_image/saveLoadSequenceDiagram.png)
+
+### 2. Attack       
 **Overview**    
         
 The Attack Feature in RollaDie is a core component of the Game's battle system, 
 allowing the player and enemy to take turns attacking each other. The feature manages input handling, 
 attack calculations, and battle progression.
 - During the player's turn, the Game reads the player's command, 
-determines the action, and roll dice to calculate attack bonuses. If the player chooses to attack, 
-the attack is executed, and damage is applied to the enemy. The Game then prints the attack message 
-and checks if the battle has ended.      
+determines the action, cooldown, power, and roll dice to calculate attack bonuses. 
+If the player chooses to attack, the attack is executed, and damage is applied to
+the enemy. The Game then prints the attack message and checks if the battle has ended.      
 - The player can choose from the numbers provided on screen to choose different attacks during his turn.
-- During the enemy's turn, the enemy follows a similar process—attacking the player, applying damage, 
+- During the enemy's turn, the enemy follows a similar process which is attacking the player, applying damage, 
 and displaying attack messages. The Game continues alternating between player and 
 enemy turns until either the player or the enemy is defeated. This feature ensures smooth battle flow,
 handles attack mechanics, and updates battle status dynamically, keeping the combat engaging and strategic.
@@ -173,44 +198,29 @@ The sequence diagram below illustrates the process that occurs when the player i
 
 ![Sequence Diagram](uml_image/attackSequence.png)
 
-### 2. Defend        
+### 2. Heal        
 **Overview**
 
-The Defend Feature in RollaDie allows players to adopt a defensive stance during their turn instead of attacking.
-This feature enhances strategic gameplay by giving the player an option to reduce incoming damage
-rather than dealing damage. When the player chooses to defend, dice is rolled to determine a defense bonus,
-which is applied to increase the player's resistance against enemy attacks.
-The battle sequence continues until either the player or the enemy is defeated.
+The heal Feature in RollaDie allows players to adopt a heal during their turn instead of attacking.
+This feature enhances strategic gameplay by giving the player an option to heal and recover both
+health and power which is needed for casting skills.The battle sequence continues until either 
+the player or the enemy is defeated.
 
 **Implementation Details**   
+The implementation is generally very similar to the attack feature above, with the only difference being the action used.
 
 During the player’s turn:
-1. The user inputs a command, which is processed by the **Parser class**
-to determine the action and returns it to **PlayerTurn**.
-2. **PlayerTurn** process the input using getAction(inputString)
-3. If the player chooses to defend, **PlayerTurn** calls rollDice()
-in the **RollDice** class to determine the defense bonus. 
-4. **PlayerTurn** sets the player's defending state by calling setDefending(true) in the **Character** class and applies
-   the defense bonus using setDefenseBonus(diceOutcome) in the **Player** class.
-5. The Game then checks if the battle has ended by calling checkBattleEnd(turn) in **BattleLogic**.
-
-During the enemy’s turn:
-1. **BattleLogic** creates a new **EnemyTurn** object.
-2. The enemy executes its attack on the player.
-3. The **Character** class calculates the damage using calculateDamage(player).
-4. The damage calculation takes the player's defense into account,
-reducing the damage if the player is in a defensive stance.
-5. The **Player** takes damage using takeDamage(damage).
-6. **EnemyTurn** calls printEnemyAttack(enemy, player, damage) in the **UI** class to display attack messages.
-7. The **UI** updates character info by calling printCharacterInfo(player) and printCharacterInfo(enemy).
-8. **EnemyTurn** checks if the battle has ended by calling checkBattleEnd(turn) in **BattleLogic**.
-
+1. The user inputs command "2", which is the heal action.
+2. The parsed command is processed by Player, which sets chosen heal ability based on the command parsed.      
+3. The heal action will start its cooldown and is sent to the **Battle** class where the heal action
+is stored as the player's ability chosen. The enemy will also choose an ability.
+4. Only the enemy rolls a die and the player will be healed for a flat amount of health. The enemy will deal damage
+based on die roll while the player will heal a fixed amount.
 
 **Sequence Diagram**        
 
-The sequence diagram below illustrates the process that occurs when the player inputs an defend command.
+The sequence diagram is shared with the attack feature above.
 
-![Sequence Diagram](uml_image/defendSequence.png)
 
 
 ### 3. Flee        
@@ -228,13 +238,24 @@ When the player chooses to flee, the battle ends immediately and the player goes
 **Sequence Diagram**          
 ![Sequence Diagram](uml_image/fleeSequence.png)
 
-### 4. Start      
-{To be Updated}         
+
+
+### 4. Loot      
 **Overview**
+The loot feature in Rolladie allows the player to get gold after winning a battle.
+This feature enables players to earn gold to upgrade himself in the shop.
+If player does not win battle, he does not get gold.
 
 **Implementation Details**
+1. After the battle, **Battle** object will send hasWon to **Game** to set the hasWonCurrBattle in Game to true
+or false depending on whether the player won or fled from the battle.
+2. **Game** sets the hasWon variable in **Loot** based on hasWonCurrBattle.
+3. If hasWon in **loot** is true, add gold to player and print the loot that the player got.
+4. If hasWon in **loot** is false, print that the player got no loot.
 
 **Sequence Diagram**
+![Sequence Diagram](uml_image/lootSequenceDiagram.png)
+
 
 
 ### 5. Load        
