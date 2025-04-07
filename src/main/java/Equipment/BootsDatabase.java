@@ -9,10 +9,11 @@ public class BootsDatabase {
 
     // Static block to initialize predefined boots
     static {
-        bootsList.add(new Boots("Iron Boots", 20, 30, 0, 30));
-        bootsList.add(new Boots("Steel Boots", 30, 30, 0, 40));
-        bootsList.add(new Boots("Leather Soles", 10, 50, 0, 10));
-        bootsList.add(new Boots("Dragon Scale Strides", 50, 100, 0, 120));
+        bootsList.add(new Boots("Leather Soles", 5, 5, 0, 10));
+        bootsList.add(new Boots("Chainmail Boots", 9, 9, 0, 15));
+        bootsList.add(new Boots("Iron Boots", 12, 16, 0, 25));
+        bootsList.add(new Boots("Diamond Boots", 26, 22, 0, 40));
+        bootsList.add(new Boots("Dragon Scale Strides", 40, 40, 0, 50));
     }
 
     // Get all boots

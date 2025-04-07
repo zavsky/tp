@@ -135,7 +135,7 @@ public class Game implements Serializable {
         return new Loot(this.player, loot);
     }
 
-    private Event generateShopEvent(int wave) {
+    public Event generateShopEvent(int wave) {
         Equipment[] equipmentsForSale = {
                 ArmorDatabase.getArmorByIndex(wave / 2),
                 BootsDatabase.getBootsByIndex(wave / 2),
@@ -165,20 +165,4 @@ public class Game implements Serializable {
         }
     }
 
-    private Event optionalShopEvent() {
-        if (Math.random() <= (0.3 + 0.2 * turnsWithoutShop)) {
-            turnsWithoutShop = 0;
-            // shop entered
-            Equipment[] equipmentsForSale = {
-                    ArmorDatabase.getArmorByIndex((int) (Math.random() * ArmorDatabase.getNumberOfArmorTypes())),
-                    BootsDatabase.getBootsByIndex((int) (Math.random() * BootsDatabase.getNumberOfBootsTypes())),
-                    WeaponDatabase.getWeaponByIndex((int) (Math.random() * WeaponDatabase.getNumberOfWeaponTypes()))
-            };
-            UI.printMessage("SHOP EVENT");
-        } else {
-            // shop not provisioned
-            turnsWithoutShop++;
-        }
-        return null;
-    }
 }
