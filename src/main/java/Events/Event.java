@@ -14,12 +14,11 @@ public abstract class Event implements Serializable {
         this.player = player;
     }
 
-    public abstract void run() throws RolladieException;
-
     public boolean getHasWon() {
         return hasWon;
     }
     public void setHasWon(boolean hasWon) {
         this.hasWon = hasWon;
     }
+    public abstract void run() throws RolladieException, InterruptedException;
 }

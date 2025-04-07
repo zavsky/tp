@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Represents Weapon that Player can equip
  */
-public class Weapon extends Equipment {
+public class Weapon extends Equipment implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public Weapon(String name, int defense, int attack, int health, int value) {
@@ -19,6 +19,11 @@ public class Weapon extends Equipment {
     @Override
     public String getEquipmentType() {
         return "weapon";
+    }
+
+    @Override
+    public int getId() {
+        return 2;
     }
 
     public String toString() {

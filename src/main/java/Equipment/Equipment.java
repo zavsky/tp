@@ -24,6 +24,8 @@ public abstract class Equipment implements Serializable {
 
     public abstract String getEquipmentType();
 
+    public abstract int getId();
+
     public String getName() {
         return this.name;
     }
@@ -42,5 +44,23 @@ public abstract class Equipment implements Serializable {
 
     public int getValue() {
         return this.value;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        // First check if the obj is of type Equipment
+        if (this == obj) {
+            return true;  // If both references are the same, they're equal
+        }
+
+        if (obj instanceof Equipment) {
+            // Cast obj to Equipment to access Equipment-specific methods
+            Equipment other = (Equipment) obj;
+
+            // Now you can safely call getName() and other methods
+            return this.getName().equals(other.getName());
+        }
+
+        return false;  // If obj is not an instance of Equipment, return false
     }
 }

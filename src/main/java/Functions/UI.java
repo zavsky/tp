@@ -1,7 +1,7 @@
 package Functions;
 
 import Characters.Players.Player;
-import Game.Game;
+import game.Game;
 
 import java.util.Scanner;
 
@@ -21,6 +21,18 @@ public class UI {
     public static String readInput() {
         String inputLine = SCANNER.nextLine().toLowerCase();
         return inputLine;
+    }
+
+    public static int readIntegerInput() throws InterruptedException {
+        String input = SCANNER.nextLine().trim();
+        int intInput = -1;
+        try {
+            intInput = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Try again.");
+            Thread.sleep(1000);
+        }
+        return intInput;
     }
 
     /**
