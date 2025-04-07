@@ -15,15 +15,21 @@ public class Loot extends Event {
     }
 
 
+
     /**
      * Runs the loot event, which generates loot from 30 to 70 gold and returns it to player.
      * @throws RolladieException
      */
     @Override
     public void run() throws RolladieException {
-        int loot = generateRandomLoot();
-        player.gold += loot;
-        LootUI.printLoot(loot);
+        if (hasWon) {
+            int loot = generateRandomLoot();
+            player.gold += loot;
+            LootUI.printLoot(loot);
+        }
+        else {
+            LootUI.printNoLoot();
+        }
     }
 
     private int generateRandomLoot() throws RolladieException {

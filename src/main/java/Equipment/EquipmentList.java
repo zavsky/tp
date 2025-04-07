@@ -4,6 +4,7 @@ package Equipment;
 import exceptions.RolladieException;
 
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -12,7 +13,7 @@ import java.util.stream.IntStream;
 /**
  * EquipmentList class to store information on the equipment that the player is using
  */
-public class EquipmentList {
+public class EquipmentList implements Serializable {
     private static final int MAX_EQUIPMENTS = 3;
     //player only allowed to equip one armour, one pair of boots and one weapon
     private static final int ARMOUR_SLOT = 0;

@@ -1,5 +1,6 @@
 package Game;
 
+import Events.Loot;
 import exceptions.RolladieException;
 import Functions.Storage;
 import Functions.UI;
@@ -26,6 +27,7 @@ public class Game implements Serializable {
     private Event currentEvent;
     private int wave;
     private int turnsWithoutShop = 0;
+    private boolean winCurrBattle = false;
 
     /**
      * Constructor to instantiate a new game
@@ -69,13 +71,22 @@ public class Game implements Serializable {
     public void run() {
         while (this.currentEvent != null && this.player.isAlive()) {
             try {
-                saveGame();
+                //If current battle is won, sets loot event to give rewards
+                currentEvent.setHasWon(winCurrBattle);
                 this.currentEvent.run();
                 if (!player.isAlive()) {
                     break;
                 }
-                this.currentEvent = optionalShopEvent();
-                saveGame();
+                //Checks if current battle is won
+                if (this.currentEvent instanceof Battle) {
+                    winCurrBattle = currentEvent.getHasWon();
+                }
+                //Saves game on loot or shop screen after a battle.
+                if (this.currentEvent instanceof Loot) {
+                    saveGame();
+                }
+
+                //this.currentEvent = optionalShopEvent();
                 // To run the shop event
                 // this.currentEvent.run();
                 this.currentEvent = nextEvent();
@@ -96,23 +107,33 @@ public class Game implements Serializable {
      */
     private Queue<Event> generateEventQueue() {
         Queue<Event> eventsQueue = new LinkedList<>();
-        for (int i = 1; i < MAX_NUMBER_OF_WAVES + 1; i++) {
-            eventsQueue.add(generateEvent(i));
-        }
+        Battle battle1 = generateBattle();
+        Battle battle2 = generateBattle();
+        Battle battle3 = generateBattle();
+        eventsQueue.add(battle1);
+        eventsQueue.add(generateLoot(20));
+        eventsQueue.add(battle2);
+        eventsQueue.add(generateLoot(30));
+        eventsQueue.add(battle3);
+        eventsQueue.add(generateLoot(40));
         return eventsQueue;
     }
 
     /**
-     * Returns an event to insert into the event queue
-     * Current version only has a Battle event
-     * Future development would include a more robust event generation
-     * Idea: Interleaving the event queue with Battle and Non-Battle events
+     * Returns a battle to insert into the event queue.
      *
      * @return Event
      */
-    private Event generateEvent(int wave) {
-        return new Battle(this.player, wave);
+    private Battle generateBattle() {
+        Battle newBattle = new Battle(this.player, wave);
+        wave++; //increment wave after battle
+        return newBattle;
     }
+
+    private Event generateLoot(int loot) {
+        return new Loot(this.player, loot);
+    }
+
 
     /**
      * returns the next event inside the event queue

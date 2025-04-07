@@ -23,8 +23,16 @@ public class LootUI {
                     "                    '-.||_/.-'";
 
 
+    /**
+     * Prints the loot that the player gets.
+     * @param gold the amount of gold player gets.
+     */
     public static void printLoot(int gold) {
         System.out.println(CHEST);
         System.out.println("You got " + gold + " gold!");
+    }
+
+    public static void printNoLoot() {
+        System.out.println("As you did not win the battle, you did not get anything...");
     }
 }

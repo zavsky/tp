@@ -61,6 +61,9 @@ public class Battle extends Event {
             TypewriterEffect.print("💀 You fell at encounter " + wave, END_DELAY);
             return;
         }
+        else {
+            hasWon = true;
+        }
 
         // Heal partially, recharge power
         System.out.println("🍃 You survived! Regaining strength...");
@@ -80,6 +83,8 @@ public class Battle extends Event {
             TypewriterEffect.print("🗡️ You obtained the Flame Blade!", 1000);
         }
     }
+
+
 
     /**
      * Creates a new enemy when the previous one is defeated, increasing difficulty as wave progresses

@@ -26,6 +26,7 @@ public class Rolladie {
      * Starts the game menu and shows options for new game or loading from save
      */
     public static void mainMenu() throws InterruptedException {
+
         UI.printWelcomeMessage();
 
         UI.printOptions();

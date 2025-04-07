@@ -34,5 +34,6 @@ public class Storage {
         } catch (IOException | ClassNotFoundException e) {
             throw new RolladieException("❌ Load failed: " + e.getMessage());
         }
+
     }
 }
