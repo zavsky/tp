@@ -1,4 +1,3 @@
-/*
 package Loot;
 
 import Characters.Players.Player;
@@ -14,19 +13,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class LootTest {
     @Test
     public void lootGranted_updatesPlayerGold() {
-        String simulatedInput = "Player\n";
+        // Simulate enough lines for every input expected in your test flow:
+        String simulatedInput = "PlayerName\n\n\n\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+
         System.setIn(inputStream);
-        Player player = Player.createNewPlayer();
+
+        Player player = Player.createNewPlayer(); // reads "PlayerName"
         Loot loot = new Loot(player, 10);
         loot.setHasWon(true);
+
+
         try {
-            loot.run();
-        }
-        catch (Exception e) {
+            loot.simulateRun(); // possibly triggers more input reads (e.g., in LootUI.halt)
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        assertTrue(player.gold >= 10);
+
+        assertTrue(player.getGold() >= 10);
     }
 }
-*/

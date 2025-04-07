@@ -1,3 +1,4 @@
+//@@author Vincesum
 package Events;
 
 import Characters.Players.Player;
@@ -32,6 +33,20 @@ public class Loot extends Event {
         LootUI.halt();
     }
 
+    /**
+     * Runs a simulation of the loot event for testing purposes.
+     * Does not have LootUI.printLoot(loot) as it causes scanner issues with testing.
+     * @throws RolladieException
+     */
+    public void simulateRun() throws RolladieException {
+        if (hasWon) {
+            int loot = generateRandomLoot();
+            player.earnGold(loot);
+            LootUI.printLoot(loot);
+        } else {
+            LootUI.printNoLoot();
+        }
+    }
     private int generateRandomLoot() throws RolladieException {
         Random rand = new Random();
         int bonusLoot = rand.nextInt(10);

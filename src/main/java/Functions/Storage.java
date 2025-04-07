@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import exceptions.RolladieException;
-import Game.Game;
+import game.Game;
 
 /**
  * Saving and loading games
