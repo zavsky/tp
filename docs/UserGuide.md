@@ -15,6 +15,7 @@
     - [9. Ending the game prematurely](#9-ending-the-game-prematurely-)
 -[Command Summary](#command-summary)
 
+Rolladie is a text-based adventure RPG where players face off hoardes of enemies with the ultimate goal of achieving the legendary status in the annals of history. Join the story and learn the secrets that lay within.
 
 ## Introduction      
 
@@ -26,19 +27,31 @@ This program is meant for CS2113 students as a stress reliever, and it aims to p
 ## Quick Start      
 
 1. Ensure that you have Java 17 or above installed.
-2. Down the latest version of `Rolladie` jar file from [here](https://github.com/AY2425S2-CS2113-T13-4/tp/releases/download/Release-V1.0/tp.jar).     
-3. Run the jar file as follows:    
-    - Put the jar file in a separate empty folder
-    - Navigate to the jar file folder in a terminal
-    - Run the jar file with the command: `javaw -jar "{file_name}"`
+1. Download the latest version of `Rolladie` from [here](https://github.com/AY2425S2-CS2113-T13-4/tp/releases).
+1. To run, navigate to the folder containing the downloaded JAR file and use the command `java -jar ./rolladie.java`
 
 ## Features   
 > [!NOTE]            
 > The dice outcome listed below are randomly generated, meaning the results will vary each time.         
 > As a result, the damage dealt will also differ with each roll.
 
-### 1. Starting a new game     
-Initialise a new game instance.
+### Starting a new game
+
+### Loading from a save
+
+### Making your character
+
+### Choosing your battle ability
+
+#### Strategizing for a win
+
+### Looting the enemy
+
+### Purchasing from the shop
+
+### Saving the game
+
+{Give detailed description of each feature}
 
 - Press the run button in the top right corner to run the application.
 - Use the `up`, `down` and `enter` key to select `start game`
@@ -181,12 +194,7 @@ Example usage:
 
 ## Command Summary
 
-* Load previous game: `load` {To be updated}       
-* Attack an enemy `attack`
-* Defend against attacks `defend` 
-* Surrender early: `flee` {To be updated}     
-* Buy equipment: `buy` {To be updated}     
-* Sell equipment: `sell` {To be updated}     
-* End shopping: `leave` {To be updated}        
-* End game prematurely `exit` {To be updated}      
+There are no commands to remember. Simply follow and let the game guide you along!
+
+{Give a 'cheat sheet' of commands here}
 
