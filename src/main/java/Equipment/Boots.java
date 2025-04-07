@@ -4,7 +4,7 @@ package Equipment;
 /**
  * Represents Weapon that Player can equip
  */
-public class Boots extends Equipment {
+public class Boots extends Equipment implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public Boots(String name, int defense, int attack, int health, int value) {
@@ -18,6 +18,11 @@ public class Boots extends Equipment {
     @Override
     public String getEquipmentType() {
         return "weapon";
+    }
+
+    @Override
+    public int getId() {
+        return 1;
     }
 
     public String toString() {
