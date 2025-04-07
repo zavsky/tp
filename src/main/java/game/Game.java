@@ -12,6 +12,7 @@ import equipments.Equipment;
 import equipments.weapons.WeaponDatabase;
 import events.Battle;
 import events.Event;
+import functions.UI.GameOverUI;
 
 import java.io.Serializable;
 import java.util.Queue;
@@ -96,11 +97,8 @@ public class Game implements Serializable {
                 UI.printErrorMessage(e.getMessage());
             }
         }
-        if (!this.player.isAlive()) {
-            UI.printDeathMessage();
-        } else {
-            UI.printWinMessage();
-        }
+        GameOver gameOver = new GameOver(hasWonCurrBattle);
+        gameOver.run();
     }
 
 

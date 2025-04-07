@@ -135,6 +135,10 @@ The game will periodically ask you to save the game at checkpoints. Type `y` whe
 
 At any point in the game when it asks for input, you can insert the command, `exit`, to quit the game. Do note however, that any unsaved progress will be lost!
 
+### Game Rounds
+
+The total number of battle rounds is 10. The goal is to win the 10th round of the game to beat the game.
+
 ## Command Summary
 
 There are no commands to remember. Simply follow and let the game guide you along!
