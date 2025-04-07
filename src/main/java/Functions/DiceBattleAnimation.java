@@ -65,7 +65,7 @@ public class DiceBattleAnimation {
      */
     public static String animateBattle(int[] player1Rolls, int[] player2Rolls) throws InterruptedException {
         Random rand = new Random();
-        int frames = 16;
+        int frames = 0;
 
         for (int frame = 0; frame < frames; frame++) {
             int[] p1Rolls = randomRolls(player1Rolls.length, rand);

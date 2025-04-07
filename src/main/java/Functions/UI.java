@@ -1,7 +1,7 @@
 package Functions;
 
 import Characters.Players.Player;
-import game.Game;
+import Game.Game;
 
 import java.util.Scanner;
 
@@ -77,6 +77,10 @@ public class UI {
         System.out.println("Narrator: Game over, you've died! L");
     }
 
+    public static void printWinMessage() {
+        System.out.println("Narrator: YOU ARE BIG BOI");
+    }
+
     public static String promptSaveFile() {
         System.out.print("Choose save slot to load (1–3): ");
         return readInput();
@@ -98,4 +102,5 @@ public class UI {
         System.out.println("\nPress Enter to continue...");
         SCANNER.nextLine();
     }
+
 }
