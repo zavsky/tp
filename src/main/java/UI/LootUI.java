@@ -1,15 +1,6 @@
-package oldgame.events.loot;
+package UI;
 
-import exceptions.RolladieException;
-import functionalities.ui.UI;
-import oldgame.characters.Player;
-import oldgame.currency.Gold;
-import oldgame.events.Event;
-import functionalities.ui.LootUI;
-import oldgame.RollDice;
-
-public class Loot extends Event {
-    private static final int DEFAULT_LOOT = 50;
+public class LootUI {
     private static final String CHEST =
             "                            _.--.\n" +
                     "                        _.-'_:-'||\n" +
@@ -32,32 +23,16 @@ public class Loot extends Event {
                     "                    '-.||_/.-'";
 
 
-    public Loot(Player player) {
-        super(player);
+    /**
+     * Prints the loot that the player gets.
+     * @param gold the amount of gold player gets.
+     */
+    public static void printLoot(int gold) {
+        System.out.println(CHEST);
+        System.out.println("You got " + gold + " gold!");
     }
 
-    @Override
-    public void run() throws RolladieException {
-        LootUI.printLootEntry();
-        Gold loot = generateRandomLoot();
-        player.earnGold(loot);
-        LootUI.printLootExit(CHEST, loot.getAmount(), player);
-    }
-
-    public Gold generateRandomLoot() throws RolladieException {
-        int diceValue = RollDice.rollDice();
-        int bonusLoot = RollDice.diceOutcome(diceValue) / 2;
-        UI.printMessage("You get a bonus of " + bonusLoot + "gold.");
-        return new Gold(DEFAULT_LOOT + bonusLoot);
-    }
-
-    @Override
-    public String getEventIcon() {
-        return "Loot";
-    }
-
-    @Override
-    public String toText() {
-        return this.getEventIcon();
+    public static void printNoLoot() {
+        System.out.println("As you did not win the battle, you did not get anything...");
     }
 }

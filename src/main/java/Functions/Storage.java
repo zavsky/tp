@@ -10,7 +10,7 @@ import java.util.Scanner;
 import Characters.Abilities.Ability;
 import Characters.Players.Player;
 import exceptions.RolladieException;
-import Game.Game;
+import game.Game;
 
 /**
  * Saving and loading games

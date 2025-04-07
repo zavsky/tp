@@ -6,7 +6,7 @@ import Characters.Players.Player;
 import Equipment.Equipment;
 import Events.Shop;
 import Functions.Storage;
-import Game.Game;
+import game.Game;
 import exceptions.RolladieException;
 import Equipment.DragonShield;
 import Equipment.FlamingSword;
@@ -72,3 +72,4 @@ public class Rolladie {
         UI.printExitMessage();
     }
 }
+

@@ -1,7 +1,7 @@
 package Functions;
 
 import Characters.Players.Player;
-import Game.Game;
+import game.Game;
 
 import java.util.Scanner;
 
