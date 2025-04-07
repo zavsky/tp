@@ -161,7 +161,7 @@ public class Player implements Serializable {
      */
     public int computeDamageTo(Player opponent) throws InterruptedException {
         assert opponent.isAlive(): "Opponent must be alive to receive damage";
-        int base = totalRoll() + (diceRolls.length * weapon.bonusPerDie);
+        int base = totalRoll() + (diceRolls.length * getPlayerAttack());
 
         // if (powerStrikeActive) base *= 1.5;
         double powerMultiplier = 1.0 + (power / (double) maxPower) * 0.5; // up to +50%
@@ -420,7 +420,7 @@ public class Player implements Serializable {
         sb.append("Abilities:\n");
         for (int i = 0; i < abilities.size(); i++) {
             Ability a = abilities.get(i);
-            String status = a.isCDReady() ? "✅ ready" : "⏳ " + a.currentCooldown + " turn(s)";
+            String status = a.isCDReady() ? "✅ ready" : "⏳ " + a.currentCoolDown + " turn(s)";
             sb.append(String.format(" %d. %s %s %s\n", i + 1, a.icon, a.name, status));
         }
 
