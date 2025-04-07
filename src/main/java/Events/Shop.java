@@ -60,7 +60,7 @@ public class Shop extends Event {
         }
     }
 
-    public void handleBuyInput(int buyInput) throws RolladieException, InterruptedException {
+    private void handleBuyInput(int buyInput) throws RolladieException, InterruptedException {
         if (buyInput > equipments.length || buyInput < 1) {
             throw new RolladieException("Buy index out of range!");
         }
@@ -73,9 +73,9 @@ public class Shop extends Event {
         }
     }
 
-    public void handleSellInput(int sellInput) throws RolladieException, InterruptedException {
+    private void handleSellInput(int sellInput) throws RolladieException, InterruptedException {
         if (sellInput >= 3 || sellInput < 0) {
-            throw new RolladieException("Buy index out of range!");
+            throw new RolladieException("Sell index out of range!");
         }
         Equipment equipment = player.getEquipment(sellInput);
 
@@ -88,7 +88,7 @@ public class Shop extends Event {
     }
 
 
-    public void startShopping() throws RolladieException, InterruptedException {
+    private void startShopping() throws RolladieException, InterruptedException {
         while (!isDone) {
             ShopUI.printShopCollection(equipments);
             ShopUI.printShopMenu(player);
