@@ -31,7 +31,7 @@ public class Player implements Serializable {
     public Ability lastAbilityUsed;
     public boolean isHuman;
     public List<Ability> abilities = new ArrayList<>();
-    public int gold;
+    private int gold;
 
     public int power = 50;
     public int maxPower = 100;
@@ -68,6 +68,9 @@ public class Player implements Serializable {
         this.gold = 0;
     }
 
+    public int getGold() {
+        return gold;
+    }
     public void spendGold(int amount) throws RolladieException {
         if (gold - amount < 0) {
             throw new RolladieException("not enough gold");
@@ -234,7 +237,7 @@ public class Player implements Serializable {
         String textToPrint;
 
         if (damage > 10) {
-            textToPrint = "[Narrator] It's a devastating blow from " + opponent.name + "!";
+            textToPrint = "[Narrator] It's a devastating blow from " + opponent.name + " doing " + damage + " damage!";
         } else if (damage == 0) {
             textToPrint = "[Narrator] But the attack glances harmlessly off " + name + "'s armor!";
         } else {
