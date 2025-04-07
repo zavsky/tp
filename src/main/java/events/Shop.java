@@ -81,7 +81,7 @@ public class Shop extends Event {
             player.sellEquipment(sellInput);
             Narrator.commentOnShopSell(player, equipment);
         } else {
-            UI.printErrorMessage("No Equipment at this slot!");
+            throw new RolladieException("");
         }
     }
 
