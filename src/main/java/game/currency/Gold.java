@@ -1,6 +1,5 @@
 package game.currency;
 
-
 import exceptions.RolladieException;
 
 public class Gold {

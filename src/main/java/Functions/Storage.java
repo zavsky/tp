@@ -10,57 +10,29 @@ import java.util.Scanner;
 import Characters.Abilities.Ability;
 import Characters.Players.Player;
 import exceptions.RolladieException;
+import game.Game;
 
 /**
  * Saving and loading games
  */
 public class Storage {
-    public static void saveGame(Player player, int wave, Scanner scanner) {
-        System.out.print("Choose save slot (1–3): ");
-        int slot = Integer.parseInt(scanner.nextLine());
-
-        String filename = "save_slot_" + slot + ".dat";
+    public static void saveGame(int saveSlot, Game game) {
+        String filename = "save_slot_" + saveSlot + ".dat";
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
-            out.writeObject(player);
-            out.writeInt(wave);
-            System.out.println("✅ Game saved to slot " + slot);
+            out.writeObject(game);
+            System.out.println("✅ Game saved to save slot " + saveSlot);
         } catch (IOException e) {
             System.out.println("❌ Save failed: " + e.getMessage());
         }
     }
 
-    public static Pair<Player, Integer> loadGame(Scanner scanner) {
-        System.out.print("Choose save slot to load (1–3): ");
-        int slot = Integer.parseInt(scanner.nextLine());
-    
-        String filename = "save_slot_" + slot + ".dat";
+    public static Game loadGame(int saveSlot) throws RolladieException {
+        String filename = "save_slot_" + saveSlot + ".dat";
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
-            Player player = (Player) in.readObject();
-            int wave = in.readInt();
-            System.out.println("✅ Game loaded from slot " + slot);
-            showContinueScreen(player, wave, scanner);
-            return new Pair<>(player, wave);
-        } catch (IOException | ClassNotFoundException | RolladieException e) {
-            System.out.println("❌ Load failed: " + e.getMessage());
-            return null;
+            Game game = (Game) in.readObject();
+            return game;
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RolladieException("❌ Load failed: " + e.getMessage());
         }
-    }    
-
-    public static void showContinueScreen(Player player, int wave, Scanner scanner) throws RolladieException {
-        System.out.println("\n===== CONTINUE SCREEN =====");
-        System.out.println("👤 Name: " + player.name);
-        System.out.println("❤️ HP: " + player.hp + " / " + player.maxHp);
-        System.out.println("⚡ Power: " + player.power + " / " + player.maxPower);
-        System.out.println("🗡️ Weapon: " + player.getEquipment("weapon").getName() + " (+" + player.getEquipment("weapon").getAttack() + " dmg)");
-        System.out.println("🛡️ Armor: " + player.getEquipment("armor").getName() + " (+" + player.getEquipment("armor").getDefense() + " def)");
-
-        System.out.println("🧪 Abilities:");
-        for (Ability a : player.abilities) {
-            System.out.printf("   • %s (%s) | Cooldown: %d | Cost: %d\n", a.name, a.icon, a.cooldown, a.powerCost);
-        }
-
-        System.out.println("🌊 Current Wave: " + wave);
-        System.out.println("\nPress Enter to continue...");
-        scanner.nextLine();
     }
 }
