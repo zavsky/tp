@@ -1,4 +1,4 @@
-//@@author Vincesum
+//@@author vincesum
 package equipments.weapons;
 
 import exceptions.RolladieException;
