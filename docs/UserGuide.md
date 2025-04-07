@@ -2,27 +2,27 @@
 
 ## Table of content
 
-- [Introduction](#introduction-)
+- [Introduction](#introduction)
 
-- [Quick Start](#quick-start-)
+- [Quick Start](#quick-start)
 
-- [Features](#features-)
+- [Features](#features)
 
-- [1. Starting a new game](#starting-a-new-game-)
+- [1. Starting a new game](#starting-a-new-game)
 
-- [2. Loading from a save](#loading-from-a-save-)
+- [2. Loading from a save](#loading-from-a-save)
 
-- [3. Making your character](#making-your-character-)
+- [3. Making your character](#making-your-character)
 
-- [4. Choosing your battle ability](#choosing-your-battle-ability-)
+- [4. Choosing your battle ability](#choosing-your-battle-ability)
 
-- [5. Looting the enemy](#looting-the-enemy-)
+- [5. Looting the enemy](#looting-the-enemy)
 
-- [6. Purchasing from the shop](#purchasing-from-the-shop-)
+- [6. Purchasing from the shop](#purchasing-from-the-shop)
 
-- [7. Saving the game](#saving-the-game-)
+- [7. Saving the game](#saving-the-game)
 
-- [8. Exiting the game](#exiting-the-game-)
+- [8. Exiting the game](#exiting-the-game)
 
 - [Command Summary](#command-summary)
 
@@ -49,14 +49,14 @@ The target audience of this program are CS2113 students, but everyone is invited
 
 ### Starting a new game
 
-  ![[images/rolladie_mainmenu.jpg]]
+  ![](images/rolladie_mainmenu.png)
 
 Upon first launch, input `1` to start a new game.
 ### Loading from a save
 
 To load from a previous save, input `2`.
 
-![[images/rolladie_mainmenu_loadsave.png]]
+![](images/rolladie_mainmenu_loadsave.png)
 
 You can choose the specific save slot to load from. Select your choice and begin!
 ### Making your character
@@ -64,7 +64,7 @@ You can choose the specific save slot to load from. Select your choice and begin
 If starting from a new game, the game will then ask you for your hero's name. Choose a name and type it in!
 ### Choosing your battle ability
 
-![[images/rolladie_battle.png]]
+![](images/rolladie_battle.png)
 
 The game presents the round number (aka the bout number with the current opponent), your player stats, and the current enemy stats below.
 
@@ -77,27 +77,27 @@ Select the ability you want to use for the round. Note that each ability comes w
 
 #### Battle sequence
 
-![[images/rolladie_battle1.png]]
+![](images/rolladie_battle1.png)
 
 In this example, we begin with using the Basic Attack ability.
 
-![[images/rolladie_battle2.png]]
+![](images/rolladie_battle2.png)
 
 The game proceeds to roll both players' dice, with your hero's dice shown on the left and the opponent's shown on the right. The rolled value is critical in the calculation of the final damage dealt to each player. Here, you are looking for a high value.
 
-![[images/rolladie_battle3.png]]
+![](images/rolladie_battle3.png)
 
 An animation plays out to visually represent the changes to Hit Points at the present turn. The bar changes colour depending on the status of your character.
 
-![[Pimages/rolladie_battle4.png]]
+![](Pimages/rolladie_battle4.png)
 
 In the next turn, you will see the changes to the player stats at the top, any ability cooldown related blockers will be shown with a turn counter.
 
-![[images/rolladie_battle5.png]]
+![](images/rolladie_battle5.png)
 
 The narrator will announce the effects of your attacks, as well as those of your opponents.
 
-![[images/rolladie_battle6.png]]
+![](images/rolladie_battle6.png)
 
 Here, the game continues the battle until one of the players is down. If the player survives into the next encounter, he/she may be awarded a new skill and be able to loot from the fallen opponent.
 #### Strategizing for a win
