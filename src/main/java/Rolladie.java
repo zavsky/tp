@@ -23,15 +23,15 @@ public class Rolladie {
         UI.printWelcomeMessage();
 
         UI.printOptions();
-        int input = readIntegerInput();
+        String userInput = UI.readInput();
         Game game;
-        while(input != 3) {
+        while(!userInput.equals("3")) {
             try {
-                switch (input) {
-                case 1:
+                switch (userInput) {
+                case "1":
                     game = new Game();
                     break;
-                case 2:
+                case "2":
                     int saveSlot = Integer.parseInt(UI.promptSaveFile());
                     try {
                         game = Storage.loadGame(saveSlot);
@@ -52,7 +52,7 @@ public class Rolladie {
             } catch (RolladieException e) {
                 UI.printErrorMessage(e.getMessage());
             } finally {
-                input = readIntegerInput();
+                userInput = UI.readInput();
             }
         }
         UI.printExitMessage();

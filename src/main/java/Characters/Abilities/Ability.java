@@ -14,8 +14,8 @@ public abstract class Ability implements Serializable {
     public String name;
     public String tags;
     public String icon;
-    public int cooldown;
-    public int currentCooldown;
+    public int coolDown;
+    public int currentCoolDown;
     public double damageMult;
     public int powerCost;
 
@@ -26,17 +26,18 @@ public abstract class Ability implements Serializable {
      * @param name Name of the Ability
      * @param tags Extra information relating to Ability to aid users' choice. Example: 'Heal +5HP'
      * @param icon Emoji icon to represent the attack type
-     * @param cooldown Number of turns that the Ability will become unusable after casting
+     * @param coolDown Number of turns that the Ability will become unusable after casting
      * @param damageMult Damage multiplier
      * @param powerCost Amount of `Power` required to cast the ability
      */
-    public Ability(AbilityType type, String name, String tags, String icon, int cooldown, double damageMult, int powerCost) {
+    public Ability(AbilityType type, String name, String tags, String icon, int coolDown,
+                   double damageMult, int powerCost) {
         this.type = type;
         this.name = name;
         this.tags = tags;
         this.icon = icon;
-        this.cooldown = cooldown;
-        this.currentCooldown = 0;
+        this.coolDown = coolDown;
+        this.currentCoolDown = 0;
         this.damageMult = damageMult;
         this.powerCost = powerCost;
     }
@@ -48,7 +49,7 @@ public abstract class Ability implements Serializable {
      * @return true if the cooldown is complete and there's sufficient power, false otherwise
      */
     public boolean isReady(int currentPower) {
-        return currentCooldown == 0 && currentPower >= powerCost;
+        return currentCoolDown == 0 && currentPower >= powerCost;
     }
 
     /**
@@ -57,28 +58,28 @@ public abstract class Ability implements Serializable {
      * @return true if the cooldown is complete (currentCooldown == 0), false otherwise
      */
     public boolean isCDReady() {
-        return currentCooldown == 0;
+        return currentCoolDown == 0;
     }
 
     /**
      * Sets the cooldown timer
      */
     public void startCooldown() {
-        this.currentCooldown = cooldown;
+        this.currentCoolDown = coolDown;
     }
 
     /**
      * Resets the cooldown timer
      */
     public void resetCooldown() {
-        this.currentCooldown = 0;
+        this.currentCoolDown = 0;
     }
 
     /**
      * Decrements the cooldown time
      */
     public void tickCooldown() {
-        if (currentCooldown > 0) currentCooldown--;
+        if (currentCoolDown > 0) currentCoolDown--;
     }
 
     /**

@@ -21,7 +21,7 @@ public class BattleDisplay {
         
         for (int i = 0; i < p.abilities.size(); i++) {
             Ability a = p.abilities.get(i);
-            String status = a.isCDReady() ? "✅ ready" : "⏳ " + a.currentCooldown + " turn(s)";
+            String status = a.isCDReady() ? "✅ ready" : "⏳ " + a.currentCoolDown + " turn(s)";
             System.out.printf(" %d. %s %s (%s)\n", i + 1, a.icon, a.name, status);
         }
         System.out.println();

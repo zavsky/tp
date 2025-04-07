@@ -26,6 +26,8 @@
 
 - [Command Summary](#command-summary)
 
+- [FAQ](#faq)
+
 ## Introduction
 
 RollaDie is a Dungeon & Dragons (DnD) text-based RPG, optimised to play using Command Line Interface (CLI) and has a simple text-ui display that reminisces games of the 1960s. Players face off hordes of enemies with the ultimate goal of achieving the legendary status in the annals of history. Join the story and learn the secrets that lay within!
@@ -131,3 +133,30 @@ At any point in the game when it asks for input, you can insert the command, `ex
 ## Command Summary
 
 There are no commands to remember. Simply follow and let the game guide you along!
+
+| Function             | Scenario    | Input                                          |
+|----------------------|-------------|------------------------------------------------|
+| Starting a new game | In main menu | `1` |
+| Loading a previous save | In main menu | `2` |
+| Creating a new character | In character screen | {your_hero_name} |
+| Choosing your battle ability | In combat | Integer corresponding to your choice of ability {1..*} |
+| Saving the game | At checkpoints | Input `y` and choose a slot number {1-3} |
+
+
+## FAQ
+
+**Q: How do I transfer my data to another computer?**
+
+A: Copy the `.dat` files created in the same directory over to the other computer you wish to continue your save from.
+
+**Q: What happens if I enter invalid input?**
+
+A: The game will not accept the input and will prompt for another valid one.
+
+**Q: What is the difference between HP, Power and Cooldown?**
+
+A: Remaining HP is a measure of your character's durability against incoming damage. When HP falls to zero, your character also falls. Power acts like mana as seen frequently in other games of such genre, in that it is an ability casting requirement to prevent skill spamming, but also gives you a damage boost the more you stack it. So it helps add strategic depth. Cooldown applies to individual skills so that players are forced to choose their combat sequence tactically for the best outcome.
+
+**Q: What happens if I close the application without using the `exit` command?**
+
+A: Any previously saved progress will remain available. However, if there are any progress made between the point of exit and the point of last save, then those progress will be lost.
