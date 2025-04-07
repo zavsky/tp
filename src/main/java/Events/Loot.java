@@ -24,7 +24,7 @@ public class Loot extends Event {
     public void run() throws RolladieException {
         if (hasWon) {
             int loot = generateRandomLoot();
-            player.gold += loot;
+            player.addGold(loot);
             LootUI.printLoot(loot);
         }
         else {

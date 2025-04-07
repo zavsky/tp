@@ -35,7 +35,7 @@ public class Player implements Serializable {
     public Ability lastAbilityUsed;
     public boolean isHuman;
     public List<Ability> abilities = new ArrayList<>();
-    public int gold;
+    private int gold;
 
     public int power = 50;
     public int maxPower = 100;
@@ -72,6 +72,12 @@ public class Player implements Serializable {
         this.gold = 0;
     }
 
+    public int getGold() {
+        return gold;
+    }
+    public int addGold(int gold) {
+        this.gold += gold;
+    }
     public int getPlayerAttack() {
         return equipmentList.getEquipmentAttack();
     }

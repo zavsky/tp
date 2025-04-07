@@ -27,7 +27,7 @@ public class Game implements Serializable {
     private Event currentEvent;
     private int wave;
     private int turnsWithoutShop = 0;
-    private boolean winCurrBattle = false;
+    private boolean hasWonCurrBattle = false;
 
     /**
      * Constructor to instantiate a new game
@@ -72,14 +72,14 @@ public class Game implements Serializable {
         while (this.currentEvent != null && this.player.isAlive()) {
             try {
                 //If current battle is won, sets loot event to give rewards
-                currentEvent.setHasWon(winCurrBattle);
+                currentEvent.setHasWon(hasWonCurrBattle);
                 this.currentEvent.run();
                 if (!player.isAlive()) {
                     break;
                 }
                 //Checks if current battle is won
                 if (this.currentEvent instanceof Battle) {
-                    winCurrBattle = currentEvent.getHasWon();
+                    hasWonCurrBattle = currentEvent.getHasWon();
                 }
                 //Saves game on loot or shop screen after a battle.
                 if (this.currentEvent instanceof Loot) {
