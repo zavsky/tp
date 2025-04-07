@@ -120,7 +120,10 @@ To break it down further:
 
 ### Purchasing from the shop
 
-<< in progress >>
+Every 2 waves, the player will be able to purchase Equipment from the Shop. These Equipment consists of Armor, Boots, Weapon. They improve the stats of the the player, so that the player can potentially defeat stronger and stronger enemies.
+
+After buying or selling equipment, the players new equipment and stats will be shown.
+
 
 ### Saving the game
 
