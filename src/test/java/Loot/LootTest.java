@@ -1,7 +1,7 @@
 package Loot;
 
-import Characters.Players.Player;
-import Events.Loot;
+import players.Player;
+import events.Loot;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
