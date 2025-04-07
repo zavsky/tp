@@ -135,7 +135,7 @@ public class Game implements Serializable {
         return new Loot(this.player, loot);
     }
 
-    private Event generateShopEvent(int wave) {
+    public Event generateShopEvent(int wave) {
         Equipment[] equipmentsForSale = {
                 ArmorDatabase.getArmorByIndex(wave / 2),
                 BootsDatabase.getBootsByIndex(wave / 2),
