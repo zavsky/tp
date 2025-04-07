@@ -15,7 +15,7 @@ public class WeaponDatabase {
 
     // Static block to initialize predefined weapons
     static {
-        weaponList.add(new Weapon("Stick", 0, 10, 0, 5));
+        weaponList.add(new Weapon("Wooden Sword", 0, 10, 0, 5));
         weaponList.add(new Weapon("Iron Sword", 0, 20, 0, 10));
         weaponList.add(new Weapon("Kunai", 0, 30, 0, 20));
         weaponList.add(new Weapon("Executioner's Axe", 0, 40, 0, 30));
@@ -40,11 +40,23 @@ public class WeaponDatabase {
         throw new RolladieException("Weapon not found!");
     }
 
+    public static int getIndexByName(String name) throws RolladieException {
+        for (int i = 0; i < weaponList.size(); i++) {
+            if (weaponList.get(i).getName().equalsIgnoreCase(name)) {
+                return i;
+            }
+        }
+        throw new RolladieException("Armor not found!");
+    }
+
     public static int getNumberOfWeaponTypes() {
         return weaponList.size();
     }
 
     public static Weapon getWeaponByIndex(int index) {
+        if (index < 0) {
+            return new Stick();
+        }
         return weaponList.get(index);
     }
 }

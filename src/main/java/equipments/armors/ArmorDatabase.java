@@ -37,11 +37,23 @@ public class ArmorDatabase {
         throw new RolladieException("Armor not found!");
     }
 
+    public static int getIndexByName(String name) throws RolladieException {
+        for (int i = 0; i < armorList.size(); i++) {
+            if (armorList.get(i).getName().equalsIgnoreCase(name)) {
+                return i;
+            }
+        }
+        throw new RolladieException("Armor not found!");
+    }
+
     public static int getNumberOfArmorTypes() {
         return armorList.size();
     }
 
     public static Armor getArmorByIndex(int index) {
+        if (index < 0) {
+            return new Tshirt();
+        }
         return armorList.get(index);
     }
 }
