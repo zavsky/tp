@@ -1,10 +1,9 @@
-import Characters.Players.Player;
-import Equipment.Equipment;
-import Equipment.ArmorDatabase;
-import Equipment.BootsDatabase;
-import Equipment.WeaponDatabase;
-import Events.Loot;
-import Events.Shop;
+import players.Player;
+import equipments.Equipment;
+import equipments.armors.ArmorDatabase;
+import equipments.boots.BootsDatabase;
+import equipments.weapons.WeaponDatabase;
+import events.Shop;
 import exceptions.RolladieException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

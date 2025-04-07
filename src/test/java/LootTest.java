@@ -1,8 +1,6 @@
-import Characters.Players.Player;
-import Events.Loot;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import players.Player;
 import org.junit.jupiter.api.Test;
+import events.Loot;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
