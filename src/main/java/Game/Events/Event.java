@@ -1,7 +1,7 @@
 package Game.Events;
 
 import Exceptions.RolladieException;
-import Game.Characters.Player;
+import Characters.Players.Player;
 
 public abstract class Event {
     protected Player player;

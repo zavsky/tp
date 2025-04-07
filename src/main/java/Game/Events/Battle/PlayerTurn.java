@@ -10,7 +10,6 @@ import Game.Characters.Character;
 import Game.Characters.Player;
 import Game.RollDice;
 
-import static Functionalities.Parser.getAction;
 
 /**
  * Represents the player's turn. Player can select different moves during his/her turn.
@@ -40,20 +39,19 @@ public class PlayerTurn extends Turn {
      *
      * @return A String representing the action of the player.
      */
-    private Action getCurrAction() {
+    private int getCurrAction() {
         String inputString = Parser.readInput();
-        return getAction(inputString);
+        return Parser.getActionInteger(inputString);
     }
 
     /**
      * Handles the user input during user's turn
      *
      */
-    public void handleAction() throws RolladieException {
+    /*public void handleAction() throws RolladieException {
         ((Player) player).setAttackBonus(0);
         ((Player) player).setDefenseBonus(0);
 
-        Action currentAction = getCurrAction();
         int diceValue = RollDice.rollDice();
         int diceOutcome = RollDice.diceOutcome(diceValue);
 
@@ -71,7 +69,7 @@ public class PlayerTurn extends Turn {
             break;
         default:
             throw new RolladieException("You can only use \"defend\", \"attack\" or \"flee\" bro");
-        }
+        }*/
 
         /*
         if (currentAction instanceof AttackAction) {
@@ -86,6 +84,7 @@ public class PlayerTurn extends Turn {
         else if (currentAction instanceof FleeAction) {
             hasSurrendered = true;
         }
-        */
+
     }
+         */
 }

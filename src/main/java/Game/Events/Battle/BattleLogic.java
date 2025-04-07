@@ -70,7 +70,7 @@ public class BattleLogic {
         if (playerTurn) {
             turnNumber++;
             PlayerTurn turn = new PlayerTurn(player, enemy);
-            turn.handleAction();
+            //turn.handleAction();
             checkBattleEnd(turn);
         }
         else {
