@@ -33,7 +33,7 @@ git clone https://github.com/AY2425S2-CS2113-T13-4/tp.git
 ## Design
 
 ## Architecture 
-![Architecture diagram](images/Architecture Diagram.png)        
+![Architecture diagram](images/ArchitectureDiagram.png)        
 
 The Architecture diagram given above explain the high-level design of the application.      
 
