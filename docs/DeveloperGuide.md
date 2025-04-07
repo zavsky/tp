@@ -151,7 +151,8 @@ Start Game, 2 is Load Game and 3 is exit game.
 is processed to load the game information, and initialise a new Game object based on the data fetched.
 5. If player chooses 3, the game exits itself.
 6. After every loot and shop event, the game also presents the users with an opportunity to save the game.
-7. If the player selects y, the game prompts the user to choose from 1-3 to save to a save slot, else game does not save.
+7. If the player selects "y", the game prompts the user to choose from 1-3 to save to a save slot, else 
+if player selects "n", game does not save.
 
 **Sequence Diagram**         
      
@@ -198,7 +199,7 @@ The sequence diagram below illustrates the process that occurs when the player i
 
 ![Sequence Diagram](uml_image/attackSequence.png)
 
-### 2. Heal        
+### 3. Heal        
 **Overview**
 
 The heal Feature in RollaDie allows players to adopt a heal during their turn instead of attacking.
@@ -223,7 +224,7 @@ The sequence diagram is shared with the attack feature above.
 
 
 
-### 3. Flee        
+### 4. Flee        
 **Overview**      
 The flee feature in Rolladie is to allow the player to escape from nasty situations.
 This feature allows players to make a strategic retreat to re gear up before fighting strong enemies.
@@ -240,7 +241,7 @@ When the player chooses to flee, the battle ends immediately and the player goes
 
 
 
-### 4. Loot      
+### 5. Loot      
 **Overview**
 The loot feature in Rolladie allows the player to get gold after winning a battle.
 This feature enables players to earn gold to upgrade himself in the shop.
