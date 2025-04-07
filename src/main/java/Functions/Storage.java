@@ -55,7 +55,7 @@ public class Storage {
 
         System.out.println("🧪 Abilities:");
         for (Ability a : player.abilities) {
-            System.out.printf("   • %s (%s) | Cooldown: %d | Cost: %d\n", a.name, a.icon, a.cooldown, a.powerCost);
+            System.out.printf("   • %s (%s) | Cooldown: %d | Cost: %d\n", a.name, a.icon, a.coolDown, a.powerCost);
         }
 
         System.out.println("🌊 Current Wave: " + wave);
