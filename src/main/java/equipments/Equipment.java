@@ -63,4 +63,6 @@ public abstract class Equipment implements Serializable {
 
         return false;  // If obj is not an instance of Equipment, return false
     }
+
+    public abstract String toText();
 }

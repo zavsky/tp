@@ -14,6 +14,7 @@ import functions.TypewriterEffect;
 import functions.UI.UI;
 import exceptions.RolladieException;
 
+import static functions.Storage.SAVE_DELIMITER;
 import static functions.UI.BattleDisplay.drawPowerBar;
 
 
@@ -38,13 +39,13 @@ public class Player implements Serializable {
 
     /**
      * Creates a Player object either controlled by a human player or computer
-     * 
-     * @param name Name of the character
-     * @param maxHp Maximum hitpoints the character can take
-     * @param baseAttack Base damage amount
-     * @param numDice Number of dice to roll during battle encounters
+     *
+     * @param name          Name of the character
+     * @param maxHp         Maximum hitpoints the character can take
+     * @param baseAttack    Base damage amount
+     * @param numDice       Number of dice to roll during battle encounters
      * @param equipmentList A list to encapsulate all the equipment equipped by a character,
-     * @param isHuman True if creating player-controlled character, false otherwise
+     * @param isHuman       True if creating player-controlled character, false otherwise
      */
     public Player(String name, int maxHp, int baseAttack, int numDice, List<Equipment> equipmentList, boolean isHuman) {
         this.name = name;
@@ -69,6 +70,7 @@ public class Player implements Serializable {
     public int getGold() {
         return gold;
     }
+
     public void spendGold(int amount) throws RolladieException {
         if (gold - amount < 0) {
             throw new RolladieException("not enough gold");
@@ -165,14 +167,16 @@ public class Player implements Serializable {
 
     /**
      * Get hp value of the player
+     *
      * @return An integer represent hp value of the player.
      */
-    public int getHp(){
+    public int getHp() {
         return hp;
     }
 
     /**
      * Reroll the dice and get results
+     *
      * @return Integer array of size equivalent to number of dice Player has
      */
     public int[] getDiceRolls() {
@@ -182,6 +186,7 @@ public class Player implements Serializable {
 
     /**
      * Adds up the current dice roll results that the Player possesses
+     *
      * @return sum of dice rolls
      */
     public int totalRoll() {
@@ -194,18 +199,19 @@ public class Player implements Serializable {
 
 
     // todo: print the compute damage process
+
     /**
      * Calculates the damage dealt to an opponent, computed as follows:
-     * 
+     * <p>
      * [(dice roll result) + (num of dice) * (weapon bonus)] *
      * [(power) / (max power) * 0.5 * (weapon damage multiplier)] - (opponent armor defense)
-     * 
+     *
      * @param opponent Player that the current Player is battling
      * @return damage dealt to an opponent
      * @throws InterruptedException
      */
     public int computeDamageTo(Player opponent) throws InterruptedException {
-        assert opponent.isAlive(): "Opponent must be alive to receive damage";
+        assert opponent.isAlive() : "Opponent must be alive to receive damage";
         int base = totalRoll() + (diceRolls.length * getPlayerAttack());
 
         // if (powerStrikeActive) base *= 1.5;
@@ -218,15 +224,15 @@ public class Player implements Serializable {
 
     /**
      * Updates the hitpoints of current Player based on damage dealt by opponent
-     * 
-     * @param damage Value of damage dealt
+     *
+     * @param damage   Value of damage dealt
      * @param opponent Player object representing opponent
-     * @param text String to concatenate result to
+     * @param text     String to concatenate result to
      * @return String for UI
      * @throws InterruptedException
      */
     public String applyDamage(int damage, Player opponent, String text) throws InterruptedException {
-        assert damage > 0: "damage value must be non-negative";
+        assert damage > 0 : "damage value must be non-negative";
 
         this.hp = Math.max(0, this.hp - damage);
 
@@ -239,7 +245,7 @@ public class Player implements Serializable {
         } else {
             textToPrint = "[Narrator] " + opponent.name + " hits " + name + " for " + damage + " damage.";
         }
-        
+
         TypewriterEffect.print(textToPrint, 1000);
         System.out.print("\007");
 
@@ -252,18 +258,18 @@ public class Player implements Serializable {
 
     /**
      * Recovers Player hitpoints
-     * 
+     *
      * @param amount value of hitpoints to recover
      */
     public void heal(int amount) {
-        assert amount >= 0: "amount to heal must be non-negative";
+        assert amount >= 0 : "amount to heal must be non-negative";
 
         this.hp = Math.min(maxHp, this.hp + amount);
     }
 
     /**
      * Gives control to player or computer to make battle decisions
-     * 
+     *
      * @return an Ability object
      * @throws InterruptedException
      */
@@ -272,7 +278,7 @@ public class Player implements Serializable {
 
         if (isHuman) {
             chosenAbility = showUserMenu();
-            if(chosenAbility == null) {
+            if (chosenAbility == null) {
                 return null;
             }
         } else {
@@ -293,7 +299,7 @@ public class Player implements Serializable {
 
     /**
      * Prints Player options for each specified round of battle
-     * 
+     *
      * @return an Ability object
      * @throws InterruptedException
      */
@@ -322,7 +328,7 @@ public class Player implements Serializable {
             }
 
             String input = scanner.nextLine().trim();
-            if(input.equals("exit")) {
+            if (input.equals("exit")) {
                 return null;
             }
             int intInput = -1;
@@ -357,8 +363,8 @@ public class Player implements Serializable {
     // todo: fix the ai
     private Ability chooseAIAction() {
         List<Ability> readyAbilities = abilities.stream()
-            .filter(a -> a.isReady(power))
-            .collect(Collectors.toList());
+                .filter(a -> a.isReady(power))
+                .collect(Collectors.toList());
 
         // Prioritize HEALING if low HP
         if (hp < maxHp * 0.4) {
@@ -410,12 +416,12 @@ public class Player implements Serializable {
 
     /**
      * Checks if the Player has learnt a specific Ability
-     * 
+     *
      * @param name String variable containing Ability name
      * @return true if Ability present, false otherwise
      */
     public boolean hasAbility(String name) {
-        assert name != null: "ability to be searched cannot be null";
+        assert name != null : "ability to be searched cannot be null";
 
         for (Ability a : abilities)
             if (a.name.equalsIgnoreCase(name)) return true;
@@ -424,7 +430,7 @@ public class Player implements Serializable {
 
     /**
      * Apply special effects of Abilities
-     * 
+     *
      * @param ability
      */
     public void applyAbilityAdditionalFeatures(Ability ability) {
@@ -442,7 +448,7 @@ public class Player implements Serializable {
      * Increment the Power value by a variable amount after each battle round
      */
     public void updatePower(int powerVal) {
-        assert powerVal >= 0: "power value must be non-negative";
+        assert powerVal >= 0 : "power value must be non-negative";
 
         power = Math.min(maxPower, power + powerVal);
     }
@@ -487,5 +493,60 @@ public class Player implements Serializable {
 
         // Return the final string representation
         return sb.toString();
+    }
+
+    /**
+     * Overloaded constructor to load player from save file
+     *
+     * @param name
+     * @param hp
+     * @param maxHp
+     * @param baseAttack
+     * @param numDice
+     * @param equipmentList
+     * @param abilities
+     * @param gold
+     * @param power
+     * @param maxPower
+     * @param isHuman
+     */
+
+    public Player(String name, int hp, int maxHp, int baseAttack, int numDice,
+                  List<Equipment> equipmentList, List<Ability> abilities,
+                  int gold, int power, int maxPower, boolean isHuman) {
+        this.name = name;
+        this.hp = hp;
+        this.maxHp = maxHp;
+        this.baseAttack = baseAttack;
+        this.diceRolls = new int[numDice];
+        this.equipmentList = equipmentList;
+        this.abilities = abilities;
+        this.gold = gold;
+        this.power = power;
+        this.maxPower = maxPower;
+        this.isHuman = isHuman;
+    }
+
+    public String toText() {
+        String equipmentsText = "";
+        for (Equipment equipment : equipmentList) {
+            equipmentsText += equipment.toText();
+        }
+        String abilitiesText = "";
+        for (Ability ability : abilities) {
+            abilitiesText += ability.toText();
+        }
+
+        return this.name + SAVE_DELIMITER +
+                this.hp + SAVE_DELIMITER +
+                this.maxHp + SAVE_DELIMITER +
+                this.baseAttack + SAVE_DELIMITER +
+                this.diceRolls.length + SAVE_DELIMITER +
+                equipmentsText + SAVE_DELIMITER +
+                abilitiesText + SAVE_DELIMITER +
+                this.gold + SAVE_DELIMITER +
+                this.power + SAVE_DELIMITER +
+                this.maxPower + SAVE_DELIMITER +
+                this.isHuman;
     }
 }

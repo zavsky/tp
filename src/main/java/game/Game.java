@@ -39,7 +39,7 @@ public class Game implements Serializable {
     public Game() {
         this.player = Player.createNewPlayer();
         this.wave = 1;
-        this.eventsQueue = generateEventQueue();
+        this.eventsQueue = generateEventQueue(this.wave);
         this.currentEvent = nextEvent();
     }
 
@@ -56,13 +56,13 @@ public class Game implements Serializable {
      * Main usage is within the Storage class to load game from save file
      *
      * @param player
-     * @param currentEvent
-     * @param eventsQueue
+     * @param wave
      */
-    public Game(Player player, Event currentEvent, Queue<Event> eventsQueue) {
+    public Game(Player player, int wave) {
         this.player = player;
-        this.eventsQueue = eventsQueue;
-        this.currentEvent = currentEvent;
+        this.wave = wave;
+        this.eventsQueue = generateEventQueue(wave);
+        this.currentEvent = nextEvent();
     }
 
     /**
@@ -104,24 +104,23 @@ public class Game implements Serializable {
     }
 
 
-
     /**
      * Returns a filled queue of events
      * Used during the construction of a new game
      *
      * @return eventsQueue
      */
-    private Queue<Event> generateEventQueue() {
+    private Queue<Event> generateEventQueue(int start) {
         Queue<Event> eventsQueue = new LinkedList<>();
         int i;
-        for (i = 1; i <= MAX_NUMBER_OF_WAVES; i++) {
+        for (i = start; i <= MAX_NUMBER_OF_WAVES; i++) {
             eventsQueue.add(generateBattle(i));
             eventsQueue.add(generateLoot((i + 1) * 10));
-            if(i % 2 == 0) {
+            if (i % 2 == 0) {
                 eventsQueue.add(generateShopEvent(i));
             }
         }
-        eventsQueue.add(generateBattle(i+1));
+        eventsQueue.add(generateBattle(i + 1));
         return eventsQueue;
     }
 

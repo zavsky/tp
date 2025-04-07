@@ -22,4 +22,6 @@ public abstract class Event implements Serializable {
         this.hasWon = hasWon;
     }
     public abstract void run() throws RolladieException, InterruptedException;
+
+    public abstract String toText();
 }

@@ -87,4 +87,8 @@ public abstract class Ability implements Serializable {
      * @param player the Player which the ability will affect
      */
     public void additionalFeatures(Player player) {}
+
+    public String toText() {
+        return this.name;
+    }
 }
