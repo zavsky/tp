@@ -91,5 +91,11 @@ public class EquipmentTest {
         public int getId() {
             return 0;
         }
+
+        @Override
+        public String toText() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'toText'");
+        }
     }
 }
