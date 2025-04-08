@@ -3,13 +3,16 @@ package events;
 import exceptions.RolladieException;
 import players.Player;
 
+
 public abstract class Event {
+    public boolean isExit;
     protected Player player;
-    protected boolean hasWon = false;
-    public boolean isExit = false;
+    protected boolean hasWon;
 
     public Event(Player player) {
         this.player = player;
+        hasWon = false;
+        isExit = false;
     }
 
     public boolean getHasWon() {

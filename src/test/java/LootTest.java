@@ -2,10 +2,6 @@ import players.Player;
 import org.junit.jupiter.api.Test;
 import events.Loot;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LootTest {

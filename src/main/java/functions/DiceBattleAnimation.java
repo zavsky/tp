@@ -161,7 +161,9 @@ public class DiceBattleAnimation {
 
         // Add spacing between players
         for (StringBuilder line : lines) {
-            while (line.length() < 12) line.append(" ");
+            while (line.length() < 12) {
+                line.append(" ");
+            }
             line.append("  |   ");
         }
 

@@ -97,9 +97,9 @@ public class Storage {
      * Returns player object defined by playerData
      * Decodes player from text within savefile
      *
-     * @param wave
-     * @param playerData
-     * @return
+     * @param wave current wave information
+     * @param playerData player data saved
+     * @return Creates a new player with the data saved
      * @throws RolladieException
      */
     private static Player parsePlayerFromText(int wave, String[] playerData) throws RolladieException {
