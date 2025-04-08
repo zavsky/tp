@@ -95,7 +95,9 @@ public class Battle extends Event {
         Player enemy = new Player("Enemy " + wave, 30 + wave * 20, (3 + wave) / 2, 2, equipmentList, false);
 
         enemy.abilities.add(new PowerStrike());
-        if (wave >= 3) enemy.abilities.add(new Crush());
+        if (wave >= 3) {
+            enemy.abilities.add(new Crush());
+        }
 
         return enemy;
     }

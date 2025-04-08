@@ -7,12 +7,14 @@ import java.io.Serializable;
 
 public abstract class Event implements Serializable {
     private static final long serialVersionUID = 1L;
+    public boolean isExit;
     protected Player player;
-    protected boolean hasWon = false;
-    public boolean isExit = false;
+    protected boolean hasWon;
 
     public Event(Player player) {
         this.player = player;
+        hasWon = false;
+        isExit = false;
     }
 
     public boolean getHasWon() {
