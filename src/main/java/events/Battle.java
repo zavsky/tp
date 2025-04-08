@@ -14,14 +14,12 @@ import functions.DiceBattleAnimation;
 import functions.TypewriterEffect;
 import exceptions.RolladieException;
 import functions.UI.Narrator;
-import functions.UI.UI;
 import functions.UI.BattleDisplay;
 import functions.UI.HpBar;
 
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import static functions.UI.Narrator.END_DELAY;
 
@@ -102,7 +100,9 @@ public class Battle extends Event {
         Player enemy = new Player("Enemy " + wave, 30 + wave * 20, (3 + wave) / 2, 2, equipmentList, false);
 
         enemy.abilities.add(new PowerStrike());
-        if (wave >= 3) enemy.abilities.add(new Crush());
+        if (wave >= 3) {
+            enemy.abilities.add(new Crush());
+        }
 
         return enemy;
     }
