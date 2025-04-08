@@ -1,6 +1,4 @@
-package equipments.boots;
-
-import equipments.Equipment;
+package equipments;
 
 public class EmptySlot extends Equipment {
     public EmptySlot() {
@@ -10,6 +8,11 @@ public class EmptySlot extends Equipment {
     @Override
     public String getEquipmentType() {
         return "empty";
+    }
+
+    @Override
+    public String toText() {
+        return "";
     }
 
     @Override

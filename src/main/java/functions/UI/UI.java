@@ -16,8 +16,19 @@ public class UI {
      */
     public static final String LINE_SEPARATOR = "=====================================================================";
 
-    private static final Scanner SCANNER = new Scanner(System.in);
+    public static final Scanner SCANNER = new Scanner(System.in);
 
+    public static void nextLine() {
+        SCANNER.nextLine();
+    }
+
+    public static String storageWave() {
+        return SCANNER.nextLine().trim();
+    }
+
+    public static String[] storagePlayerData(String LOAD_DELIMITER) {
+        return SCANNER.nextLine().split(LOAD_DELIMITER);
+    }
 
     public static String readInput() {
         String inputLine = SCANNER.nextLine().toLowerCase();
@@ -83,9 +94,15 @@ public class UI {
         System.out.println("Narrator: YOU ARE BIG BOI");
     }
 
-    public static String promptSaveFile() {
+    public static int promptSaveFile() {
         System.out.print("Choose save slot to load (1–3): ");
-        return readInput();
+        int saveSlot = Integer.parseInt(readInput());
+        while(saveSlot < 1 || saveSlot > 3) {
+            System.out.print("Out of range!");
+            System.out.print("Choose save slot to load (1–3): ");
+            saveSlot = Integer.parseInt(readInput());
+        }
+        return saveSlot;
     }
 
     public static void printOptions() {

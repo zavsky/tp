@@ -1,12 +1,9 @@
 package equipments;
 
-import java.io.Serializable;
-
 /**
  * Represents Armor that Player can augment
  */
-public abstract class Equipment implements Serializable {
-    private static final long serialVersionUID = 1L;
+public abstract class Equipment {
 
     public String name;
     public int defense;
@@ -21,8 +18,6 @@ public abstract class Equipment implements Serializable {
         this.health = health;
         this.value = value;
     }
-
-    public abstract String getEquipmentType();
 
     public abstract int getId();
 
@@ -48,6 +43,8 @@ public abstract class Equipment implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
+        assert obj != null:"object cannot be null";
+
         // First check if the obj is of type Equipment
         if (this == obj) {
             return true;  // If both references are the same, they're equal
@@ -63,4 +60,8 @@ public abstract class Equipment implements Serializable {
 
         return false;  // If obj is not an instance of Equipment, return false
     }
+
+    public abstract String getEquipmentType();
+
+    public abstract String toText();
 }
