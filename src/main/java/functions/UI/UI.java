@@ -18,6 +18,10 @@ public class UI {
 
     public static final Scanner SCANNER = new Scanner(System.in);
 
+    public static void main(String[] args) {
+        System.out.println(LOGO);
+    }
+
     public static void nextLine() {
         SCANNER.nextLine();
     }
@@ -51,11 +55,11 @@ public class UI {
      * A string containing the ASCII art LOGO of the game.
      */
     public static final String LOGO =
-            " ____    " + "  ___   " + " _      " + " _      " + "    _    " + " ____   " + " ___  " + " _____  " + "\n" +
-                    "|  _ \\ " + "   / _ \\  " + "| |     " + "| |     " + "   / \\   " + "|  _ \\  " + "|_ _| " + "| ____| " + "\n" +
-                    "| |_) |  " + "| | | | " + "| |     " + "| |     " + "  / _ \\  " + "| | | | " + " | |  " + "|  _|   " + "\n" +
-                    "|  _ <   " + "| |_| | " + "| |___  " + "| |___  " + " / /_\\ \\ " + "| |_| | " + " | |  " + "| |___  " + "\n" +
-                    "|_| \\_\\  " + " \\___/  " + "|_____| " + "|_____| " + "/_/   \\_\\" + "|____/  " + "|___| " + "|_____| ";
+            " ____      ___    _       _          _     ____    ___   _____  \n" +
+            "|  _ \\    / _ \\  | |     | |        / \\   |  _ \\  |_ _| | ____| \n" +
+            "| |_) |  | | | | | |     | |       / _ \\  | | | |  | |  |  _|   \n" +
+            "|  _ <   | |_| | | |___  | |___   / /_\\ \\ | |_| |  | |  | |___  \n" +
+            "|_| \\_\\   \\___/  |_____| |_____| /_/   \\_\\|____/  |___| |_____| ";
 
     /**
      * Prints a message to the console.
