@@ -99,7 +99,7 @@ public class UITest {
         String simulatedInput = "2\n";
         testIn = new ByteArrayInputStream(simulatedInput.getBytes());
         System.setIn(testIn);
-        String result = UI.promptSaveFile();
+        int result = UI.promptSaveFile();
         assertEquals("2", result);
     }
 
@@ -109,7 +109,7 @@ public class UITest {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         System.setIn(inputStream);
 
-        String result = UI.promptSaveFile();
+        int result = UI.promptSaveFile();
         assertEquals("", result);
     }
 
